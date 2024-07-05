@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+@layer reset, bootstrap, primeng, primeflex, custom;
+
+@import "bootstrap/dist/css/bootstrap.css" layer(bootstrap);
+@import "bootstrap/dist/css/bootstrap-utilities.css" layer(bootstrap);
+@import "bootstrap/dist/css/bootstrap-reboot.css" layer(bootstrap);
+@import "primeng/resources/themes/lara-light-blue/theme.css" layer(primeng);
+@import "primeng/resources/primeng.css" layer(primeng);
+@import "primeicons/primeicons.css" layer(primeng);
+@import "primeflex/primeflex.css" layer(primeflex);
+@import "./assets/fonts";
+
+:root {
+  --primary-color: #3b82f6; // #007bff;
+  --secondary-color: #f8f9fa;
+  --accent-color: #28a745;
+  --primary-text: #212529;
+  --secondary-text: #6c757d;
+  --background: #ffffff;
+}
+
+*{
+  border: 0.5px solid red;
+}
+
+footer {
+  color: var(--primary-text);
+  background-color: var(--secondary-color);
+}
+
+header {
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}

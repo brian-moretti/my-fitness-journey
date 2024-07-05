@@ -1,0 +1,8 @@
+@layer reset, bootstrap-reboot, primeng, custom;
+
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-reboot.css" layer(bootstrap-reboot);
+@import "primeng/resources/themes/lara-light-blue/theme.css" layer(primeng);
+@import "primeng/resources/primeng.css" layer(primeng);
+@import "primeicons/primeicons.css" layer(primeng);
+@import "primeflex/primeflex.css" layer(primeng);

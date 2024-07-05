@@ -1,0 +1,14 @@
+@import "../../assets/_color.scss";
+
+:host ::ng-deep .green .p-button  {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+}
+:host ::ng-deep .gray .p-button {
+  background-color: var(--secondary-text);
+  color: var(--primary-text);
+}
+:host ::ng-deep .blue .p-button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}

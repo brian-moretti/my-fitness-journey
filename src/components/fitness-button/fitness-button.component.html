@@ -1,0 +1,28 @@
+<span [ngSwitch]="link">
+  <p *ngSwitchCase="true">
+    <a
+      [routerLink]="urlLink"
+      [target]="target"
+      rel="noopener noreferrer"
+      class="p-button font-bold"
+      >{{ title }}</a
+    >
+  </p>
+  <p *ngSwitchDefault>
+    <p-button
+      [label]="title"
+      [icon]="icon"
+      [iconPos]="iconPosition"
+      [loading]="loading"
+      [rounded]="rounded"
+      [raised]="raised"
+      [outlined]="outline"
+      [badge]="badgeNumber"
+      [disabled]="readOnly"
+      (onClick)="onClickBtn()"
+      [type]="type"
+      [routerLink]="urlLink"
+      [ngClass]="classes"
+    />
+  </p>
+</span>

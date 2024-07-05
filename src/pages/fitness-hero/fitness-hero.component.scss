@@ -1,0 +1,13 @@
+.full-height {
+  height: calc(100vh - 10rem);
+}
+
+.font-big{
+  span{
+    font-weight: 300;
+    text-wrap: wrap;
+  }
+  strong{
+    font-weight: 700;
+  }
+}
