@@ -3,10 +3,16 @@ import { FitnessDashboardComponent } from '../pages/fitness-dashboard/fitness-da
 import { FitnessHeroComponent } from '../pages/fitness-hero/fitness-hero.component';
 import { FitnessLoginComponent } from '../pages/fitness-login/fitness-login.component';
 import { FitnessProgramDetailsComponent } from '../pages/fitness-program-details/fitness-program-details.component';
+import { FitnessSignupComponent } from '../pages/fitness-signup/fitness-signup.component';
 
 export const routes: Routes = [
   { path: '', component: FitnessHeroComponent, title: 'Your Fitness Journey' },
   { path: 'auth/login', component: FitnessLoginComponent, title: 'Login Page' },
+  {
+    path: 'auth/signup',
+    component: FitnessSignupComponent,
+    title: 'Signup Page',
+  },
   {
     path: 'dashboard',
     component: FitnessDashboardComponent,

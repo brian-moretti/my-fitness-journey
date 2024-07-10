@@ -1,14 +1,15 @@
 <div class="xl:h-screen xl:max-h-screen">
   <app-fitness-header></app-fitness-header>
-  <div
-    class="row xl:px-8 xl:py-6 md:px-6 md:py-6 md:flex-row sm:px-6 sm:py-5 full-height"
-  >
-    <div class="w-12 md:w-5 xl:w-4">
-      <h1 class="roboto-bold font-big md:text-6xl text-5xl">
+  <div class="container d-flex py-4 full-height align-items-center">
+    <div class="col-12 md:col-5">
+      <h1 class="font-big roboto-bold xl:text-7xl lg:text-6xl text-5xl">
         <span>The only app that</span>
         <strong> gets you in shape while tracking</strong>
       </h1>
-      <div class="flex gap-5">
+      <div
+        *ngIf="viewScreen > 768"
+        class="btn-container sm:justify-content-start sm:gap-5 lg:gap-8"
+      >
         <app-fitness-button
           [title]="'ACCEDI'"
           [rounded]="true"
@@ -23,8 +24,25 @@
         ></app-fitness-button>
       </div>
     </div>
-    <div class="w-12 md:w-7 xl:w-8">
+    <div class="col-12 md:col-7">
       <img src="" alt="" class="" />
+    </div>
+    <div
+      *ngIf="viewScreen < 768"
+      class="btn-container sm:justify-content-start sm:gap-5 lg:gap-8"
+    >
+      <app-fitness-button
+        [title]="'ACCEDI'"
+        [rounded]="true"
+        [raised]="true"
+        [urlLink]="'auth/login'"
+      ></app-fitness-button>
+      <app-fitness-button
+        [title]="'REGISTRATI'"
+        [rounded]="true"
+        [raised]="true"
+        [urlLink]="'auth/signup'"
+      ></app-fitness-button>
     </div>
   </div>
   <app-fitness-footer></app-fitness-footer>

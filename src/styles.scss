@@ -1,13 +1,13 @@
 @layer reset, bootstrap, primeng, primeflex, custom;
 
 @import "bootstrap/dist/css/bootstrap.css" layer(bootstrap);
-@import "bootstrap/dist/css/bootstrap-utilities.css" layer(bootstrap);
-@import "bootstrap/dist/css/bootstrap-reboot.css" layer(bootstrap);
+//@import "bootstrap/dist/css/bootstrap-utilities.css" layer(bootstrap);
+//@import "bootstrap/dist/css/bootstrap-reboot.css" layer(bootstrap);
 @import "primeng/resources/themes/lara-light-blue/theme.css" layer(primeng);
 @import "primeng/resources/primeng.css" layer(primeng);
-@import "primeicons/primeicons.css" layer(primeng);
+@import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css" layer(primeflex);
-@import "./assets/fonts";
+@import "./assets/scss/fonts";
 
 :root {
   --primary-color: #3b82f6; // #007bff;
@@ -18,10 +18,6 @@
   --background: #ffffff;
 }
 
-*{
-  border: 0.5px solid red;
-}
-
 footer {
   color: var(--primary-text);
   background-color: var(--secondary-color);
@@ -30,4 +26,31 @@ footer {
 header {
   color: var(--secondary-color);
   background-color: var(--primary-color);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul > li {
+  list-style-type: none;
+}
+
+@layer custom {
+  .login-page,
+  .signup-page {
+    & .p-inputtext {
+      padding-right: 2.5rem;
+    }
+    & span.p-float-label {
+      margin: 2rem 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    & .p-button-label {
+      font-size: 0.75rem;
+    }
+  }
 }

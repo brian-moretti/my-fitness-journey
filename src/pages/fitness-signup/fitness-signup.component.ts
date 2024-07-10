@@ -12,16 +12,16 @@ import { PRIMENG_COMPONENTS } from '../../assets/primeng-index';
 @Component({
   standalone: true,
   imports: [...SHARED_COMPONENTS, ...PRIMENG_COMPONENTS, ReactiveFormsModule],
-  templateUrl: './fitness-login.component.html',
-  styleUrl: './fitness-login.component.scss',
+  templateUrl: './fitness-signup.component.html',
+  styleUrl: './fitness-signup.component.scss',
 })
-export class FitnessLoginComponent implements OnInit {
-  loginForm!: FormGroup;
+export class FitnessSignupComponent implements OnInit {
+  signupForm!: FormGroup;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.loginForm = new FormGroup({
+    this.signupForm = new FormGroup({
       username: new FormControl<string>('', Validators.required),
       email: new FormControl<string>('', [
         Validators.email,
@@ -31,13 +31,13 @@ export class FitnessLoginComponent implements OnInit {
     });
   }
 
-  onLoginSubmit(form: FormGroup) {
-    const loginForm = {
+  onSignupSubmit(form: FormGroup) {
+    const signupForm = {
       username: form.value.username,
       email: form.value.email,
       password: form.value.password,
     };
-    console.log(loginForm);
-    this.router.navigate(['dashboard']);
+    console.log(signupForm);
+    this.router.navigate(['auth/login']);
   }
 }

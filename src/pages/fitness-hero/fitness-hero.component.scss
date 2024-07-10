@@ -1,5 +1,11 @@
 .full-height {
-  height: calc(100vh - 10rem);
+  height: calc(100vh - 9.3rem);
+}
+
+.btn-container{
+  display: flex;
+  padding: 1.5rem 0;
+  gap: 2rem
 }
 
 .font-big{
@@ -11,3 +17,4 @@
     font-weight: 700;
   }
 }
+

@@ -1,9 +1,9 @@
 <app-fitness-header></app-fitness-header>
-<div class="container login-page full-height">
+<div class="container signup-page full-height">
   <form
-    [formGroup]="loginForm"
+    [formGroup]="signupForm"
     class="text-center"
-    (ngSubmit)="onLoginSubmit(loginForm)"
+    (ngSubmit)="onSignupSubmit(signupForm)"
   >
     <p-floatLabel>
       <input pInputText id="username" formControlName="username" />
@@ -22,16 +22,19 @@
       <label for="password">Password</label>
     </p-floatLabel>
     <app-fitness-button
-      [title]="'Not signup yet. Go now'"
+      [title]="'Already signed. Login now!'"
       [link]="true"
-      [urlLink]="'/auth/signup'"
+      [urlLink]="'/auth/login'"
     ></app-fitness-button>
 
+    <!-- ! ADD READONLY + URLLINK-->
     <app-fitness-button
-      [title]="'LOGIN'"
+      [title]="'SIGNUP'"
       [raised]="true"
       [type]="'submit'"
     ></app-fitness-button>
   </form>
 </div>
 <app-fitness-footer></app-fitness-footer>
+
+<!-- ? P-BUTTON SE POSSIEDE UN LINK, AL CLICK PERDE I DATI FORM PER PASSARE ALL'ALTRA PAGINA -->

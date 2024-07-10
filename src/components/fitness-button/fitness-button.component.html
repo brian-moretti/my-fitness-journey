@@ -1,12 +1,21 @@
 <span [ngSwitch]="link">
   <p *ngSwitchCase="true">
-    <a
+    <p-button
+      [routerLink]="urlLink"
+      [label]="title"
+      [link]="link"
+      [outlined]="outline"
+      [text]="text"
+      [rounded]="rounded"
+    >
+    </p-button>
+    <!-- <a
       [routerLink]="urlLink"
       [target]="target"
       rel="noopener noreferrer"
       class="p-button font-bold"
       >{{ title }}</a
-    >
+    > -->
   </p>
   <p *ngSwitchDefault>
     <p-button
@@ -17,9 +26,10 @@
       [rounded]="rounded"
       [raised]="raised"
       [outlined]="outline"
+      [size]="size"
       [badge]="badgeNumber"
-      [disabled]="readOnly"
-      (onClick)="onClickBtn()"
+      [disabled]="disabled"
+      (onClick)="onClickBtn($event)"
       [type]="type"
       [routerLink]="urlLink"
       [ngClass]="classes"

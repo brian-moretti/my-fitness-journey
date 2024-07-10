@@ -1,6 +1,6 @@
-@import "../../assets/_color.scss";
+@import "../../assets/scss/color";
 
-:host ::ng-deep .green .p-button  {
+:host ::ng-deep .green .p-button {
   background-color: var(--accent-color);
   color: var(--secondary-color);
 }

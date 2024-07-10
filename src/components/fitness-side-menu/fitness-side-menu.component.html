@@ -1,1 +1,37 @@
-<p>fitness-side-menu works!</p>
+<menu class="side-bar md:w-15rem m-0">
+  <app-fitness-button
+    [icon]="'pi pi-angle-left'"
+    [raised]="true"
+    [rounded]="true"
+    class="mobile-btn"
+  ></app-fitness-button>
+
+  <div class="logo">
+    <img src="" alt="logo" />
+  </div>
+  <nav>
+    <ul class="p-0 m-0 text-center">
+      <ng-container *ngFor="let button of buttons; let i = index">
+        <app-fitness-button
+          [title]="button.title"
+          [rounded]="true"
+          [raised]="true"
+          [outline]="button.outline"
+          [size]="'small'"
+          [urlLink]="button.urlLink"
+          (btnEvent)="onActiveSection(i)"
+        ></app-fitness-button>
+      </ng-container>
+    </ul>
+  </nav>
+  <div class="text-center p-0 m-0 align-self-end">
+    <app-fitness-button
+      [title]="'LOGOUT'"
+      [rounded]="true"
+      [raised]="true"
+      [color]="'ACCENT'"
+      [size]="'small'"
+      (btnEvent)="onLogout()"
+    ></app-fitness-button>
+  </div>
+</menu>

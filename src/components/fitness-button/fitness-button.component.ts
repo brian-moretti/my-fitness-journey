@@ -20,12 +20,14 @@ export class FitnessButtonComponent implements OnInit {
   @Input() rounded: boolean = false;
   @Input() outline: boolean = false;
   @Input() raised: boolean = false;
+  @Input() text: boolean = false;
+  @Input() size: 'small' | 'large' | undefined = undefined;
   @Input() badgeNumber: string = '';
-  @Input() type: string = 'submit';
+  @Input() type: string = '';
   @Input() target: string = '';
-  @Input() readOnly: boolean = false;
+  @Input() disabled: boolean = false;
   @Input() link: boolean = false;
-  @Input() urlLink: string = '';
+  @Input() urlLink!: string;
   @Input() color: 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'EMPTY' = 'EMPTY';
   @Input() styleClasses: string[] = [];
 
@@ -36,14 +38,12 @@ export class FitnessButtonComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.btnColor = this.mapColorButton();
     this.classes.push(this.btnColor, ...this.styleClasses);
   }
 
-  onClickBtn() {
-    this.btnEvent.emit();
+  onClickBtn(event?: any) {
+    this.btnEvent.emit(event);
   }
 
   mapColorButton(): string {
