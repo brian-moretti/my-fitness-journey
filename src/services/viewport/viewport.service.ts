@@ -1,21 +1,24 @@
-import { HostListener, Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ViewportService {
-  constructor(private ngZone: NgZone) {}
+  private viewScreenSubject = new Subject<number>();
+  viewScreen$ = this.viewScreenSubject.asObservable();
 
-  @HostListener('window:resize', ['$event'])
-  onResizeScreen() {
-    setTimeout(() => {
-      this.ngZone.run(() => {
-        this.updateViewport();
-      });
-    }, 100);
+  constructor(private ngZone: NgZone) {
+    this.onResizeScreen();
   }
 
-  updateViewport() {
-    return window.innerWidth;
+  private onResizeScreen() {
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        this.ngZone.run(() => {
+          this.viewScreenSubject.next(window.innerWidth);
+        });
+      }, 100);
+    });
   }
 }

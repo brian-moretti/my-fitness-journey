@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SHARED_COMPONENTS } from '..';
-import { PRIMENG_COMPONENTS } from '../../assets/primeng-index';
+import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 
 @Component({
   standalone: true,

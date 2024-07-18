@@ -1,11 +1,15 @@
-<menu class="side-bar md:w-15rem m-0">
-  <app-fitness-button
-    [icon]="'pi pi-angle-left'"
-    [raised]="true"
-    [rounded]="true"
-    class="mobile-btn"
-  ></app-fitness-button>
-
+<app-fitness-button
+  *ngIf="viewScreen < 768"
+  [icon]="'pi pi-angle-left'"
+  [raised]="true"
+  [rounded]="true"
+  class="mobile-btn"
+  (btnEvent)="showSideMenu()"
+></app-fitness-button>
+<menu
+  *ngIf="viewScreen >= 768 || (showMenu && viewScreen < 768)"
+  class="side-bar md:w-15rem m-0"
+>
   <div class="logo">
     <img src="" alt="logo" />
   </div>

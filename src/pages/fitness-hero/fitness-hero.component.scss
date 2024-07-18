@@ -1,20 +1,43 @@
-.full-height {
-  height: calc(100vh - 9.3rem);
+.hero {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
 }
 
-.btn-container{
+.btn-container {
   display: flex;
   padding: 1.5rem 0;
-  gap: 2rem
+  gap: 2rem;
 }
 
-.font-big{
-  span{
+.font-big {
+  span {
     font-weight: 300;
     text-wrap: wrap;
   }
-  strong{
+  strong {
     font-weight: 700;
   }
 }
 
+@media only screen and (max-width: 769px) {
+  .font-big {
+    text-align: center;
+  }
+
+  .hero {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .font-big {
+    font-size: calc(2.25rem + 1.35vw);
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .btn-container {
+    gap: 5rem;
+  }
+}

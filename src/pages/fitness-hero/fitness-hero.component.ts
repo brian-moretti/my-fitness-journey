@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SHARED_COMPONENTS } from '..';
+import { ViewportService } from '../../services/viewport/viewport.service';
 
 @Component({
   selector: 'app-fitness-hero',
@@ -10,24 +11,13 @@ import { SHARED_COMPONENTS } from '..';
   styleUrl: './fitness-hero.component.scss',
 })
 export class FitnessHeroComponent implements OnInit {
-  viewScreen: any = '';
+  viewScreen: number = window.innerWidth;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private viewportService: ViewportService) {}
 
   ngOnInit(): void {
-    this.updateViewport();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResizeScreen(event: Event) {
-    setTimeout(() => {
-      this.ngZone.run(() => {
-        this.updateViewport();
-      });
-    }, 100);
-  }
-
-  updateViewport() {
-    this.viewScreen = window.innerWidth;
+    this.viewportService.viewScreen$.subscribe({
+      next: (size) => (this.viewScreen = size),
+    });
   }
 }

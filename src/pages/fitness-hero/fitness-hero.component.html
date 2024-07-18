@@ -1,15 +1,12 @@
-<div class="xl:h-screen xl:max-h-screen">
+<div class="full-height">
   <app-fitness-header></app-fitness-header>
-  <div class="container d-flex py-4 full-height align-items-center">
-    <div class="col-12 md:col-5">
-      <h1 class="font-big roboto-bold xl:text-7xl lg:text-6xl text-5xl">
+  <div class="container hero container-height">
+    <div class="col-12 md:col-6 xl:col-5">
+      <h1 class="font-big roboto-bold">
         <span>The only app that</span>
         <strong> gets you in shape while tracking</strong>
       </h1>
-      <div
-        *ngIf="viewScreen > 768"
-        class="btn-container sm:justify-content-start sm:gap-5 lg:gap-8"
-      >
+      <div *ngIf="viewScreen > 768" class="btn-container">
         <app-fitness-button
           [title]="'ACCEDI'"
           [rounded]="true"
@@ -24,13 +21,10 @@
         ></app-fitness-button>
       </div>
     </div>
-    <div class="col-12 md:col-7">
+    <div class="col-12 md:col-6 xl:col-7">
       <img src="" alt="" class="" />
     </div>
-    <div
-      *ngIf="viewScreen < 768"
-      class="btn-container sm:justify-content-start sm:gap-5 lg:gap-8"
-    >
+    <div *ngIf="viewScreen <= 768" class="btn-container">
       <app-fitness-button
         [title]="'ACCEDI'"
         [rounded]="true"

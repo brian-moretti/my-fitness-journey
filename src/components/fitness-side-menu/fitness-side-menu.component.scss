@@ -3,25 +3,18 @@
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: 0.5fr 2fr 1fr;
   align-items: center;
   padding: 2rem 1rem;
-  position: relative;
-  border: 1px solid red;
+  position: fixed;
+  transition: all 3 ease-in-out;
+  overflow: hidden;
 }
 
 .mobile-btn {
   position: absolute;
   top: 1.5rem;
   right: 1rem;
-}
-
-::ng-deep {
-  .side-bar .p-button {
-    width: 100%;
-  }
-  .mobile-btn .p-button {
-    height: 2.5rem;
-    width: 2.5rem;
-  }
+  z-index: 100;
+  //! VEDERE SE RELATIVE NECESSARIO
 }

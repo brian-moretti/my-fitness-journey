@@ -32,21 +32,22 @@ export class FitnessButtonComponent implements OnInit {
   @Input() styleClasses: string[] = [];
 
   @Output() btnEvent = new EventEmitter();
+
   btnColor: string = '';
   classes: string[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.btnColor = this.mapColorButton();
+    this.btnColor = this._mapColorButton();
     this.classes.push(this.btnColor, ...this.styleClasses);
   }
 
-  onClickBtn(event?: any) {
+  public onClickBtn(event?: any) {
     this.btnEvent.emit(event);
   }
 
-  mapColorButton(): string {
+  private _mapColorButton(): string {
     switch (this.color) {
       case 'PRIMARY':
         return 'blue';

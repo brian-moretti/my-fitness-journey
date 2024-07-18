@@ -1,5 +1,5 @@
 <app-fitness-header></app-fitness-header>
-<div class="container login-page full-height">
+<div class="container log-pages container-height">
   <form
     [formGroup]="loginForm"
     class="text-center"
@@ -27,6 +27,7 @@
       [urlLink]="'/auth/signup'"
     ></app-fitness-button>
 
+    <!-- ! ADD READONLY -->
     <app-fitness-button
       [title]="'LOGIN'"
       [raised]="true"

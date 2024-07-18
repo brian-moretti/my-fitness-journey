@@ -1,0 +1,7 @@
+<p-dataView [value]="exerciseList" [paginator]="true" [rows]="30">
+  <ng-template pTemplate="list" let-exercises>
+    <ng-container *ngFor="let e of exercises">
+      <div>{{ e | json }}</div>
+    </ng-container>
+  </ng-template>
+</p-dataView>
