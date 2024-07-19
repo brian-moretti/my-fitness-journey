@@ -7,6 +7,7 @@
       <ng-container *ngIf="exercises$ | async as exercises; else loading">
         <app-fitness-exercises-list
           [exerciseDataList]="exercises"
+          (updateExerciseList)="onUpdateExerciseList($event)"
         ></app-fitness-exercises-list
       ></ng-container>
     </div>

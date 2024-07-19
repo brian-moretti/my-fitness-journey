@@ -1,7 +1,13 @@
-<p-dataView [value]="exerciseList" [paginator]="true" [rows]="30">
+<p-dataView
+  [value]="exerciseList"
+  [paginator]="true"
+  [rows]="60"
+  (onPage)="changePages($event)"
+>
   <ng-template pTemplate="list" let-exercises>
     <ng-container *ngFor="let e of exercises">
       <div>{{ e | json }}</div>
+      <img [src]="e.gifUrl" alt="" />
     </ng-container>
   </ng-template>
 </p-dataView>

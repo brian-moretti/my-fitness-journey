@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { PaginatorState } from 'primeng/paginator';
+import { BehaviorSubject, map, Observable, scan } from 'rxjs';
 import { SHARED_COMPONENTS } from '..';
 import { IExercise, IExercises } from '../../core/model';
 import { ExerciseService } from '../../services/exercise/exercise.service';
@@ -13,24 +14,75 @@ import { ExerciseService } from '../../services/exercise/exercise.service';
   styleUrl: './fitness-exercises.component.scss',
 })
 export class FitnessExercisesComponent implements OnInit {
-  exercises$!: Observable<IExercises>;
+  private _exercisesSubject = new BehaviorSubject<IExercises>({
+    Exercises: [],
+  });
+  exercises$: Observable<IExercises> = this._exercisesSubject
+    .asObservable()
+    .pipe(
+      scan((acc, curr) => {
+        console.log(acc, curr);
+        return { ...acc, Exercises: [...acc.Exercises, ...curr.Exercises] };
+      })
+    );
 
   constructor(private exerciseService: ExerciseService) {}
 
   ngOnInit(): void {
-    this.getExercise();
+    this._getExercises();
   }
 
-  private getExercise() {
-    this.exercises$ = this.exerciseService.getExercise().pipe(
-      map((e: IExercises) => {
-        e.Exercises = e.Exercises.map((e: IExercise) => {
-          const name = e.name.replaceAll('_', ' ');
-          const gifUrl = 'back-end/Api/' + e.gifUrl?.slice(2);
-          return { ...e, name, gifUrl };
-        });
-        return e;
-      })
-    );
+  private _getExercises(page?: number) {
+    this.exerciseService
+      .getExercise(page)
+      .pipe(
+        map((e: IExercises) => {
+          e.Exercises = e.Exercises.map((exercise: IExercise) => {
+            const name = exercise.name.replaceAll('_', ' ');
+            const gifUrl =
+              'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);
+            return { ...exercise, name, gifUrl };
+          });
+          return e;
+        })
+      )
+      .subscribe((exercise: IExercises) => {
+        this._exercisesSubject.next(exercise);
+      });
+  }
+
+  public onUpdateExerciseList(event: PaginatorState) {
+    let maxExercisePerPage = 60;
+    let page = 1; //this.checkPagination(event, );
+    console.log(event);
+    console.log(event.first! % maxExercisePerPage);
+
+    if (event.first === maxExercisePerPage * page) {
+      page += 1;
+      this._getExercises(page);
+      console.log(page);
+    }
+
+    /*
+     * 0 - 60 page 1 === 60 / 60
+     * 60 - 180 page 2 === 180 / 60 - 1
+     * 180 - 300 page 3 === 300 / 60 - 2
+     * 300 - 420 page 4 === 420 / 60 - 3
+     */
+
+    /*   console.log(event);
+    if (event.first === maxExercisePerPage) {
+      let page = (event.first / maxExercisePerPage) + 1;
+      let params = new HttpParams().set('page', page);
+      console.log(params);
+      this._getExercises();
+    } */
+  }
+
+  public checkPagination(event: PaginatorState, page: number) {
+    if (page === 1) {
+      return 1;
+    }
+    return page;
   }
 }
