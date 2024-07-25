@@ -7,11 +7,17 @@ import { provideRouter } from '@angular/router';
 
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(ReactiveFormsModule, FormsModule, HttpClient),
+    importProvidersFrom(
+      ReactiveFormsModule,
+      FormsModule,
+      HttpClient,
+      BrowserAnimationsModule
+    ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),

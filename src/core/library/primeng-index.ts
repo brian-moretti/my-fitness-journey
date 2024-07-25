@@ -1,7 +1,8 @@
 import { ButtonModule } from 'primeng/button';
-import { DataViewModule } from 'primeng/dataview';
+import { DialogModule } from 'primeng/dialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule } from 'primeng/paginator';
 import { PasswordModule } from 'primeng/password';
 
 export const PRIMENG_COMPONENTS = [
@@ -9,5 +10,6 @@ export const PRIMENG_COMPONENTS = [
   FloatLabelModule,
   PasswordModule,
   ButtonModule,
-  DataViewModule,
+  PaginatorModule,
+  DialogModule,
 ];

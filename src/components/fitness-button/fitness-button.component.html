@@ -3,10 +3,11 @@
     <p-button
       [routerLink]="urlLink"
       [label]="title"
-      [link]="link"
       [outlined]="outline"
       [text]="text"
       [rounded]="rounded"
+      [ngClass]="classes"
+      (onClick)="onClickBtn($event)"
     >
     </p-button>
     <!-- <a

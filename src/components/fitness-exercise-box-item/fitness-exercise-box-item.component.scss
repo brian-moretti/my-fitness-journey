@@ -1,0 +1,41 @@
+.exercise-box {
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
+  min-height: 400px;
+  transition: box-shadow 1s ease;
+}
+
+.info-exercise {
+  width: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dialog-container{
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 1rem;
+}
+
+.exercise-box:hover {
+  box-shadow: 0 0 20px rgba($color: #000000, $alpha: 1);
+}
+
+// TODO: INSERIRE SENZA
+:host ::ng-deep {
+  .p-button {
+    padding: 0;
+    font-size: 0.85rem;
+  }
+
+  .p-dialog-title {
+    margin: auto;
+  }
+}

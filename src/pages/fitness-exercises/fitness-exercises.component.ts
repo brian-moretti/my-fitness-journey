@@ -29,7 +29,9 @@ export class FitnessExercisesComponent implements OnInit {
   constructor(private exerciseService: ExerciseService) {}
 
   ngOnInit(): void {
+    //setTimeout(() => {
     this._getExercises();
+    //}, 2000);
   }
 
   private _getExercises(page?: number) {
@@ -41,7 +43,31 @@ export class FitnessExercisesComponent implements OnInit {
             const name = exercise.name.replaceAll('_', ' ');
             const gifUrl =
               'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);
-            return { ...exercise, name, gifUrl };
+            const instructions = exercise.instructions
+              ?.join(' <br/>')
+              .split(',');
+            const secondaryMuscles = exercise.secondaryMuscles
+              ?.map((muscle) => {
+                if (muscle.includes(' ')) {
+                  return muscle
+                    .split(' ')
+                    .map((m) => m.charAt(0).toUpperCase() + m.slice(1))
+                    .join(' ');
+                }
+                return muscle.split(',').map((m) => {
+                  return m.charAt(0).toUpperCase() + m.slice(1);
+                });
+              })
+              .join(' | ')
+              .split(',');
+
+            return {
+              ...exercise,
+              name,
+              gifUrl,
+              instructions,
+              secondaryMuscles,
+            };
           });
           return e;
         })
@@ -49,6 +75,42 @@ export class FitnessExercisesComponent implements OnInit {
       .subscribe((exercise: IExercises) => {
         this._exercisesSubject.next(exercise);
       });
+  }
+
+  private _onMappingExercises(exercises: Observable<IExercises>) {
+    exercises.pipe(
+      map((e: IExercises) => {
+        e.Exercises = e.Exercises.map((exercise: IExercise) => {
+          const name = exercise.name.replaceAll('_', ' ');
+          const gifUrl =
+            'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);
+          const instructions = exercise.instructions?.join(' <br/>').split(',');
+          const secondaryMuscles = exercise.secondaryMuscles
+            ?.map((muscle) => {
+              if (muscle.includes(' ')) {
+                return muscle
+                  .split(' ')
+                  .map((m) => m.charAt(0).toUpperCase() + m.slice(1))
+                  .join(' ');
+              }
+              return muscle.split(',').map((m) => {
+                return m.charAt(0).toUpperCase() + m.slice(1);
+              });
+            })
+            .join(' | ')
+            .split(',');
+
+          return {
+            ...exercise,
+            name,
+            gifUrl,
+            instructions,
+            secondaryMuscles,
+          };
+        });
+        return e;
+      })
+    );
   }
 
   public onUpdateExerciseList(event: PaginatorState) {

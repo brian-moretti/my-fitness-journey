@@ -1,0 +1,34 @@
+<div class="exercise-box">
+  <h5 class="text-center">
+    {{ exercise.name | titlecase }}
+  </h5>
+  <img [src]="exercise.gifUrl" [alt]="exercise.name" width="200px" />
+  <p><b>Target: </b>{{ exercise.target | titlecase }}</p>
+  <p-dialog
+    [(visible)]="showMoreInfoExercise"
+    [header]="exercise.name | titlecase"
+    [modal]="true"
+    [style]="{ width: '35rem' }"
+  >
+    <div class="dialog-container">
+      <div class="flex flex-column text-sm">
+        <img [src]="exercise.gifUrl" [alt]="exercise.name" width="225px" />
+        <span>{{ exercise.bodyPart | titlecase }}</span>
+        <span>{{ exercise.equipment | titlecase }}</span>
+        <span>{{ exercise.secondaryMuscles }}</span>
+      </div>
+      <div class="flex flex-column text-sm text-justify line-height-2">
+        <b class="align-self-start">Instructions:</b>
+        <span [innerHTML]="exercise.instructions"></span>
+      </div>
+    </div>
+  </p-dialog>
+
+  <app-fitness-button
+    *ngIf="!showMoreInfoExercise"
+    [text]="true"
+    [link]="true"
+    [title]="'Show more...'"
+    (btnEvent)="onShowMore($event)"
+  ></app-fitness-button>
+</div>

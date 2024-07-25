@@ -1,4 +1,4 @@
-@layer reset, bootstrap, primeng, primeflex, custom;
+@layer bootstrap, primeng, primeflex, custom;
 
 @import "bootstrap/dist/css/bootstrap.css" layer(bootstrap);
 //@import "bootstrap/dist/css/bootstrap-utilities.css" layer(bootstrap);
@@ -84,6 +84,12 @@ ul > li {
       font-size: 0.75rem;
     }
   }
+
+/*   .info-exercise{
+    & .p-button{
+      padding: 0
+    }
+  } */
 }
 
 @import "./assets/scss/mediascreen";

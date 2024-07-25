@@ -1,13 +1,23 @@
-<p-dataView
+<!-- ! FIX EXTRA SPACE RIGHT WITH THIS COMP -->
+<!-- <p-dataView
   [value]="exerciseList"
   [paginator]="true"
   [rows]="60"
   (onPage)="changePages($event)"
->
-  <ng-template pTemplate="list" let-exercises>
-    <ng-container *ngFor="let e of exercises">
-      <div>{{ e | json }}</div>
-      <img [src]="e.gifUrl" alt="" />
-    </ng-container>
-  </ng-template>
-</p-dataView>
+> -->
+<div class="exercise-grid">
+  <ng-container *ngFor="let exercise of exerciseList">
+    <app-fitness-exercise-box-item
+      [exercise]="exercise"
+    ></app-fitness-exercise-box-item>
+  </ng-container>
+</div>
+<p-paginator
+  (onPageChange)="onPageChange($event)"
+  [first]="0"
+  [rows]="30"
+  [totalRecords]="120"
+  [rowsPerPageOptions]="[10, 20, 30]"
+/>
+<!-- </p-dataView>
+ -->

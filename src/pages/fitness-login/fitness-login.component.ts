@@ -37,7 +37,6 @@ export class FitnessLoginComponent implements OnInit {
       email: form.value.email,
       password: form.value.password,
     };
-    console.log(loginForm);
     this.router.navigate(['dashboard']);
   }
 }
