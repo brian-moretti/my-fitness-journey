@@ -1,10 +1,19 @@
 <div class="container-fluid g-0">
   <app-fitness-side-menu></app-fitness-side-menu>
+
   <div class="container cnb py-5 border-500 border-2">
     <h1 class="text-center roboto-bold font-big m-0">Exercises Database</h1>
     <p class="text-center m-0">Limits are often just illusions!</p>
     <div class="my-4 p-4">
-      <ng-container *ngIf="exercises$ | async as exercises; else loading">
+      <ng-container *ngIf="exercises; else loading">
+        <div>
+          <app-fitness-filter
+            (filtersToApply)="onFilters($event)"
+          ></app-fitness-filter>
+          <app-fitness-button
+            [title]="'CREATE NEW EXERCISE'"
+          ></app-fitness-button>
+        </div>
         <app-fitness-exercises-list
           [exerciseDataList]="exercises"
           (updateExerciseList)="onUpdateExerciseList($event)"

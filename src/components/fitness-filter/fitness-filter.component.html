@@ -1,0 +1,42 @@
+<div class="filter-container">
+  <input
+    name="searchName"
+    type="text"
+    pInputText
+    variant="filled"
+    [(ngModel)]="searchName"
+    placeholder="Search by name..."
+    (input)="onSearchName(searchName)"
+  />
+  <p-dropdown
+    name="target"
+    placeholder="Select target"
+    variant="filled"
+    optionLabel="target"
+    [showClear]="true"
+    [options]="targets"
+    [(ngModel)]="selectedTarget"
+    [filter]="false"
+    (onChange)="onSelectTargets(selectedTarget)"
+  />
+  <p-dropdown
+    name="bodyPart"
+    placeholder="Select body part"
+    variant="filled"
+    optionLabel="bodyPart"
+    [showClear]="true"
+    [options]="bodyParts"
+    [(ngModel)]="selectedBodyPart"
+    [filter]="false"
+    (onChange)="onSelectBodyPart(selectedBodyPart)"
+  />
+  <p-checkbox
+    name="checkEntireDatabase"
+    [(ngModel)]="checkEntireDatabase"
+    [binary]="true"
+    variant="filled"
+    (onChange)="onCheckEntireDatabase(checkEntireDatabase)"
+    pTooltip="Entire Database"
+    tooltipPosition="top"
+  />
+</div>

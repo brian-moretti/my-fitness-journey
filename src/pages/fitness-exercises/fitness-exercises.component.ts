@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PaginatorState } from 'primeng/paginator';
-import { BehaviorSubject, map, Observable, scan } from 'rxjs';
 import { SHARED_COMPONENTS } from '..';
 import { IExercise, IExercises } from '../../core/model';
+import { IFilters } from '../../core/model/interface/filterExercises';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 
 @Component({
@@ -14,17 +14,8 @@ import { ExerciseService } from '../../services/exercise/exercise.service';
   styleUrl: './fitness-exercises.component.scss',
 })
 export class FitnessExercisesComponent implements OnInit {
-  private _exercisesSubject = new BehaviorSubject<IExercises>({
-    Exercises: [],
-  });
-  exercises$: Observable<IExercises> = this._exercisesSubject
-    .asObservable()
-    .pipe(
-      scan((acc, curr) => {
-        console.log(acc, curr);
-        return { ...acc, Exercises: [...acc.Exercises, ...curr.Exercises] };
-      })
-    );
+  exercises: IExercise[] = [];
+  filterExercises: IExercise[] = [];
 
   constructor(private exerciseService: ExerciseService) {}
 
@@ -34,51 +25,142 @@ export class FitnessExercisesComponent implements OnInit {
     //}, 2000);
   }
 
-  private _getExercises(page?: number) {
-    this.exerciseService
-      .getExercise(page)
-      .pipe(
-        map((e: IExercises) => {
-          e.Exercises = e.Exercises.map((exercise: IExercise) => {
-            const name = exercise.name.replaceAll('_', ' ');
-            const gifUrl =
-              'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);
-            const instructions = exercise.instructions
-              ?.join(' <br/>')
-              .split(',');
-            const secondaryMuscles = exercise.secondaryMuscles
-              ?.map((muscle) => {
-                if (muscle.includes(' ')) {
-                  return muscle
-                    .split(' ')
-                    .map((m) => m.charAt(0).toUpperCase() + m.slice(1))
-                    .join(' ');
-                }
-                return muscle.split(',').map((m) => {
-                  return m.charAt(0).toUpperCase() + m.slice(1);
-                });
-              })
-              .join(' | ')
-              .split(',');
+  private _getExercises() {
+    this.exerciseService.getExercise().subscribe({
+      next: (exercises) => {
+        let exercisesMapped = this._onMappingExercises(exercises);
+        this.exercises = exercisesMapped;
+        this.filterExercises = exercisesMapped;
+      },
+      error: () => {},
+    });
+  }
 
-            return {
-              ...exercise,
-              name,
-              gifUrl,
-              instructions,
-              secondaryMuscles,
-            };
-          });
-          return e;
+  private _onMappingExercises(exercises: IExercises) {
+    return exercises.Exercises.map((exercise) => {
+      const name = exercise.name.replaceAll('_', ' ');
+      const gifUrl =
+        'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);
+      const instructions = exercise.instructions?.join(' <br/>').split(',');
+      const secondaryMuscles = exercise.secondaryMuscles
+        ?.map((muscle) => {
+          if (muscle.includes(' ')) {
+            return muscle
+              .split(' ')
+              .map((m) => m.charAt(0).toUpperCase() + m.slice(1))
+              .join(' ');
+          }
+          return muscle
+            .split(',')
+            .map((m) => m.charAt(0).toUpperCase() + m.slice(1));
         })
-      )
-      .subscribe((exercise: IExercises) => {
+        .join(' | ')
+        .split(',');
+
+      return {
+        ...exercise,
+        name,
+        gifUrl,
+        instructions,
+        secondaryMuscles,
+      };
+    });
+  }
+
+  public onFilters(filters: IFilters) {
+    
+    const name = filters.searchName;
+    const target = filters.selectedTarget;
+    const bodyPart = filters.selectedBodyPart;
+    const checkDatabase = filters.checkEntireDatabase;
+    
+    if (!filters) {
+      this.exercises = this.filterExercises;
+    }
+
+    const filterByName = this.filterExercises.filter((exercise) =>
+      name ? exercise.name.includes(name.toLowerCase().trim()) : exercise
+    );
+    const filterByTarget = this.filterExercises.filter((exercise) =>
+      target ? exercise.target.includes(target.toLowerCase().trim()) : exercise
+    );
+    const filterByBodyPart = this.filterExercises.filter((exercise) =>
+      bodyPart
+        ? exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
+        : exercise
+    );
+
+    this.exercises = filterByName && filterByTarget && filterByBodyPart;
+
+    /*     this.exercises = this.filterExercises.filter((exercise) =>
+      name ? exercise.name.includes(name.toLowerCase().trim()) && target ? exercise.target.includes(target.toLowerCase().trim()) && bodyPart ? exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
+   : : : ) */
+
+    /*     if (name) {
+      this.exercises = this.filterExercises.filter((exercise) =>
+        exercise.name.includes(name.toLowerCase().trim())
+      );
+    }
+    if (target) {
+      this.exercises = this.filterExercises.filter((exercise) =>
+        exercise.target.includes(target.toLowerCase().trim())
+      );
+    } */
+  }
+
+  public onFilterByName(name: string) {
+    if (!name) {
+      this.exercises = this.filterExercises;
+    }
+    this.exercises = this.filterExercises.filter((exercise) =>
+      exercise.name.includes(name.toLowerCase().trim())
+    );
+  }
+  public onFilterByTarget(target: string) {
+    if (!target) {
+      this.exercises = this.filterExercises;
+    }
+    this.exercises = this.filterExercises.filter((exercise) =>
+      exercise.target.includes(target.toLowerCase().trim())
+    );
+  }
+  public onFilterByBodyPart(bodyPart: string) {
+    if (!bodyPart) {
+      this.exercises = this.filterExercises;
+    }
+    this.exercises = this.filterExercises.filter((exercise) =>
+      exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
+    );
+  }
+
+  public onUpdateExerciseList(event: PaginatorState) {
+    event;
+  }
+}
+
+/*   private _exercisesSubject = new BehaviorSubject<IExercises>({
+    Exercises: [],
+  });
+  exercises$: Observable<IExercises> = this._exercisesSubject
+    .asObservable()
+    .pipe(
+      scan((acc, curr) => {
+        console.log(acc, curr);
+        return { ...acc, Exercises: [...acc.Exercises, ...curr.Exercises] };
+      })
+    ); 
+    
+      private _getExercises(page?: number) {
+    let exerciseToMap = this.exerciseService.getExercise(page);
+    this._onMappingExercises(exerciseToMap).subscribe(
+      (exercise: IExercises) => {
         this._exercisesSubject.next(exercise);
-      });
+      }
+    );
   }
 
   private _onMappingExercises(exercises: Observable<IExercises>) {
-    exercises.pipe(
+    return exercises.pipe(
       map((e: IExercises) => {
         e.Exercises = e.Exercises.map((exercise: IExercise) => {
           const name = exercise.name.replaceAll('_', ' ');
@@ -125,20 +207,20 @@ export class FitnessExercisesComponent implements OnInit {
       console.log(page);
     }
 
-    /*
+    
      * 0 - 60 page 1 === 60 / 60
      * 60 - 180 page 2 === 180 / 60 - 1
      * 180 - 300 page 3 === 300 / 60 - 2
      * 300 - 420 page 4 === 420 / 60 - 3
-     */
+     
 
-    /*   console.log(event);
+       console.log(event);
     if (event.first === maxExercisePerPage) {
       let page = (event.first / maxExercisePerPage) + 1;
       let params = new HttpParams().set('page', page);
       console.log(params);
       this._getExercises();
-    } */
+    } 
   }
 
   public checkPagination(event: PaginatorState, page: number) {
@@ -147,4 +229,44 @@ export class FitnessExercisesComponent implements OnInit {
     }
     return page;
   }
-}
+
+  onFilterByName(event: any) {
+    console.log(event);
+    this.exercises$
+      .pipe(
+        map((exercise: IExercises) => {
+          exercise.Exercises = exercise.Exercises.filter((ex) => {
+            console.log(ex);
+            return ex.name.includes(event);
+          });
+          //console.log(filter);
+          return exercise.Exercises;
+        })
+      )
+      .subscribe((data) => console.log(data));
+    this.exercises$.subscribe((data) => console.log(data));
+  }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    */
