@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
+import { CommonModule } from '@angular/common';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,7 +17,8 @@ export const appConfig: ApplicationConfig = {
       ReactiveFormsModule,
       FormsModule,
       HttpClient,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      CommonModule
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),

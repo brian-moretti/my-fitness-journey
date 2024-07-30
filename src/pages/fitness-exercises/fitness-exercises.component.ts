@@ -31,6 +31,7 @@ export class FitnessExercisesComponent implements OnInit {
         let exercisesMapped = this._onMappingExercises(exercises);
         this.exercises = exercisesMapped;
         this.filterExercises = exercisesMapped;
+        console.log(exercises);
       },
       error: () => {},
     });
@@ -68,12 +69,11 @@ export class FitnessExercisesComponent implements OnInit {
   }
 
   public onFilters(filters: IFilters) {
-    
     const name = filters.searchName;
     const target = filters.selectedTarget;
     const bodyPart = filters.selectedBodyPart;
     const checkDatabase = filters.checkEntireDatabase;
-    
+
     if (!filters) {
       this.exercises = this.filterExercises;
     }

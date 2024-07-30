@@ -1,0 +1,32 @@
+.form-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid red;
+  width: 100%;
+  max-width: 600px;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.form-container form {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 1rem 0;
+  gap: 1.5rem;
+  text-align: center;
+  border-radius: 12px;
+}
+
+:host ::ng-deep {
+  form {
+    & .p-button,
+    .p-dropdown {
+      width: 220px;
+    }
+    & .p-float-label .p-inputtext {
+      width: 100%;
+    }
+  }
+}

@@ -6,12 +6,16 @@
     <p class="text-center m-0">Limits are often just illusions!</p>
     <div class="my-4 p-4">
       <ng-container *ngIf="exercises; else loading">
-        <div>
+        <div class="flex justify-content-between mb-4">
           <app-fitness-filter
             (filtersToApply)="onFilters($event)"
           ></app-fitness-filter>
           <app-fitness-button
-            [title]="'CREATE NEW EXERCISE'"
+            [link]="true"
+            [title]="'Create new exercise' | titlecase"
+            [text]="true"
+            [raised]="true"
+            [urlLink]="'/exercises-form'"
           ></app-fitness-button>
         </div>
         <app-fitness-exercises-list
