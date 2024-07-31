@@ -8,6 +8,9 @@ import {
 import { Router } from '@angular/router';
 import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
+import { IUserGet } from '../../core/model/interface/user';
+import { AuthService } from '../../services/auth/auth.service';
+import { LoginService } from '../../services/login/login.service';
 
 @Component({
   standalone: true,
@@ -18,7 +21,11 @@ import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 export class FitnessLoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private login: LoginService,
+    private guard: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -31,12 +38,35 @@ export class FitnessLoginComponent implements OnInit {
     });
   }
 
+  get usernameControl() {
+    return this.loginForm.get('username') as FormControl;
+  }
+  get emailControl() {
+    return this.loginForm.get('email') as FormControl;
+  }
+  get passwordControl() {
+    return this.loginForm.get('password') as FormControl;
+  }
+
   onLoginSubmit(form: FormGroup) {
     const loginForm = {
       username: form.value.username,
       email: form.value.email,
       password: form.value.password,
     };
-    this.router.navigate(['dashboard']);
+    this.login.loginUserUsingPost(loginForm).subscribe({
+      next: (users: IUserGet[]) => {
+        const account = users.find(
+          (user) =>
+            user.username === loginForm.username &&
+            user.email === loginForm.email
+        );
+        if (account) {
+          this.guard.isLoginStorage(account);
+          this.router.navigate(['dashboard']);
+        }
+      },
+      error: () => {},
+    });
   }
 }

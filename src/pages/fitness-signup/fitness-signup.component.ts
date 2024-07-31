@@ -8,6 +8,8 @@ import {
 import { Router } from '@angular/router';
 import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
+import { IUserCreated } from '../../core/model/interface/user';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   standalone: true,
@@ -18,7 +20,7 @@ import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 export class FitnessSignupComponent implements OnInit {
   signupForm!: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private user: UserService) {}
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -31,12 +33,30 @@ export class FitnessSignupComponent implements OnInit {
     });
   }
 
+  get usernameControl() {
+    return this.signupForm.get('username') as FormControl;
+  }
+  get emailControl() {
+    return this.signupForm.get('email') as FormControl;
+  }
+  get passwordControl() {
+    return this.signupForm.get('password') as FormControl;
+  }
+
   onSignupSubmit(form: FormGroup) {
     const signupForm = {
       username: form.value.username,
       email: form.value.email,
       password: form.value.password,
     };
-    this.router.navigate(['auth/login']);
+
+    this.user.createUserUsingPost(signupForm).subscribe({
+      next: (user: IUserCreated) => {
+        this.router.navigate(['auth/login']);
+        form.reset();
+        //* ADD MESSAGE OF CREATION DONE with user info
+      },
+      error: () => {},
+    });
   }
 }

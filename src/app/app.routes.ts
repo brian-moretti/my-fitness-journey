@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '../guard/auth/auth.guard';
 import { navigationDelayGuard } from '../guard/navigation-delay.guard';
 import { FitnessDashboardComponent } from '../pages/fitness-dashboard/fitness-dashboard.component';
 import { FitnessExercisesFormComponent } from '../pages/fitness-exercises-form/fitness-exercises-form.component';
@@ -22,6 +23,7 @@ export const routes: Routes = [
     path: 'dashboard',
     component: FitnessDashboardComponent,
     title: 'Your Dashboard',
+    canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },
   {

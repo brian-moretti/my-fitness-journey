@@ -6,11 +6,31 @@
     (ngSubmit)="onSignupSubmit(signupForm)"
   >
     <p-floatLabel>
-      <input pInputText id="username" formControlName="username" />
+      <input
+        pInputText
+        id="username"
+        formControlName="username"
+        [class]="
+          usernameControl.invalid &&
+          (usernameControl.dirty || usernameControl.touched)
+            ? 'ng-dirty ng-invalid'
+            : ''
+        "
+      />
       <label for="username">Username</label>
     </p-floatLabel>
     <p-floatLabel>
-      <input pInputText id="email" formControlName="email" />
+      <input
+        pInputText
+        id="email"
+        formControlName="email"
+        [class]="
+          emailControl.invalid &&
+          (emailControl.dirty || emailControl.touched)
+            ? 'ng-dirty ng-invalid'
+            : ''
+        "
+      />
       <label for="email">Email</label>
     </p-floatLabel>
     <p-floatLabel>
@@ -18,6 +38,12 @@
         formControlName="password"
         [feedback]="false"
         [toggleMask]="true"
+        [class]="
+          passwordControl.invalid &&
+          (passwordControl.dirty || passwordControl.touched)
+            ? 'ng-dirty ng-invalid'
+            : ''
+        "
       />
       <label for="password">Password</label>
     </p-floatLabel>
@@ -27,14 +53,12 @@
       [urlLink]="'/auth/login'"
     ></app-fitness-button>
 
-    <!-- ! ADD READONLY -->
     <app-fitness-button
       [title]="'SIGNUP'"
       [raised]="true"
       [type]="'submit'"
+      [disabled]="signupForm.invalid"
     ></app-fitness-button>
   </form>
 </div>
 <app-fitness-footer></app-fitness-footer>
-
-<!-- ? P-BUTTON SE POSSIEDE UN LINK, AL CLICK PERDE I DATI FORM PER PASSARE ALL'ALTRA PAGINA -->
