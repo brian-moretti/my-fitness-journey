@@ -61,6 +61,7 @@ export class FitnessLoginComponent implements OnInit {
             user.username === loginForm.username &&
             user.email === loginForm.email
         );
+        //! METODO GETUSER CON ID ACCOUNT.ID
         if (account) {
           this.guard.isLoginStorage(account);
           this.router.navigate(['dashboard']);

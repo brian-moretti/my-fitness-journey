@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IUser, IUserCreated } from '../../core/model/interface/user';
+import { IUserCreated, IUserGet } from '../../core/model/interface/user';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +11,22 @@ export class UserService {
 
   private url = 'http://localhost:3000/users';
 
+  //! MODIFICARE INTERFACCIA, UNA UNICA X SERVIZIO
   createUserUsingPost(userInfo: {
     username: string;
     email: string;
     password: string;
   }): Observable<IUserCreated> {
     return this.http.post<IUserCreated>(this.url, userInfo);
+  }
+
+  modifyUserUsingPut(userInfo: IUserGet): Observable<IUserGet> {
+    return this.http.put(`${this.url}/${userInfo.id}`, userInfo, {
+      withCredentials: true,
+    });
+  }
+
+  deleteUserUsingDelete(userInfo: IUserGet): Observable<IUserGet> {
+    return this.http.delete(`${this.url}/${userInfo.id}`);
   }
 }

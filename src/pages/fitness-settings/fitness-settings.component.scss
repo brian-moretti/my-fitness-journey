@@ -1,0 +1,25 @@
+.setting-container {
+  max-width: fit-content;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+  margin-top: 2rem;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 0 5px 0;
+}
+
+:host ::ng-deep {
+  .edit-btn .p-button.p-button-icon-only {
+    height: 2.5rem;
+    width: 2.5rem;
+    position: absolute;
+    top: 15px;
+  }
+  .danger-btn .p-button {
+    width: 100%;
+  }
+}
