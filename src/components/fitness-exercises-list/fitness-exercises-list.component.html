@@ -1,10 +1,4 @@
 <!-- ! FIX EXTRA SPACE RIGHT WITH THIS COMP -->
-<!-- <p-dataView
-  [value]="exerciseList"
-  [paginator]="true"
-  [rows]="60"
-  (onPage)="changePages($event)"
-> -->
 <div class="exercise-grid">
   <ng-container *ngFor="let exercise of exerciseList">
     <app-fitness-exercise-box-item
@@ -19,5 +13,3 @@
   [totalRecords]="120"
   [rowsPerPageOptions]="[10, 20, 30]"
 />
-<!-- </p-dataView>
- -->

@@ -19,6 +19,9 @@ import { FitnessExerciseBoxItemComponent } from '../fitness-exercise-box-item/fi
 export class FitnessExercisesListComponent implements OnInit {
   @Input() set exerciseDataList(exercises: IExercise[]) {
     this.exerciseList = exercises;
+    this.exerciseList
+      .sort((a, b) => (a.secondaryMuscles! > b.secondaryMuscles! ? 1 : -1))
+      .map((e) => console.log(e.secondaryMuscles));
   }
   @Output() updateExerciseList = new EventEmitter();
 

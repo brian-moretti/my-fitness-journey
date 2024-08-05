@@ -1,7 +1,3 @@
-export interface IExercises {
-  Exercises: IExercise[];
-}
-
 export interface IExercise {
   id: number;
   name: string;

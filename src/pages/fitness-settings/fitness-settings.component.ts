@@ -22,8 +22,12 @@ export class FitnessSettingsComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.account = JSON.parse(localStorage.getItem('Account')!);
+    this._getAccount();
     this.backupAccount = cloneDeep(this.account);
+  }
+
+  private _getAccount() {
+    this.account = JSON.parse(localStorage.getItem('Account')!);
   }
 
   editAccount() {
@@ -39,6 +43,7 @@ export class FitnessSettingsComponent implements OnInit {
     this.userService.modifyUserUsingPut(this.account).subscribe({
       next: (value) => {
         console.log(value);
+
       },
     });
     this.backupAccount = this.account;

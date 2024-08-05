@@ -3,14 +3,6 @@
   <div class="container cnb py-5 border-500 border-2">
     <h1 class="text-center roboto-bold font-big m-0">Settings</h1>
     <section class="setting-container">
-      <app-fitness-button
-        *ngIf="!isEditable"
-        class="align-self-end edit-btn"
-        [rounded]="true"
-        [raised]="true"
-        [icon]="'pi pi-user-edit'"
-        (btnEvent)="editAccount()"
-      ></app-fitness-button>
       <span class="align-self-start">Your Account</span>
       <input
         type="text"
@@ -24,6 +16,16 @@
         [(ngModel)]="account.email"
         [disabled]="!isEditable"
       />
+
+      <app-fitness-button
+        *ngIf="!isEditable"
+        class="align-self-end edit-btn"
+        [rounded]="true"
+        [raised]="true"
+        [icon]="'pi pi-user-edit'"
+        (btnEvent)="editAccount()"
+      ></app-fitness-button>
+
       <div
         class="d-flex justify-content-between"
         [ngClass]="isEditable ? 'mt-3' : ''"

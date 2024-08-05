@@ -15,16 +15,17 @@
             ? 'ng-dirty ng-invalid'
             : ''
         "
+        [required]="true"
       />
       <label for="exerciseName">Exercise Name</label>
     </p-floatLabel>
     <div class="flex gap-5">
       <p-dropdown
-        inputId="targets"
         name="target"
         placeholder="Select target"
         formControlName="target"
         optionLabel="target"
+        [showClear]="true"
         [options]="targets"
         [class]="
           targetControl.invalid &&
@@ -32,6 +33,7 @@
             ? 'ng-dirty ng-invalid'
             : ''
         "
+        [required]="true"
       />
       <p-dropdown
         inputId="bodyPart"
@@ -39,6 +41,7 @@
         placeholder="Select body part"
         formControlName="bodyPart"
         optionLabel="bodyPart"
+        [showClear]="true"
         [options]="bodyParts"
         [class]="
           bodyPartControl.invalid &&
@@ -46,6 +49,7 @@
             ? 'ng-dirty ng-invalid'
             : ''
         "
+        [required]="true"
       />
     </div>
     <textarea
@@ -59,6 +63,28 @@
       tooltipPosition="right"
       tooltipEvent="focus"
     ></textarea>
+
+    <div class="flex gap-5">
+      <p-multiSelect
+        name="secondaryMuscles"
+        placeholder="Optional muscles"
+        formControlName="secondaryMuscles"
+        optionLabel="muscle"
+        [options]="secondaryMuscles"
+        [showToggleAll]="false"
+        [showClear]="true"
+        [showHeader]="false"
+        [filter]="false"
+      />
+      <p-dropdown
+        name="equipment"
+        placeholder="Optional equipment"
+        formControlName="equipment"
+        optionLabel="equipment"
+        [showClear]="true"
+        [options]="equipment"
+      />
+    </div>
     <!-- ! SECONDARY MUSCLES + EQUIPMENT -->
     <div class="flex gap-5 mt-5">
       <app-fitness-button

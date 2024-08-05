@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PaginatorState } from 'primeng/paginator';
 import { SHARED_COMPONENTS } from '..';
-import { IExercise, IExercises } from '../../core/model';
+import { IExercise } from '../../core/model';
 import { IFilters } from '../../core/model/interface/filterExercises';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 
@@ -28,6 +28,8 @@ export class FitnessExercisesComponent implements OnInit {
   private _getExercises() {
     this.exerciseService.getExercise().subscribe({
       next: (exercises) => {
+        console.log(exercises);
+
         let exercisesMapped = this._onMappingExercises(exercises);
         this.exercises = exercisesMapped;
         this.filterExercises = exercisesMapped;
@@ -37,8 +39,8 @@ export class FitnessExercisesComponent implements OnInit {
     });
   }
 
-  private _onMappingExercises(exercises: IExercises) {
-    return exercises.Exercises.map((exercise) => {
+  private _onMappingExercises(exercises: IExercise[]) {
+    return exercises.map((exercise) => {
       const name = exercise.name.replaceAll('_', ' ');
       const gifUrl =
         'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);

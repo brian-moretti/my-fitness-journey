@@ -11,6 +11,10 @@ export class UserService {
 
   private url = 'http://localhost:3000/users';
 
+  getUser(userId: number): Observable<IUserGet> {
+    return this.http.get<IUserGet>(`${this.url}/${userId}`);
+  }
+
   //! MODIFICARE INTERFACCIA, UNA UNICA X SERVIZIO
   createUserUsingPost(userInfo: {
     username: string;

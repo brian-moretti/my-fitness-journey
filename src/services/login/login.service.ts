@@ -21,5 +21,7 @@ export class LoginService {
     });
   }
 
-  logoutUserUsingDelete() {}
+  logoutUserUsingDelete() {
+    return this.http.delete(this.url)
+  }
 }

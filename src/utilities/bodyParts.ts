@@ -13,3 +13,4 @@ export let bodyParts: IBodyParts[] = [
   { bodyPart: 'Upper Legs' },
   { bodyPart: 'Waist' },
 ];
+
