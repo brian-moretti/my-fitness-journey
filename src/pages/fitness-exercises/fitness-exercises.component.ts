@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { PaginatorState } from 'primeng/paginator';
 import { SHARED_COMPONENTS } from '..';
 import { IExercise } from '../../core/model';
 import { IFilters } from '../../core/model/interface/filterExercises';
+import { IPagination } from '../../core/model/interface/pagination';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 
 @Component({
@@ -16,58 +16,30 @@ import { ExerciseService } from '../../services/exercise/exercise.service';
 export class FitnessExercisesComponent implements OnInit {
   exercises: IExercise[] = [];
   filterExercises: IExercise[] = [];
+  page: number = 1;
 
   constructor(private exerciseService: ExerciseService) {}
 
   ngOnInit(): void {
-    //setTimeout(() => {
     this._getExercises();
-    //}, 2000);
   }
 
   private _getExercises() {
-    this.exerciseService.getExercise().subscribe({
+    this.exerciseService.getExercise(this.page).subscribe({
       next: (exercises) => {
-        console.log(exercises);
-
-        let exercisesMapped = this._onMappingExercises(exercises);
-        this.exercises = exercisesMapped;
-        this.filterExercises = exercisesMapped;
-        console.log(exercises);
+        this.exercises = [...this.exercises, ...exercises];
+        this.filterExercises = this.exercises;
       },
       error: () => {},
     });
   }
 
-  private _onMappingExercises(exercises: IExercise[]) {
-    return exercises.map((exercise) => {
-      const name = exercise.name.replaceAll('_', ' ');
-      const gifUrl =
-        'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);
-      const instructions = exercise.instructions?.join(' <br/>').split(',');
-      const secondaryMuscles = exercise.secondaryMuscles
-        ?.map((muscle) => {
-          if (muscle.includes(' ')) {
-            return muscle
-              .split(' ')
-              .map((m) => m.charAt(0).toUpperCase() + m.slice(1))
-              .join(' ');
-          }
-          return muscle
-            .split(',')
-            .map((m) => m.charAt(0).toUpperCase() + m.slice(1));
-        })
-        .join(' | ')
-        .split(',');
-
-      return {
-        ...exercise,
-        name,
-        gifUrl,
-        instructions,
-        secondaryMuscles,
-      };
-    });
+  public onUpdateExerciseList(event: IPagination) {
+    let maxElementPerPage = 120 * this.page;
+    if (event.first! + event.rows! >= maxElementPerPage) {
+      this.page += 1;
+      this._getExercises();
+    }
   }
 
   public onFilters(filters: IFilters) {
@@ -133,10 +105,6 @@ export class FitnessExercisesComponent implements OnInit {
     this.exercises = this.filterExercises.filter((exercise) =>
       exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
     );
-  }
-
-  public onUpdateExerciseList(event: PaginatorState) {
-    event;
   }
 }
 
