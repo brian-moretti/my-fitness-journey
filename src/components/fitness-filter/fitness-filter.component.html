@@ -3,9 +3,10 @@
     name="searchName"
     type="text"
     pInputText
+    placeholder="Search by name..."
     variant="filled"
     [(ngModel)]="searchName"
-    placeholder="Search by name..."
+    [disabled]="filters.selectedTarget! || filters.selectedBodyPart!"
     (input)="onSearchName(searchName)"
   />
   <p-dropdown

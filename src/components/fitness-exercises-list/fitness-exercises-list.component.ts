@@ -10,8 +10,11 @@ import {
 import { PaginatorState } from 'primeng/paginator';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
+import { IFilters } from '../../core/model/interface/filterExercises';
 import { IPagination } from '../../core/model/interface/pagination';
+import { FitnessButtonComponent } from '../fitness-button/fitness-button.component';
 import { FitnessExerciseBoxItemComponent } from '../fitness-exercise-box-item/fitness-exercise-box-item.component';
+import { FitnessFilterComponent } from '../fitness-filter/fitness-filter.component';
 
 @Component({
   selector: 'app-fitness-exercises-list',
@@ -20,6 +23,8 @@ import { FitnessExerciseBoxItemComponent } from '../fitness-exercise-box-item/fi
     ...PRIMENG_COMPONENTS,
     CommonModule,
     FitnessExerciseBoxItemComponent,
+    FitnessFilterComponent,
+    FitnessButtonComponent,
   ],
   templateUrl: './fitness-exercises-list.component.html',
   styleUrl: './fitness-exercises-list.component.scss',
@@ -29,6 +34,7 @@ export class FitnessExercisesListComponent implements OnChanges {
   @Output() updateExerciseList: EventEmitter<IPagination> = new EventEmitter();
 
   exerciseList: IExercise[] = [];
+  filterExercises: IExercise[] = [];
   maxElementPerPage: number = 0;
   first: number = 0;
   rows: number = 30;
@@ -44,6 +50,7 @@ export class FitnessExercisesListComponent implements OnChanges {
       this.first,
       this.first + this.rows
     );
+    this.filterExercises = this.exerciseList;
   }
 
   private _onMappingExercises(exercises: IExercise[]) {
@@ -92,5 +99,51 @@ export class FitnessExercisesListComponent implements OnChanges {
     };
 
     this.updateExerciseList.emit(pagination);
+  }
+
+  public onFilters(filters: IFilters) {
+    const name = filters.searchName;
+    const target = filters.selectedTarget;
+    const bodyPart = filters.selectedBodyPart;
+    const checkDatabase = filters.checkEntireDatabase;
+
+    if (!filters) {
+      this.exerciseList = this.filterExercises;
+    }
+
+    const filterByName = this.filterExercises.filter((exercise) =>
+      name ? exercise.name.includes(name.toLowerCase().trim()) : exercise
+    );
+    const filterByTarget = this.filterExercises.filter((exercise) =>
+      target ? exercise.target.includes(target.toLowerCase().trim()) : exercise
+    );
+    const filterByBodyPart = this.filterExercises.filter((exercise) =>
+      bodyPart
+        ? exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
+        : exercise
+    );
+
+    console.log(this.exerciseList);
+
+    if (target) {
+      this.exerciseList = this.filterExercises.filter((exercise) =>
+        exercise.target.includes(target.toLowerCase().trim())
+      );
+    }
+
+    /*     this.exercises = this.filterExercises.filter((exercise) =>
+      name ? exercise.name.includes(name.toLowerCase().trim()) && target ? exercise.target.includes(target.toLowerCase().trim()) && bodyPart ? exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
+   : : : ) */
+
+    /*     if (name) {
+      this.exercises = this.filterExercises.filter((exercise) =>
+        exercise.name.includes(name.toLowerCase().trim())
+      );
+    }
+    if (target) {
+      this.exercises = this.filterExercises.filter((exercise) =>
+        exercise.target.includes(target.toLowerCase().trim())
+      );
+    } */
   }
 }

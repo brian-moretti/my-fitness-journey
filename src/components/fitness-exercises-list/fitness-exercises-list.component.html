@@ -1,4 +1,14 @@
 <!-- ! FIX EXTRA SPACE RIGHT WITH THIS COMP -->
+<div class="flex justify-content-between mb-4">
+  <app-fitness-filter (filtersToApply)="onFilters($event)"></app-fitness-filter>
+  <app-fitness-button
+    [link]="true"
+    [title]="'Create new exercise' | titlecase"
+    [text]="true"
+    [raised]="true"
+    [urlLink]="'/exercises-form'"
+  ></app-fitness-button>
+</div>
 <div class="exercise-grid">
   <ng-container *ngFor="let exercise of exerciseList">
     <app-fitness-exercise-box-item

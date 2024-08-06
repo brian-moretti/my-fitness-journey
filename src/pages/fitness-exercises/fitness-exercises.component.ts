@@ -64,7 +64,11 @@ export class FitnessExercisesComponent implements OnInit {
         : exercise
     );
 
-    this.exercises = filterByName && filterByTarget && filterByBodyPart;
+    if (target) {
+      this.exercises = this.filterExercises.filter((exercise) =>
+        exercise.target.includes(target.toLowerCase().trim())
+      );
+    }
 
     /*     this.exercises = this.filterExercises.filter((exercise) =>
       name ? exercise.name.includes(name.toLowerCase().trim()) && target ? exercise.target.includes(target.toLowerCase().trim()) && bodyPart ? exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
