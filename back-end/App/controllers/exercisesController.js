@@ -14,7 +14,7 @@ const exercise_details = async (req, res) => {
   try {
     const [result] = await ExercisesModel.getExercise(req.params.id);
     if (!result) return res.status(404).json({ Error: "Exercise not founded" });
-    return res.status(200).json({ Exercise: result });
+    return res.status(200).json(result);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal error server" });

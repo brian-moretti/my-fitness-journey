@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
 import { FitnessButtonComponent } from '../fitness-button/fitness-button.component';
@@ -16,8 +17,15 @@ export class FitnessExerciseBoxItemComponent {
 
   showMoreInfoExercise: boolean = false;
 
+  constructor(private router: Router) {}
+
   onShowMore(event: any) {
-    console.log(event);
     this.showMoreInfoExercise = true;
+  }
+
+  onEditExercise(exercise: IExercise) {
+    this.router.navigate(['/exercise-form'], {
+      state: { exercise, mode: 'UPDATE' },
+    });
   }
 }

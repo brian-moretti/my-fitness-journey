@@ -2,7 +2,7 @@ export interface IEquipment {
   equipment: string;
 }
 
-export let equipment: IEquipment[] = [
+export let equipments: IEquipment[] = [
   { equipment: 'Assisted' },
   { equipment: 'Band' },
   { equipment: 'Barbell' },

@@ -19,7 +19,9 @@ export class ExerciseService {
     return this.http.get<IExercise[]>(this.url);
   }
 
-  getSingleExercise() {}
+  getSingleExercise(id: number): Observable<IExercise> {
+    return this.http.get<IExercise>(`${this.url}/${id}`);
+  }
 
   createExerciseUsingPost(exerciseBody: IExercise) {
     return this.http.post(this.url, exerciseBody);

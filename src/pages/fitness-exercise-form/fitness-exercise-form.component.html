@@ -1,15 +1,15 @@
 <div class="container form-container">
-  <form [formGroup]="exercisesForm" (ngSubmit)="onSubmit(exercisesForm)">
-    <span  [ngSwitch]="action">
+  <form [formGroup]="exercisesForm">
+    <span [ngSwitch]="action">
       <h2 *ngSwitchCase="'CREATE'">Create New Exercise</h2>
       <h2 *ngSwitchCase="'UPDATE'">Update Exercise</h2>
     </span>
     <p-floatLabel>
       <input
-        name="exerciseName"
-        formControlName="exerciseName"
+        name="name"
+        formControlName="name"
         pInputText
-        id="exerciseName"
+        id="name"
         [class]="
           nameControl.invalid && (nameControl.dirty || nameControl.touched)
             ? 'ng-dirty ng-invalid'
@@ -82,7 +82,7 @@
         formControlName="equipment"
         optionLabel="equipment"
         [showClear]="true"
-        [options]="equipment"
+        [options]="equipments"
       />
     </div>
     <div class="flex gap-5 mt-5">
@@ -91,7 +91,20 @@
         [outline]="true"
         [urlLink]="'/exercises'"
       ></app-fitness-button>
-      <app-fitness-button [title]="'Save'"></app-fitness-button>
+      <span [ngSwitch]="action">
+        <app-fitness-button
+          *ngSwitchCase="'CREATE'"
+          [type]="'submit'"
+          [title]="'Save'"
+          (btnEvent)="onSubmitNewExercise(exercisesForm)"
+        ></app-fitness-button>
+        <app-fitness-button
+          *ngSwitchCase="'UPDATE'"
+          [type]="'submit'"
+          [title]="'Update'"
+          (btnEvent)="onSubmitUpdateExercise(exercisesForm)"
+        ></app-fitness-button>
+      </span>
       <!-- [disabled]="exercisesForm.invalid" -->
     </div>
   </form>

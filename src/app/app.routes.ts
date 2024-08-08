@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from '../guard/auth/auth.guard';
 import { navigationDelayGuard } from '../guard/navigation-delay.guard';
 import { FitnessDashboardComponent } from '../pages/fitness-dashboard/fitness-dashboard.component';
-import { FitnessExercisesFormComponent } from '../pages/fitness-exercises-form/fitness-exercises-form.component';
+import { FitnessExerciseFormComponent } from '../pages/fitness-exercise-form/fitness-exercise-form.component';
 import { FitnessExercisesComponent } from '../pages/fitness-exercises/fitness-exercises.component';
 import { FitnessHeroComponent } from '../pages/fitness-hero/fitness-hero.component';
 import { FitnessLoginComponent } from '../pages/fitness-login/fitness-login.component';
@@ -45,9 +45,9 @@ export const routes: Routes = [
     canDeactivate: [navigationDelayGuard],
   },
   {
-    path: 'exercises-form',
-    component: FitnessExercisesFormComponent,
-    title: 'Exercises Form',
+    path: 'exercise-form',
+    component: FitnessExerciseFormComponent,
+    title: 'Exercise Form',
     canDeactivate: [navigationDelayGuard],
   },
   {
