@@ -1,29 +1,27 @@
 .form-container {
   display: flex;
   align-items: center;
-  border: 1px solid red;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   height: 100vh;
   padding: 2rem;
 }
 
 .form-container form {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 1rem;
   gap: 1.5rem;
-  text-align: center;
   border-radius: 12px;
+  box-shadow: 0 0 15px rgba($color: black, $alpha: 0.5);
 }
 
 :host ::ng-deep {
   form {
     & .p-button,
-    .p-dropdown {
-      width: 220px;
+    .p-dropdown, .p-multiselect {
+      width: 250px;
     }
     & .p-float-label .p-inputtext {
       width: 100%;
