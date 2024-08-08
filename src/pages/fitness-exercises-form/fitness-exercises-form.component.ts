@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { FitnessButtonComponent } from '../../components/fitness-button/fitness-button.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
+import { IExercise } from '../../core/model';
+import { ExerciseService } from '../../services/exercise/exercise.service';
 import { bodyParts, IBodyParts } from '../../utilities/bodyParts';
 import { equipment, IEquipment } from '../../utilities/equipment';
 import { IMuscles, muscles } from '../../utilities/muscles';
@@ -35,9 +37,10 @@ export class FitnessExercisesFormComponent implements OnInit {
   secondaryMuscles: IMuscles[] = [];
   action = 'CREATE';
 
+  constructor(private exerciseService: ExerciseService) {}
   //! Implementare logica di UPDATE DA PULSANTE in BOX-ITEMS con invio ID
   //! LOGICA GET EXERCISE/ID E COMPILARE IL FORM CON QUEI DATI
-  
+
   ngOnInit(): void {
     this.exercisesForm = new FormGroup({
       exerciseName: new FormControl<string>('', Validators.required),
@@ -66,24 +69,34 @@ export class FitnessExercisesFormComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    const instructions: string[] | null = form.value.instructions
+    const instructions: string[] | undefined = form.value.instructions
       ? form.value.instructions.trim().split('.')
-      : null;
-    const secondaryMuscles: string[] | null = form.value.secondaryMuscles
+      : undefined;
+    const secondaryMuscles: string[] | undefined = form.value.secondaryMuscles
       ? form.value.secondaryMuscles
           .flatMap((muscle: { muscle: string }) => Object.values(muscle))
           .sort((a: string, b: string) => (a > b ? 1 : -1))
-      : null;
-    const equipment = form.value.equipment ? form.value.equipment : null;
-    const exerciseToAdd = {
+      : undefined;
+    const equipment = form.value.equipment
+      ? form.value.equipment.equipment
+      : undefined;
+    const exerciseToAdd: IExercise = {
       name: form.value.exerciseName,
       target: form.value.target.target,
-      bodyPart: form.value.bodyPart.bodyPart,
       instructions,
+      bodyPart: form.value.bodyPart.bodyPart,
       secondaryMuscles,
       equipment,
     };
-    console.log(exerciseToAdd);
-    console.log(secondaryMuscles);
+    this.exerciseService
+      .createExerciseUsingPost(exerciseToAdd)
+      .subscribe((exercise) => {
+        //! OK POST - ESEGUIRE NAVIGAZIONE + MESSAGGIO CORRETTO INSERIMENTO
+        //! GESTIRE ERRORE DUPLICATO NAME
+        //! TOGLIERE IMG SE NON PRESENTE HTML
+        //! CAPIRE PERCHE' DA ERRORE B/END QUANDO POST X DUPLICATO...
+        console.log(exercise);
+        form.reset();
+      });
   }
 }
