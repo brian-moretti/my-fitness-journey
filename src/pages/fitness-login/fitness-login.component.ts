@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
-import { IUserGet } from '../../core/model/interface/user';
+import { IUser } from '../../core/model/interface/user';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoginService } from '../../services/login/login.service';
 
@@ -55,7 +55,7 @@ export class FitnessLoginComponent implements OnInit {
       password: form.value.password,
     };
     this.login.loginUserUsingPost(loginForm).subscribe({
-      next: (users: IUserGet[]) => {
+      next: (users: IUser[]) => {
         const account = users.find(
           (user) =>
             user.username === loginForm.username &&

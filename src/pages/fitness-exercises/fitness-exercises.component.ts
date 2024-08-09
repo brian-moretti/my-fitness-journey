@@ -25,7 +25,7 @@ export class FitnessExercisesComponent implements OnInit {
   }
 
   private _getExercises() {
-    this.exerciseService.getExercise(this.page).subscribe({
+    this.exerciseService.getExercises(this.page).subscribe({
       next: (exercises) => {
         this.exercises = [...this.exercises, ...exercises];
         this.filterExercises = this.exercises;

@@ -13,6 +13,8 @@ app.use(cors({ origin: "http://localhost:4200", credentials: true }));
 app.use(express.json()).use(cookieParser()).use(router);
 //app.use(express.urlencoded({ extended: false }));
 
-app.listen(3000, "localhost", (err) => {
-  console.error(err);
+app.listen(3000, (err) => {
+  if (err) {
+    console.error(err);
+  }
 });

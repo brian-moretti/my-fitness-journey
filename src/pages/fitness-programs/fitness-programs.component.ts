@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { SHARED_COMPONENTS } from '..';
 import { CommonModule } from '@angular/common';
-
+import { Component, OnInit } from '@angular/core';
+import { SHARED_COMPONENTS } from '..';
 @Component({
   selector: 'app-fitness-programs',
   standalone: true,
@@ -9,6 +8,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './fitness-programs.component.html',
   styleUrl: './fitness-programs.component.scss',
 })
-export class FitnessProgramsComponent {
-  programs = []
+export class FitnessProgramsComponent implements OnInit {
+  programs = [];
+  ngOnInit(): void {}
 }

@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
-import { IUserCreated } from '../../core/model/interface/user';
+import { IUser } from '../../core/model/interface/user';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
@@ -51,7 +51,7 @@ export class FitnessSignupComponent implements OnInit {
     };
 
     this.user.createUserUsingPost(signupForm).subscribe({
-      next: (user: IUserCreated) => {
+      next: (user: IUser) => {
         this.router.navigate(['auth/login']);
         form.reset();
         //* ADD MESSAGE OF CREATION DONE with user info

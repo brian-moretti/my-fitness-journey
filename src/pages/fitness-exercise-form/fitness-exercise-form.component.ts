@@ -171,6 +171,6 @@ export class FitnessExerciseFormComponent implements OnInit {
   }
 
   onSubmitUpdateExercise(form: FormGroup) {
-    this.exerciseService.updateExerciseUsingPut();
+    //this.exerciseService.updateExerciseUsingPut();
   }
 }
