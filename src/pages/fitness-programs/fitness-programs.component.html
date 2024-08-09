@@ -4,7 +4,9 @@
     <h1 class="text-center roboto-bold font-big m-0">YOUR PROGRAMS</h1>
     <p class="text-center m-0">Limits are often just illusions!</p>
     <div>
-      <ng-container *ngFor="let program of programs"></ng-container>
+      <ng-container *ngFor="let program of programs">
+        <p-card [header]="program.name"></p-card>
+      </ng-container>
     </div>
   </div>
 </div>
