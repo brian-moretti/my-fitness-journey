@@ -4,15 +4,18 @@ import paginations from "../../Core/utilities/paginations.js";
 class TrainingProgramsModel {
   static table_name = "training_programs";
 
+  //! INSERIRE COTROLLO REQ.USER.ID === USER.ID
   static async getAll(req) {
     const params = paginations(req);
     const query = `SELECT training.*, users.username FROM ${this.table_name} AS training INNER JOIN users ON users.id = id_user LIMIT ${params.maxData} OFFSET ${params.offsetData}`;
-    return await mySqlConnectionQuery(query);
+    const result = await mySqlConnectionQuery(query);
+    return result.filter((username) => username.id_user === req.user.id);
   }
 
-  static async getTrainingProgram(id) {
+  static async getTrainingProgram(req) {
     const query = `SELECT training.*, users.username, exercises_training.* FROM ${this.table_name} AS training INNER JOIN users ON users.id = training.id_user LEFT JOIN exercises_training ON exercises_training.id_scheda = training.id WHERE training.id = ?`;
-    return await mySqlConnectionQuery(query, id);
+    const result = await mySqlConnectionQuery(query, req.params.id);
+    return result.filter((username) => username.id_user === req.user.id);
   }
 
   static async createTrainingProgram(data, id_user) {
@@ -43,7 +46,10 @@ class TrainingProgramsModel {
   static async deleteTrainingProgram(id) {
     const query = `DELETE FROM ${this.table_name} WHERE id = ?`;
     const selectQuery = `SELECT * FROM ${this.table_name} WHERE id = ?`;
-    const [deletedTrainingProgram] = await mySqlConnectionQuery(selectQuery, id);
+    const [deletedTrainingProgram] = await mySqlConnectionQuery(
+      selectQuery,
+      id
+    );
     const result = await mySqlConnectionQuery(query, id);
     return [deletedTrainingProgram, result];
   }

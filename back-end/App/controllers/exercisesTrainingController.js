@@ -47,7 +47,7 @@ const exercisesTraining_details = async (req, res) => {
         "Secondary Muscles": result.secondaryMuscles,
       },
     };
-    return res.status(200).json({ result });
+    return res.status(200).json(result);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal error server" });
@@ -108,6 +108,7 @@ const exercisesTraining_update = async (req, res) => {
       exerciseTraining,
       req.body
     );
+    const updatedExerciseTraining = {}
     if (result.affectedRows >= 1)
       return res
         .status(200)
@@ -135,7 +136,7 @@ const exercisesTraining_delete = async (req, res) => {
     if (result.affectedRows >= 1) {
       return res
         .status(200)
-        .json({ "Exercise Deleted from Training": exerciseToDelete });
+        .json(exerciseToDelete);
     }
   } catch (error) {
     console.error(error);

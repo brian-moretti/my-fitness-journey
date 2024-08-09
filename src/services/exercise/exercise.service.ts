@@ -11,7 +11,8 @@ export class ExerciseService {
 
   private url = 'http://localhost:3000/exercises';
 
-  getExercise(page?: number): Observable<IExercise[]> {
+  //! VEDERE PER MAXDATA = 120
+  getExercises(page?: number, filters?: {}): Observable<IExercise[]> {
     if (page) {
       let params = new HttpParams().set('page', page);
       return this.http.get<IExercise[]>(this.url, { params });
@@ -23,11 +24,18 @@ export class ExerciseService {
     return this.http.get<IExercise>(`${this.url}/${id}`);
   }
 
-  createExerciseUsingPost(exerciseBody: IExercise) {
-    return this.http.post(this.url, exerciseBody);
+  createExerciseUsingPost(exerciseInfo: IExercise): Observable<IExercise> {
+    return this.http.post<IExercise>(this.url, exerciseInfo);
   }
 
-  updateExerciseUsingPut() {}
+  updateExerciseUsingPut(exerciseInfo: IExercise): Observable<IExercise> {
+    return this.http.put<IExercise>(
+      `${this.url}/${exerciseInfo.id}`,
+      exerciseInfo
+    );
+  }
 
-  deleteExerciseUsingDelete() {}
+  deleteExerciseUsingDelete(id: number): Observable<IExercise> {
+    return this.http.delete<IExercise>(`${this.url}/${id}`);
+  }
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IUserGet } from '../../core/model/interface/user';
+import { IUser } from '../../core/model/interface/user';
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +11,13 @@ export class LoginService {
 
   private url = 'http://localhost:3000/login';
 
-  loginUserUsingPost(userInfo: {
-    username: string;
-    email: string;
-    password: string;
-  }): Observable<IUserGet[]> {
-    return this.http.post<IUserGet[]>(this.url, userInfo, {
+  loginUserUsingPost(userInfo: IUser): Observable<IUser[]> {
+    return this.http.post<IUser[]>(this.url, userInfo, {
       withCredentials: true,
     });
   }
 
   logoutUserUsingDelete() {
-    return this.http.delete(this.url)
+    return this.http.delete(this.url);
   }
 }

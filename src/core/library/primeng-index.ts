@@ -1,5 +1,6 @@
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
@@ -24,4 +25,5 @@ export const PRIMENG_COMPONENTS = [
   InputTextareaModule,
   DividerModule,
   CardModule,
+  CalendarModule,
 ];

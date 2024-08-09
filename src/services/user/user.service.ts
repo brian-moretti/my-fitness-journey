@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IUserCreated, IUserGet } from '../../core/model/interface/user';
+import { IUser, IUserDetails } from '../../core/model/interface/user';
 
 @Injectable({
   providedIn: 'root',
@@ -11,26 +11,25 @@ export class UserService {
 
   private url = 'http://localhost:3000/users';
 
-  getUser(userId: number): Observable<IUserGet> {
-    return this.http.get<IUserGet>(`${this.url}/${userId}`);
+  getUser(userId: number): Observable<IUserDetails> {
+    return this.http.get<IUserDetails>(`${this.url}/${userId}`, {
+      withCredentials: true,
+    });
   }
 
-  //! MODIFICARE INTERFACCIA, UNA UNICA X SERVIZIO
-  createUserUsingPost(userInfo: {
-    username: string;
-    email: string;
-    password: string;
-  }): Observable<IUserCreated> {
-    return this.http.post<IUserCreated>(this.url, userInfo);
+  createUserUsingPost(userInfo: IUser): Observable<IUser> {
+    return this.http.post<IUser>(this.url, userInfo);
   }
 
-  modifyUserUsingPut(userInfo: IUserGet): Observable<IUserGet> {
+  modifyUserUsingPut(userInfo: IUser): Observable<IUser> {
     return this.http.put(`${this.url}/${userInfo.id}`, userInfo, {
       withCredentials: true,
     });
   }
 
-  deleteUserUsingDelete(userInfo: IUserGet): Observable<IUserGet> {
-    return this.http.delete(`${this.url}/${userInfo.id}`);
+  deleteUserUsingDelete(userInfo: IUser): Observable<IUser> {
+    return this.http.delete(`${this.url}/${userInfo.id}`, {
+      withCredentials: true,
+    });
   }
 }

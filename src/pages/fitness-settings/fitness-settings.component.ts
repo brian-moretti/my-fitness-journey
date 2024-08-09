@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
-import { IUserGet } from '../../core/model/interface/user';
+import { IUser } from '../../core/model/interface/user';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
@@ -15,8 +15,8 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './fitness-settings.component.scss',
 })
 export class FitnessSettingsComponent implements OnInit {
-  account!: IUserGet;
-  backupAccount!: IUserGet;
+  account!: IUser;
+  backupAccount!: IUser;
   isEditable: boolean = false;
 
   constructor(private router: Router, private userService: UserService) {}
@@ -43,7 +43,6 @@ export class FitnessSettingsComponent implements OnInit {
     this.userService.modifyUserUsingPut(this.account).subscribe({
       next: (value) => {
         console.log(value);
-
       },
     });
     this.backupAccount = this.account;

@@ -60,10 +60,8 @@ const exercise_update = async (req, res) => {
       return res.status(404).json({ Error: "Exercise not founded" });
 
     const result = await ExercisesModel.updateExercise(exercise, req.body);
-    if (result.affectedRows >= 1)
-      return res
-        .status(200)
-        .json({ "Exercise ID:": req.params.id, Update: req.body });
+    const updatedExercise = { id: req.params.id, ...req.body };
+    if (result.affectedRows >= 1) return res.status(200).json(updatedExercise);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal error server" });
@@ -79,8 +77,7 @@ const exercise_delete = async (req, res) => {
     if (!deletedExercise)
       return res.status(404).json({ Error: "Exercise not founded" });
 
-    if (result.affectedRows >= 1)
-      return res.status(200).json({ "Exercise deleted": deletedExercise });
+    if (result.affectedRows >= 1) return res.status(200).json(deletedExercise);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal error server" });

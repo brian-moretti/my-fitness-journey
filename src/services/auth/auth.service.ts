@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IUserGet } from '../../core/model/interface/user';
+import { IUser } from '../../core/model/interface/user';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class AuthService {
     return !!account && this.isLogged;
   }
 
-  isLoginStorage(account: IUserGet) {
+  isLoginStorage(account: IUser) {
     localStorage.setItem('Account', JSON.stringify(account));
     this.isLogged = true;
   }
