@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, UrlTree } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -27,7 +27,7 @@ export class FitnessButtonComponent implements OnInit {
   @Input() target: string = '';
   @Input() disabled: boolean = false;
   @Input() link: boolean = false;
-  @Input() urlLink!: string;
+  @Input() urlLink!: string | any[];
   @Input() color: 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'EMPTY' = 'EMPTY';
   @Input() styleClasses: string[] = [];
 
