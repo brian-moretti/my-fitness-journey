@@ -1,7 +1,7 @@
 import { CanDeactivateFn } from '@angular/router';
 import { asyncScheduler, delay, scheduled } from 'rxjs';
 
-export const navigationDelayGuard: CanDeactivateFn<unknown> = (
+export const navigationDelayGuard: CanDeactivateFn<boolean> = (
   component,
   currentRoute,
   currentState,

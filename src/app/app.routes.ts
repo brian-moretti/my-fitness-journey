@@ -35,7 +35,7 @@ export const routes: Routes = [
   {
     path: 'program/:id',
     component: FitnessProgramDetailsComponent,
-    title: `Program`,
+    title: 'Program :name',
     canDeactivate: [navigationDelayGuard],
   },
   {
@@ -57,3 +57,5 @@ export const routes: Routes = [
     canDeactivate: [navigationDelayGuard],
   },
 ];
+
+
