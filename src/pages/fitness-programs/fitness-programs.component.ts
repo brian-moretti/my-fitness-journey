@@ -4,6 +4,7 @@ import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
 import { TrainingProgramsService } from '../../services/training-programs/training-programs.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-fitness-programs',
@@ -14,6 +15,7 @@ import { TrainingProgramsService } from '../../services/training-programs/traini
 })
 export class FitnessProgramsComponent implements OnInit {
   programs: ITrainingProgram[] = [];
+  speedItems: MenuItem[] = [] 
   date: any;
   constructor(private trainingPrograms: TrainingProgramsService) {}
 
@@ -34,12 +36,6 @@ export class FitnessProgramsComponent implements OnInit {
             .split('T')[0]
             .replaceAll('-', '/');
           return { ...program, date_start: dateStart, date_end: dateEnd };
-        });
-        programs.forEach((p) => {
-          if (p && p.date_start) {
-            const dateStart = new Date(p.date_start);
-            console.log(dateStart.getFullYear());
-          }
         });
         //! CATALOGARE X MESE
         this.programs = programs.sort((a, b) =>

@@ -1,6 +1,6 @@
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
@@ -10,6 +10,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PaginatorModule } from 'primeng/paginator';
 import { PasswordModule } from 'primeng/password';
+import { SpeedDialModule } from 'primeng/speeddial';
 import { TooltipModule } from 'primeng/tooltip';
 
 export const PRIMENG_COMPONENTS = [
@@ -26,4 +27,5 @@ export const PRIMENG_COMPONENTS = [
   DividerModule,
   CardModule,
   CalendarModule,
+  SpeedDialModule,
 ];
