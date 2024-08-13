@@ -11,6 +11,10 @@ export class UserService {
 
   private url = 'http://localhost:3000/users';
 
+  getAllUser(): Observable<IUser[]> {
+    return this.http.get<IUser[]>(this.url, { withCredentials: true });
+  }
+
   getUser(userId: number): Observable<IUserDetails> {
     return this.http.get<IUserDetails>(`${this.url}/${userId}`, {
       withCredentials: true,

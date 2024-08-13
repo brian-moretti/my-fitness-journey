@@ -7,13 +7,13 @@
       <input
         type="text"
         pInputText
-        [(ngModel)]="account.username"
+        [(ngModel)]="userLogged.username"
         [disabled]="!isEditable"
       />
       <input
         type="text"
         pInputText
-        [(ngModel)]="account.email"
+        [(ngModel)]="userLogged.email"
         [disabled]="!isEditable"
       />
 
@@ -25,7 +25,6 @@
         [icon]="'pi pi-user-edit'"
         (btnEvent)="editAccount()"
       ></app-fitness-button>
-
       <div
         class="d-flex justify-content-between"
         [ngClass]="isEditable ? 'mt-3' : ''"
@@ -47,10 +46,13 @@
         ></app-fitness-button>
       </div>
       <p-divider *ngIf="isEditable" />
+      <p-toast />
+      <p-confirmDialog />
       <app-fitness-button
         *ngIf="isEditable"
         class="danger-btn"
         [title]="'DELETE ACCOUNT'"
+        (btnEvent)="alertDialogue($event)"
       ></app-fitness-button>
     </section>
   </div>
