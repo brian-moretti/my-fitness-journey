@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RouterModule, UrlTree } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -13,6 +13,18 @@ import { ButtonModule } from 'primeng/button';
 export class FitnessButtonComponent implements OnInit {
   //? ROUTER ACTIVE LINK cosa fa?
 
+  @Input()
+  severity:
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'danger'
+    | 'help'
+    | 'primary'
+    | 'secondary'
+    | 'contrast'
+    | null
+    | undefined = null;
   @Input() title: string = '';
   @Input() icon: string = '';
   @Input() iconPosition: 'left' | 'right' | 'top' | 'bottom' = 'left';

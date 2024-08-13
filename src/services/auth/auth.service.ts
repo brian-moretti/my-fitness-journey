@@ -9,6 +9,7 @@ export class AuthService {
   //! USARE GETUSER/ID PER PRENDERE ACCOUNT
 
   constructor() {
+    //! OCCHIO CHE QUANDO IL JWT EXPIRE - LOCALSTORAGE è ancora presente e da ancora come loggato
     this.isLogged = !!localStorage.getItem('Account');
   }
 

@@ -3,6 +3,7 @@
     <p-button
       [routerLink]="urlLink"
       [label]="title"
+      [severity]="severity"
       [outlined]="outline"
       [text]="text"
       [link]="link"
@@ -22,6 +23,7 @@
   <p *ngSwitchDefault>
     <p-button
       [label]="title"
+      [severity]="severity"
       [icon]="icon"
       [iconPos]="iconPosition"
       [loading]="loading"

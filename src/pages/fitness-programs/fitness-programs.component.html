@@ -3,6 +3,11 @@
   <div class="container cnb py-5 border-500 border-2">
     <h1 class="text-center roboto-bold font-big m-0">YOUR PROGRAMS</h1>
     <p class="text-center m-0">Limits are often just illusions!</p>
+    <app-fitness-button
+      [link]="true"
+      [title]="'New program'"
+      [urlLink]="'/program-form'"
+    ></app-fitness-button>
     <div class="program-container">
       <ng-container *ngFor="let program of programs">
         <p-card [header]="program.name">
@@ -20,9 +25,19 @@
             [size]="'small'"
             [urlLink]="['/program', program.id]"
           ></app-fitness-button>
-          <p-speedDial [model]="speedItems" direction="down" />
+          <span class="delete">
+            <app-fitness-button
+              [icon]="'pi pi-trash'"
+              [rounded]="true"
+              [severity]="'danger'"
+              [size]="'small'"
+              (btnEvent)="alertDialogue($event, program.id!)"
+            ></app-fitness-button>
+          </span>
         </p-card>
       </ng-container>
     </div>
   </div>
 </div>
+<p-toast />
+<p-confirmDialog />

@@ -1,8 +1,9 @@
 .program-container {
+  width: 90%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem 3rem;
-  margin: 2rem auto;
+  margin: 0 auto;
 }
 
 :host ::ng-deep {
@@ -12,5 +13,20 @@
 
   .p-card-body {
     text-align: center;
+    position: relative;
   }
+
+  .delete {
+
+    .p-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+    .p-button-icon{
+      font-size: 1rem;
+    }
+  } 
 }

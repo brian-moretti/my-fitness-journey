@@ -1,0 +1,52 @@
+<p-toast (onClose)="navigateToPrograms()"/>
+<div class="container form-container">
+  <form [formGroup]="programForm">
+    <h2>Create Program</h2>
+    <p-floatLabel>
+      <input
+        id="programName"
+        type="text"
+        pInputText
+        formControlName="programName"
+      />
+      <label for="programName">Program Name</label>
+    </p-floatLabel>
+    <div class="calendar">
+      <p-calendar
+        formControlName="startDate"
+        [dateFormat]="'dd MM yy'"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        [placeholder]="'From...'"
+      />
+      <p-calendar
+        formControlName="endDate"
+        [dateFormat]="'dd MM yy'"
+        [showIcon]="true"
+        [showButtonBar]="true"
+        [placeholder]="'To...'"
+      />
+    </div>
+    <div class="buttons">
+      <app-fitness-button
+        [title]="'Go Back'"
+        [outline]="true"
+        [urlLink]="'/programs'"
+      ></app-fitness-button>
+      <span [ngSwitch]="action">
+        <app-fitness-button
+          *ngSwitchCase="'CREATE'"
+          [type]="'submit'"
+          [title]="'Save'"
+          (btnEvent)="onCreateProgram(programForm)"
+        ></app-fitness-button>
+        <app-fitness-button
+          *ngSwitchCase="'UPDATE'"
+          [type]="'submit'"
+          [title]="'Update'"
+        ></app-fitness-button>
+      </span>
+      <!-- [disabled]="exercisesForm.invalid" -->
+    </div>
+  </form>
+</div>
