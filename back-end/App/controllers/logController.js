@@ -52,9 +52,17 @@ const logout = async (req, res) => {
     const refreshToken = req.cookies["refreshToken"];
     if (refreshToken) await deleteRefreshTokenDB("users", refreshToken);
     req.headers["authorization"] ? "" : null;
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
-    return res.status(301).redirect("/login");
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+    return res.status(200).json({ message: "Logout successfully completed" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal error server" });

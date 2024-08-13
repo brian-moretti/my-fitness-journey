@@ -14,7 +14,6 @@ export async function authenticateToken(req, res, next) {
   const accessAuth = headersAuth && headersAuth.split(" ")[1];
   const cookieAccessToken = req.cookies["accessToken"];
   const accessToken = accessAuth || cookieAccessToken;
-  console.log(accessToken);
   if (!accessToken) return res.status(401).redirect("/login");
   jwt.verify(accessToken, process.env.ACCESS_TOKEN, async (err, user) => {
     if (err) {

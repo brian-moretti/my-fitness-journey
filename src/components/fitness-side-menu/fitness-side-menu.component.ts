@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
+import { LoginService } from '../../services/login/login.service';
 import { ViewportService } from '../../services/viewport/viewport.service';
 import { FitnessButtonComponent } from '../fitness-button/fitness-button.component';
 
@@ -19,7 +21,6 @@ import { FitnessButtonComponent } from '../fitness-button/fitness-button.compone
   ], */
 })
 export class FitnessSideMenuComponent implements OnInit {
-
   viewScreen: number = window.innerWidth;
   showMenu!: boolean;
 
@@ -35,7 +36,9 @@ export class FitnessSideMenuComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private viewportService: ViewportService
+    private login: LoginService,
+    private viewportService: ViewportService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +61,12 @@ export class FitnessSideMenuComponent implements OnInit {
     this.showMenu = !this.showMenu;
   }
 
+  //! MESSAGE ON LOGOUT + DELAY
   onLogout() {
-    this.router.navigate(['/']);
+    this.login
+      .logoutUserUsingDelete()
+      .subscribe({ next: () => {}, error: () => {} });
+    this.auth.isLogoutStorage();
+    this.router.navigate(['']);
   }
 }

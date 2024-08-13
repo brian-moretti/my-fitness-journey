@@ -9,3 +9,6 @@ import { SHARED_COMPONENTS } from '..';
   styleUrl: './fitness-dashboard.component.scss',
 })
 export class FitnessDashboardComponent {}
+
+
+//! getUserAll and filter from data form login

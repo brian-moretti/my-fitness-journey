@@ -11,6 +11,7 @@ import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IUser } from '../../core/model/interface/user';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoginService } from '../../services/login/login.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   standalone: true,
@@ -24,7 +25,8 @@ export class FitnessLoginComponent implements OnInit {
   constructor(
     private router: Router,
     private login: LoginService,
-    private guard: AuthService
+    private guard: AuthService,
+    private user: UserService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +64,10 @@ export class FitnessLoginComponent implements OnInit {
             user.email === loginForm.email
         );
         //! METODO GETUSER CON ID ACCOUNT.ID
-        if (account) {
+        console.log(account);
+
+        if (account && account.id) {
+          this.user.getUser(account?.id).subscribe((d) => console.log(d));
           this.guard.isLoginStorage(account);
           this.router.navigate(['dashboard']);
         }

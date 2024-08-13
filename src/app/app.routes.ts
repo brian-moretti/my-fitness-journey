@@ -12,12 +12,23 @@ import { FitnessSettingsComponent } from '../pages/fitness-settings/fitness-sett
 import { FitnessSignupComponent } from '../pages/fitness-signup/fitness-signup.component';
 
 export const routes: Routes = [
-  { path: '', component: FitnessHeroComponent, title: 'Your Fitness Journey' },
-  { path: 'auth/login', component: FitnessLoginComponent, title: 'Login Page' },
+  {
+    path: '',
+    component: FitnessHeroComponent,
+    title: 'Your Fitness Journey',
+    canDeactivate: [navigationDelayGuard],
+  },
+  {
+    path: 'auth/login',
+    component: FitnessLoginComponent,
+    title: 'Login Page',
+    canDeactivate: [navigationDelayGuard],
+  },
   {
     path: 'auth/signup',
     component: FitnessSignupComponent,
     title: 'Signup Page',
+    canDeactivate: [navigationDelayGuard],
   },
   {
     path: 'dashboard',
@@ -30,32 +41,35 @@ export const routes: Routes = [
     path: 'programs',
     component: FitnessProgramsComponent,
     title: 'Your Programs',
+    canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },
   {
     path: 'program/:id',
     component: FitnessProgramDetailsComponent,
     title: 'Program :name',
+    canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },
   {
     path: 'exercises',
     component: FitnessExercisesComponent,
     title: 'Exercises List',
+    canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },
   {
     path: 'exercise-form',
     component: FitnessExerciseFormComponent,
     title: 'Exercise Form',
+    canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },
   {
     path: 'settings',
     component: FitnessSettingsComponent,
     title: 'Settings',
+    canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },
 ];
-
-

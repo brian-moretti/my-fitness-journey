@@ -17,7 +17,8 @@ export class LoginService {
     });
   }
 
+  //! CAPOCCIO' - CANCELLA IL LOCAL STORAGE E TOGLI IL REDIRECT USER NEL BE - METTILO IN FE
   logoutUserUsingDelete() {
-    return this.http.delete(this.url);
+    return this.http.delete(this.url, { withCredentials: true });
   }
 }
