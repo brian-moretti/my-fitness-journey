@@ -1,5 +1,6 @@
 <app-fitness-header></app-fitness-header>
 <div class="container log-pages container-height">
+  <p-messages (onClose)="onCloseToast()" />
   <form
     [formGroup]="signupForm"
     class="text-center"
@@ -25,8 +26,7 @@
         id="email"
         formControlName="email"
         [class]="
-          emailControl.invalid &&
-          (emailControl.dirty || emailControl.touched)
+          emailControl.invalid && (emailControl.dirty || emailControl.touched)
             ? 'ng-dirty ng-invalid'
             : ''
         "
@@ -59,6 +59,7 @@
       [type]="'submit'"
       [disabled]="signupForm.invalid"
     ></app-fitness-button>
+    <!--     <p-toast position="top-center" (onClose)="onCloseToast(signupForm)" /> -->
   </form>
 </div>
 <app-fitness-footer></app-fitness-footer>

@@ -70,10 +70,13 @@ export class FitnessSettingsComponent implements OnInit {
   }
 
   private _deleteAccount() {
-    this.userService
-      .deleteUserUsingDelete(this.userLogged)
-      .subscribe({ next: () => {}, error: () => {} });
-    this.router.navigate(['']);
+    this.userService.deleteUserUsingDelete(this.userLogged).subscribe({
+      next: () => {
+        localStorage.removeItem('Account');
+        this.router.navigate(['']);
+      },
+      error: () => {},
+    });
   }
 
   alertDialogue(event: Event) {
@@ -88,20 +91,29 @@ export class FitnessSettingsComponent implements OnInit {
       rejectIcon: 'none',
       defaultFocus: 'none',
       accept: () => {
-        //this._deleteAccount()
         this.messageService.add({
+          key: 'success',
           severity: 'success',
           summary: 'Account Deleted',
           detail: 'Your account has been deleted',
+          life: 2000,
         });
+        this.isEditable = false;
       },
       reject: () => {
         this.messageService.add({
+          key: 'reject',
           severity: 'info',
           summary: 'Stay Hard',
           detail: 'Keep grinding! Your account is still here',
+          life: 2000,
         });
+        this.isEditable = false;
       },
     });
+  }
+
+  onCloseToast() {
+    this._deleteAccount();
   }
 }

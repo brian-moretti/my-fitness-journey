@@ -14,7 +14,9 @@ export async function authenticateToken(req, res, next) {
   const accessAuth = headersAuth && headersAuth.split(" ")[1];
   const cookieAccessToken = req.cookies["accessToken"];
   const accessToken = accessAuth || cookieAccessToken;
-  if (!accessToken) return res.status(401).redirect("/login");
+
+  if (!accessToken)
+    return res.status(401).json({ message: "Token expired. Please log again" });
   jwt.verify(accessToken, process.env.ACCESS_TOKEN, async (err, user) => {
     if (err) {
       console.error(err);
@@ -31,7 +33,8 @@ export async function regenerateJWTAccessToken(req, res, next) {
     ? await getRefreshTokenDB("users", req.user.id)
     : [null];
   const refreshToken = dbRefreshToken || cookieRefreshToken;
-  if (!refreshToken) return res.status(401).redirect("/login");
+  if (!refreshToken)
+    return res.status(401).json({ message: "Token expired. Please log again" });
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, async (err, user) => {
     if (err) {
       console.error(err);

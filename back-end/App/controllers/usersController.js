@@ -67,11 +67,7 @@ const user_update = async (req, res) => {
 const user_delete = async (req, res) => {
   try {
     let [deletedUser, result] = await UsersModel.deleteUser(req.params.id);
-    console.log(deletedUser);
-
-    deletedUser = deletedUser.filter((username) => username.id === req.user.id);
-    if (deletedUser.length <= 0)
-      return res.status(404).json({ Error: "User not founded" });
+    if (!deletedUser) return res.status(404).json({ Error: "User not founded" });
     if (result.affectedRows >= 1) return res.status(200).json(deletedUser);
   } catch (error) {
     console.error(error);

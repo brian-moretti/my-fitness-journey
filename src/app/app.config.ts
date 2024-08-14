@@ -13,7 +13,7 @@ import {
 } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { loggingInterceptorInterceptor } from '../core/http/interceptors/logging-interceptor.interceptor';
+import { errorsInterceptor } from '../core/http/interceptors/errors-interceptor.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -27,6 +27,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([loggingInterceptorInterceptor])),
+    provideHttpClient(withInterceptors([errorsInterceptor])),
   ],
 };

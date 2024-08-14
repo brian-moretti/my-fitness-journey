@@ -8,6 +8,7 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MessagesModule } from 'primeng/messages';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PaginatorModule } from 'primeng/paginator';
 import { PasswordModule } from 'primeng/password';
@@ -32,4 +33,5 @@ export const PRIMENG_COMPONENTS = [
   SpeedDialModule,
   ConfirmDialogModule,
   ToastModule,
+  MessagesModule,
 ];

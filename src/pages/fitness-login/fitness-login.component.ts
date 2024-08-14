@@ -30,6 +30,8 @@ export class FitnessLoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.router);
+
     this.loginForm = new FormGroup({
       username: new FormControl<string>('', Validators.required),
       email: new FormControl<string>('', [
@@ -64,6 +66,7 @@ export class FitnessLoginComponent implements OnInit {
             user.email === loginForm.email
         );
         //! METODO GETUSER CON ID ACCOUNT.ID
+        //! VERIFICARE IL REDIRECT DI LOGIN TO /USERS
         console.log(account);
 
         if (account && account.id) {

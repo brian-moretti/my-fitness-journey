@@ -25,35 +25,36 @@
         [icon]="'pi pi-user-edit'"
         (btnEvent)="editAccount()"
       ></app-fitness-button>
-      <div
-        class="d-flex justify-content-between"
-        [ngClass]="isEditable ? 'mt-3' : ''"
-      >
+      <ng-container *ngIf="isEditable">
+        <div
+          class="d-flex justify-content-between"
+          [ngClass]="isEditable ? 'mt-3' : ''"
+        >
+          <app-fitness-button
+            [title]="'Cancel'"
+            [outline]="true"
+            [raised]="true"
+            [size]="'small'"
+            (btnEvent)="cancelEdit()"
+          ></app-fitness-button>
+          <app-fitness-button
+            [title]="'Save'"
+            [raised]="true"
+            [size]="'small'"
+            (btnEvent)="saveEdit()"
+          ></app-fitness-button>
+        </div>
+        <p-divider />
         <app-fitness-button
-          *ngIf="isEditable"
-          [title]="'Cancel'"
-          [outline]="true"
-          [raised]="true"
-          [size]="'small'"
-          (btnEvent)="cancelEdit()"
+          class="danger-btn"
+          severity="danger"
+          [title]="'DELETE ACCOUNT'"
+          (btnEvent)="alertDialogue($event)"
         ></app-fitness-button>
-        <app-fitness-button
-          *ngIf="isEditable"
-          [title]="'Save'"
-          [raised]="true"
-          [size]="'small'"
-          (btnEvent)="saveEdit()"
-        ></app-fitness-button>
-      </div>
-      <p-divider *ngIf="isEditable" />
-      <p-toast />
-      <p-confirmDialog />
-      <app-fitness-button
-        *ngIf="isEditable"
-        class="danger-btn"
-        [title]="'DELETE ACCOUNT'"
-        (btnEvent)="alertDialogue($event)"
-      ></app-fitness-button>
+      </ng-container>
     </section>
   </div>
 </div>
+<p-toast key="success" (onClose)="onCloseToast()" />
+<p-toast key="reject" />
+<p-confirmDialog />
