@@ -1,1 +1,28 @@
 <p>fitness-program-details works!</p>
+{{ program | json }}
+<form #trainingProgram="ngForm">
+  <input
+    id="programName"
+    type="text"
+    pInputText
+    name="programName"
+    [(ngModel)]="program.name"
+    [disabled]="readOnly"
+  />
+  <p-calendar
+    name="startDate"
+    dataType="string"
+    dateFormat="yy/mm/dd"
+    [(ngModel)]="program.date_start"
+    [disabled]="readOnly"
+  />
+  <p-calendar
+    name="endDate"
+    dataType="string"
+    dateFormat="yy mm dd"
+    [(ngModel)]="program.date_end"
+    [disabled]="readOnly"
+  />
+  <ng-container *ngFor="let exercise of program.Exercises">
+  </ng-container>
+</form>

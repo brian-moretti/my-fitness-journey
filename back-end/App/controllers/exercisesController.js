@@ -73,10 +73,8 @@ const exercise_delete = async (req, res) => {
     const [deletedExercise, result] = await ExercisesModel.deleteExercise(
       req.params.id
     );
-
     if (!deletedExercise)
       return res.status(404).json({ Error: "Exercise not founded" });
-
     if (result.affectedRows >= 1) return res.status(200).json(deletedExercise);
   } catch (error) {
     console.error(error);

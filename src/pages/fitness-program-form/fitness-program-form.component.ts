@@ -30,7 +30,7 @@ export class FitnessProgramFormComponent implements OnInit {
   action: string = 'CREATE';
 
   constructor(
-    private trainingProgram: TrainingProgramsService,
+    private trainingPrograms: TrainingProgramsService,
     private router: Router,
     private toast: MessageService
   ) {}
@@ -58,7 +58,7 @@ export class FitnessProgramFormComponent implements OnInit {
         ? { name: programName, date_start: startDate, date_end: endDate }
         : {};
 
-    this.trainingProgram.createTrainingProgram(programToAdd).subscribe({
+    this.trainingPrograms.createTrainingProgram(programToAdd).subscribe({
       next: () => {
         this.toast.add({
           severity: 'success',

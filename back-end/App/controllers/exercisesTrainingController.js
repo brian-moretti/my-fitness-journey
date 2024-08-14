@@ -22,20 +22,20 @@ const exercisesTraining_details = async (req, res) => {
         .json({ Error: "Error on finding this exercise in the database" });
     }
     result = {
-      "User ID": result.id_user,
+      id_user: result.id_user,
       "Training Program": {
-        ID: result.id_scheda,
-        Name: result.program_name,
-        "Date Start": result.date_start,
-        "Date End": result.date_end,
+        id: result.id_scheda,
+        name: result.program_name,
+        date_start: result.date_start,
+        date_end: result.date_end,
       },
       Exercise: {
-        Series: result.series,
-        Reps: result.reps,
-        Rest: result.rest,
-        Weight: result.weight,
-        "Max RM Weight": result.weight_max_rm,
-        Tutorial: result.video,
+        series: result.series,
+        reps: result.reps,
+        rest: result.rest,
+        weight: result.weight,
+        max_weight_rm: result.weight_max_rm,
+        tutorial: result.video,
       },
       "Info Exercise": {
         ID: result.id_exercise,
@@ -108,7 +108,7 @@ const exercisesTraining_update = async (req, res) => {
       exerciseTraining,
       req.body
     );
-    const updatedExerciseTraining = {}
+    const updatedExerciseTraining = {};
     if (result.affectedRows >= 1)
       return res
         .status(200)
@@ -134,9 +134,7 @@ const exercisesTraining_delete = async (req, res) => {
       exerciseToDelete.id_scheda
     );
     if (result.affectedRows >= 1) {
-      return res
-        .status(200)
-        .json(exerciseToDelete);
+      return res.status(200).json(exerciseToDelete);
     }
   } catch (error) {
     console.error(error);

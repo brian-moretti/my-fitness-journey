@@ -34,11 +34,15 @@ export async function regenerateJWTAccessToken(req, res, next) {
     : [null];
   const refreshToken = dbRefreshToken || cookieRefreshToken;
   if (!refreshToken)
-    return res.status(401).json({ message: "Token expired. Please log again" });
+    return res
+      .status(401)
+      .json({ message: "Access Token expired. Please log again" });
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN, async (err, user) => {
     if (err) {
       console.error(err);
-      return res.status(403).redirect("/login");
+      return res
+        .status(403)
+        .json({ message: "Session expired. Please log again" }); //.redirect("/login");
     }
     const { iat, exp, ...User } = user;
     //user = Object.fromEntries(Object.entries(user).filter(([key]) => key !== "iat" && key !== "exp"));

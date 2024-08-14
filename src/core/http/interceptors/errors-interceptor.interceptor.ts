@@ -14,21 +14,21 @@ export const errorsInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ) => {
   const router = inject(Router);
+  const auth = inject(AuthService);
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
-      if (err.status === 401) {
-        //? SEND MESSAGE TOAST - SESSION IS EXPIRED
-        router.navigate(['']);
-      }
+      logInterceptor(err, router, auth);
       return throwError(() => err);
     })
   );
 };
 
-function logInterceptor(err: HttpErrorResponse) {
-  const router = inject(Router);
-  const auth = inject(AuthService);
-  if (err.status === 401) {
+function logInterceptor(
+  err: HttpErrorResponse,
+  router: Router,
+  auth: AuthService
+) {
+  if (err.status === 401 || err.status === 403) {
     //? SEND MESSAGE TOAST - SESSION IS EXPIRED
     auth.isLogoutStorage();
     router.navigate(['']);

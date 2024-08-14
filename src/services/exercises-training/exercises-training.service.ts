@@ -11,10 +11,24 @@ export class ExercisesTrainingService {
 
   private url = 'http://localhost:3000/exercises-training';
 
-  getSingleExerciseTraining() {}
+  getSingleExerciseTraining(exerciseID: number): Observable<IExerciseTraining> {
+    return this.http.get<IExerciseTraining>(`${this.url}/${exerciseID}`, {
+      withCredentials: true,
+    });
+  }
 
-  updateExerciseTraining(exerciseTraining: IExerciseTraining) {
-    return this.http.put(
+  createExerciseTraining(
+    exerciseTraining: IExerciseTraining
+  ): Observable<IExerciseTraining> {
+    return this.http.post<IExerciseTraining>(this.url, exerciseTraining, {
+      withCredentials: true,
+    });
+  }
+
+  updateExerciseTraining(
+    exerciseTraining: IExerciseTraining
+  ): Observable<IExerciseTraining> {
+    return this.http.put<IExerciseTraining>(
       `${this.url}/${exerciseTraining.id_exercise}`,
       exerciseTraining,
       { withCredentials: true }

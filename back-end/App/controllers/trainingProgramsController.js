@@ -22,17 +22,6 @@ const trainingPrograms_details = async (req, res) => {
     if (result.length <= 0) {
       return res.status(404).json({ Error: "Training program not founded" });
     }
-
-    /* return {
-        id: data.id,
-        [data.name]: {
-          date_start: data.date_start,
-          date_end: data.date_end,
-          User: { id: data.id_user, username: data.username },
-          Exercises,
-        },
-      }; */
-
     result = result.reduce((acc, current) => {
       const {
         id,
@@ -49,8 +38,9 @@ const trainingPrograms_details = async (req, res) => {
         weiht_max_rm,
         video,
       } = current;
-      if (!acc[name]) {
-        acc[name] = {
+      let program = acc.find((p) => p.id === current.id);
+      if (!program) {
+        program = {
           id,
           name,
           date_start,
@@ -58,8 +48,9 @@ const trainingPrograms_details = async (req, res) => {
           User: { id_user, username },
           Exercises: [],
         };
+        acc.push(program);
       }
-      acc[name].Exercises.push({
+      program.Exercises.push({
         id_exercise,
         series,
         reps,
@@ -69,7 +60,7 @@ const trainingPrograms_details = async (req, res) => {
         video,
       });
       return acc;
-    }, {});
+    }, []);
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);

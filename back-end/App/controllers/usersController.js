@@ -16,10 +16,14 @@ const user_index = async (req, res) => {
 const user_details = async (req, res) => {
   try {
     let result = await UsersModel.getUser(req.params.id);
+    //! INSERIRE NEL MODEL
     [result] = result.filter((username) => username.id === req.user.id);
     result = {
-      User: { id: result.id, username: result.username, email: result.email },
+      id: result.id,
+      username: result.username,
+      email: result.email,
       Programs: {
+        //! DOVREBBE ESSERE ARRAY
         name: result.name,
         date_start: result.date_start,
         date_end: result.date_end,
@@ -53,6 +57,7 @@ const user_create = async (req, res) => {
 const user_update = async (req, res) => {
   try {
     let user = await UsersModel.getUser(req.params.id);
+    //! INSERIRE NEL MODEL
     [user] = user.filter((username) => username.id === req.user.id);
     if (!user) return res.status(404).json({ Error: "User not found" });
     const result = await UsersModel.updateUser(user, req.body);
@@ -67,7 +72,8 @@ const user_update = async (req, res) => {
 const user_delete = async (req, res) => {
   try {
     let [deletedUser, result] = await UsersModel.deleteUser(req.params.id);
-    if (!deletedUser) return res.status(404).json({ Error: "User not founded" });
+    if (!deletedUser)
+      return res.status(404).json({ Error: "User not founded" });
     if (result.affectedRows >= 1) return res.status(200).json(deletedUser);
   } catch (error) {
     console.error(error);
