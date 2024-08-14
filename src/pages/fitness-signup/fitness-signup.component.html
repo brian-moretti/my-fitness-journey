@@ -1,6 +1,5 @@
 <app-fitness-header></app-fitness-header>
 <div class="container log-pages container-height">
-  <p-messages (onClose)="onCloseToast()" />
   <form
     [formGroup]="signupForm"
     class="text-center"
@@ -59,7 +58,7 @@
       [type]="'submit'"
       [disabled]="signupForm.invalid"
     ></app-fitness-button>
-    <!--     <p-toast position="top-center" (onClose)="onCloseToast(signupForm)" /> -->
+    <p-toast position="top-center" (onClose)="onCloseToast()" />
   </form>
 </div>
 <app-fitness-footer></app-fitness-footer>

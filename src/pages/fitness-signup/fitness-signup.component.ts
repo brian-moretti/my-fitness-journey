@@ -62,14 +62,15 @@ export class FitnessSignupComponent implements OnInit {
           severity: 'success',
           summary: `${user.username}'s Account Created`,
           detail: 'Login to your account',
-          life: 1000,
+          life: 2000,
         });
-        form.reset();
+        //form.reset();
       },
       error: () => {},
     });
   }
 
+  //! FIX ERROR ON CHANGING PAGE FOR INPUT FORM
   onCloseToast() {
     this.router.navigate(['auth/login']);
   }
