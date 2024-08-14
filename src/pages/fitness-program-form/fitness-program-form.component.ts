@@ -64,7 +64,7 @@ export class FitnessProgramFormComponent implements OnInit {
           severity: 'success',
           summary: 'Program Created',
           detail: 'Go grind now!',
-          life: 2000,
+          life: 1500,
         });
       },
       error: () => {},

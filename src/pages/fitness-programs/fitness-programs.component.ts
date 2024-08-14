@@ -52,8 +52,6 @@ export class FitnessProgramsComponent implements OnInit {
   private _deleteProgram(programID: number) {
     this.trainingPrograms.deleteTrainingProgram(programID).subscribe({
       next: (program) => {
-        console.log(program);
-
         this._getTrainingPrograms();
       },
       error: () => {},
@@ -72,11 +70,12 @@ export class FitnessProgramsComponent implements OnInit {
       rejectIcon: 'none',
       defaultFocus: 'none',
       accept: () => {
-        this._deleteProgram(programID)
+        this._deleteProgram(programID);
         this.messageService.add({
           severity: 'success',
           summary: 'Program Deleted',
           detail: 'Go ahead and make another one',
+          life: 2000,
         });
       },
       reject: () => {
@@ -84,6 +83,7 @@ export class FitnessProgramsComponent implements OnInit {
           severity: 'info',
           summary: 'Stay Hard',
           detail: 'This program still could help',
+          life: 2000,
         });
       },
     });

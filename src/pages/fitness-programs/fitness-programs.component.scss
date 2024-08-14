@@ -1,9 +1,19 @@
+.cnb {
+  min-height: 100vh;
+}
+
 .program-container {
   width: 90%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem 3rem;
   margin: 0 auto;
+}
+
+.no-programs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 :host ::ng-deep {
@@ -17,7 +27,6 @@
   }
 
   .delete {
-
     .p-button {
       position: absolute;
       top: 10px;
@@ -25,8 +34,8 @@
       width: 2.5rem;
       height: 2.5rem;
     }
-    .p-button-icon{
+    .p-button-icon {
       font-size: 1rem;
     }
-  } 
+  }
 }
