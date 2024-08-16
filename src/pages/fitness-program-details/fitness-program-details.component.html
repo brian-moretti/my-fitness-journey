@@ -24,5 +24,8 @@
     [disabled]="readOnly"
   />
   <ng-container *ngFor="let exercise of program.Exercises">
+    <app-fitness-exercise-training-field
+      [exercise]="exercise"
+    ></app-fitness-exercise-training-field>
   </ng-container>
 </form>

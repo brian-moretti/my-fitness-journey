@@ -1,0 +1,23 @@
+form {
+  border: 1px solid red;
+  width: 90%;
+  margin: 0.5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  /*   & > * {
+    border-right: 1px solid red; //? vedi sotto + impo
+  } */
+}
+
+:host ::ng-deep {
+  form {
+    .p-inputtext {
+      max-width: fit-content;
+    }
+    .ng-star-inserted {
+      margin: 0;
+    }
+  }
+}

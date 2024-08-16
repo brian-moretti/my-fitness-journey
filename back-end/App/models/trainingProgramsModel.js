@@ -12,10 +12,10 @@ class TrainingProgramsModel {
     return result.filter((username) => username.id_user === req.user.id);
   }
 
-  static async getTrainingProgram(req) {
+  static async getTrainingProgram(id_user, id) {
     const query = `SELECT training.*, users.username, exercises_training.* FROM ${this.table_name} AS training INNER JOIN users ON users.id = training.id_user LEFT JOIN exercises_training ON exercises_training.id_scheda = training.id WHERE training.id = ?`;
-    const result = await mySqlConnectionQuery(query, req.params.id);
-    return result.filter((username) => username.id_user === req.user.id);
+    const result = await mySqlConnectionQuery(query, id);
+    return result.filter((username) => username.id_user === id_user);
   }
 
   static async createTrainingProgram(data, id_user) {

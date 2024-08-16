@@ -64,6 +64,7 @@ const exercisesTraining_create = async (req, res) => {
         .status(400)
         .json({ Error: "The exercise provided do not exists" });
     const [programToFind] = await TrainingProgramsModel.getTrainingProgram(
+      req.user.id,
       req.body.id_scheda
     );
     if (!programToFind)

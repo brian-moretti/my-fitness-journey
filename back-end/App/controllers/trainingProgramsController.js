@@ -18,7 +18,10 @@ const trainingPrograms_index = async (req, res) => {
 };
 const trainingPrograms_details = async (req, res) => {
   try {
-    let result = await TrainingProgramsModel.getTrainingProgram(req);
+    let result = await TrainingProgramsModel.getTrainingProgram(
+      req.user.id,
+      req.params.id
+    );
     if (result.length <= 0) {
       return res.status(404).json({ Error: "Training program not founded" });
     }

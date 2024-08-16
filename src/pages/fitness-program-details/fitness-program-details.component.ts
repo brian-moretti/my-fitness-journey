@@ -5,11 +5,12 @@ import { cloneDeep } from 'lodash';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
 import { TrainingProgramsService } from '../../services/training-programs/training-programs.service';
+import { FitnessExerciseTrainingFieldComponent } from "../../components/fitness-exercise-training-field/fitness-exercise-training-field.component";
 
 @Component({
   selector: 'app-fitness-program-details',
   standalone: true,
-  imports: [PRIMENG_COMPONENTS, CommonModule],
+  imports: [PRIMENG_COMPONENTS, CommonModule, FitnessExerciseTrainingFieldComponent],
   templateUrl: './fitness-program-details.component.html',
   styleUrl: './fitness-program-details.component.scss',
 })
@@ -26,7 +27,6 @@ export class FitnessProgramDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.route);
     this._getTrainingProgram();
   }
 
