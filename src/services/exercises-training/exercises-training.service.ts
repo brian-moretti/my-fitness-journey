@@ -29,7 +29,7 @@ export class ExercisesTrainingService {
     exerciseTraining: IExerciseTraining
   ): Observable<IExerciseTraining> {
     return this.http.put<IExerciseTraining>(
-      `${this.url}/${exerciseTraining.id_exercise}`,
+      `${this.url}/${exerciseTraining.exercise?.id}`,
       exerciseTraining,
       { withCredentials: true }
     );
@@ -39,7 +39,7 @@ export class ExercisesTrainingService {
     exerciseTraining: IExerciseTraining
   ): Observable<IExerciseTraining> {
     return this.http.delete<IExerciseTraining>(
-      `${this.url}/${exerciseTraining.id_exercise}`,
+      `${this.url}/${exerciseTraining.exercise?.id}`,
       { withCredentials: true }
     );
   }

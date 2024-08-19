@@ -4,14 +4,15 @@
     <h1 class="text-center roboto-bold font-big m-0">YOUR PROGRAMS</h1>
     <p class="text-center m-0">Limits are often just illusions!</p>
     <ng-container *ngIf="programs.length > 0; else sideBtn">
-        <app-fitness-button
-          [link]="true"
-          [title]="'New program'"
-          [urlLink]="'/program-form'"
-        ></app-fitness-button>
+      <app-fitness-button
+        [link]="true"
+        [title]="'New program'"
+        [urlLink]="'/program-form'"
+      ></app-fitness-button>
     </ng-container>
     <div class="program-container">
       <ng-container *ngFor="let program of programs">
+        <!-- !COMPONENTE SPECIFICO - programBoxItem -->
         <p-card [header]="program.name">
           <p
             [innerHTML]="

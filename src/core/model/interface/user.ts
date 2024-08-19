@@ -6,6 +6,6 @@ export interface IUser {
 }
 
 export interface IUserDetails {
-  User: IUser;
+  User?: IUser;
   //Programs: IPrograms[]
 }

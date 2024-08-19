@@ -1,75 +1,81 @@
 <form>
-  Name:
-  <input type="text" name="name" id="name" pInputText [disabled]="true" />
-
-  Reps:
+  <label for="name">Name:</label>
   <input
-    *ngIf="exercise.reps"
-    type="number"
-    name="reps"
-    id="reps"
+    type="text"
+    id="name"
+    name="name"
     pInputText
+    [(ngModel)]="training.exercise!.name"
+    [disabled]="true"
+  />
+  <label for="reps">Reps:</label>
+  <p-inputNumber
+    type="number"
+    id="reps"
+    name="reps"
     inputId="integeronly"
-    [(ngModel)]="exercise.reps"
+    [(ngModel)]="training.reps"
     [disabled]="readOnly"
   />
-  Series:
-  <input
-    *ngIf="exercise.series"
+  <label for="series">Series:</label>
+  <p-inputNumber
     type="number"
     name="series"
     id="series"
-    pInputText
     inputId="integeronly"
-    [(ngModel)]="exercise.series"
+    [(ngModel)]="training.series"
     [disabled]="readOnly"
   />
-  Rest:
-  <input
-    *ngIf="exercise.rest"
-    type="time"
-    name="rest"
-    id="rest"
-    pInputText
-    [(ngModel)]="exercise.rest"
-    [disabled]="readOnly"
-  />
-  <app-fitness-button
-    size="small"
-    icon="pi pi-stopwatch"
-    [rounded]="true"
-  ></app-fitness-button>
-  Weight:
-  <input
-    *ngIf="exercise.weight"
-    type="text"
+  <span class="timer-container">
+    <label for="rest">Rest:</label>
+    <input
+      type="time"
+      name="rest"
+      id="rest"
+      pInputText
+      [(ngModel)]="training.rest"
+      [disabled]="readOnly"
+    />
+    <app-fitness-button
+      class="timer"
+      size="small"
+      icon="pi pi-stopwatch"
+      [rounded]="true"
+      [raised]="true"
+    ></app-fitness-button>
+  </span>
+  <label for="weight">Weight:</label>
+  <p-inputNumber
+    type="number"
     name="weight"
     id="weight"
-    pInputText
-    [(ngModel)]="exercise.weight"
+    inputId="minmaxfraction"
+    suffix=" KG"
+    mode="decimal"
+    [minFractionDigits]="1"
+    [maxFractionDigits]="1"
+    [useGrouping]="false"
+    [max]="999.9"
+    [maxlength]="8"
+    [(ngModel)]="training.weight"
     [disabled]="readOnly"
   />
-  Max Weight RM:
-  <input
-    *ngIf="exercise.weight_max_rm"
+  <label for="maxWeightRM">Max Weight RM:</label>
+  <p-inputNumber
     type="number"
     name="maxWeightRM"
     id="maxWeightRM"
-    pInputText
     inputId="integeronly"
-    [(ngModel)]="exercise.weight_max_rm"
+    [(ngModel)]="training.weight_max_rm"
     [disabled]="readOnly"
   />
-  Video Tutorial:
+  <!--   <label for="video">Video Tutorial:</label>
   <input
-    *ngIf="exercise.video"
     type="text"
-    name="tutorial"
-    id="tutorial"
+    name="video"
+    id="video"
     pInputText
-    [(ngModel)]="exercise.video"
-    [disabled]="readOnly"
-  />
+    [(ngModel)]="training.video"
+    [disabled]="true"
+  /> -->
 </form>
-
-{{exercise | json}}

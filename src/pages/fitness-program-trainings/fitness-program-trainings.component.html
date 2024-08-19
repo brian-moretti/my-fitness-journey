@@ -1,0 +1,118 @@
+<div class="container py-4 my-4 trainings">
+  <h1 class="text-center">Create your Training</h1>
+  <form [formGroup]="trainingsForm" (ngSubmit)="onSubmit()">
+    <ng-cotainer formArrayName="exercises">
+      <button type="button" [hidden]="hideBtn" (click)="addExercise()">
+        + Add another alias
+      </button>
+      <ng-container
+        *ngFor="let exercise of exercises.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <span class="">Exercise {{ i + 1 }}</span>
+        <div class="d-flex gap-4">
+          <section>
+            <p-floatLabel>
+              <input
+                class="full-width"
+                id="exercise"
+                type="text"
+                pInputText
+                formControlName="exercise"
+                (focus)="searchExercise()"
+                (input)="onFilterExercise(exercise.value.exercise)"
+              />
+              <label for="name">Exercise Name</label>
+            </p-floatLabel>
+            <div class="menu-exercise" [hidden]="filterExercise.length < 1">
+              <ng-container *ngFor="let exercise of filterExercise">
+                <button
+                  type="button"
+                  [ngStyle]="{ display: 'block' }"
+                  (click)="selectExercise(exercise, i)"
+                >
+                  {{ exercise.name | titlecase }}
+                </button>
+              </ng-container>
+            </div>
+          </section>
+          <p-floatLabel>
+            <p-inputNumber
+              id="reps"
+              type="number"
+              inputId="integeronly"
+              formControlName="reps"
+            />
+            <label for="reps">Reps</label>
+          </p-floatLabel>
+          <p-floatLabel>
+            <p-inputNumber
+              id="series"
+              type="number"
+              inputId="integeronly"
+              formControlName="series"
+            />
+            <label for="series">Series</label>
+          </p-floatLabel>
+          <p-floatLabel>
+            <p-inputMask
+              id="rest"
+              mask="99:99"
+              formControlName="rest"
+              slotChar="mm:ss"
+            />
+            <label for="rest">Rest</label>
+          </p-floatLabel>
+          <p-floatLabel>
+            <p-inputNumber
+              id="weight"
+              inputId="minmaxfraction"
+              formControlName="weight"
+              suffix=" KG"
+              mode="decimal"
+              [minFractionDigits]="1"
+              [maxFractionDigits]="1"
+              [useGrouping]="false"
+              [min]="0"
+              [max]="999.9"
+              [maxlength]="8"
+            />
+            <label for="weigth">Weight</label>
+          </p-floatLabel>
+
+          <app-fitness-button
+            icon="pi pi-save"
+            [rounded]="true"
+            [raised]="true"
+            [severity]="'success'"
+            (btnEvent)="saveExercise(i)"
+          ></app-fitness-button>
+          <app-fitness-button
+            icon="pi pi-trash"
+            [rounded]="true"
+            [raised]="true"
+            [severity]="'danger'"
+            (btnEvent)="deleteExercise(i)"
+          ></app-fitness-button>
+          <app-fitness-button
+            icon="pi pi-pen-to-square"
+            [rounded]="true"
+            [raised]="true"
+            (btnEvent)="editExercise(i)"
+          ></app-fitness-button>
+        </div>
+      </ng-container>
+    </ng-cotainer>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<!-- <p-dialog
+  header="Select the exercise"
+  [modal]="true"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+  [position]="'center'"
+  [(visible)]="showDialog"
+>
+</p-dialog> -->

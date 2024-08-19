@@ -2,15 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
+import { FitnessExerciseTrainingFieldComponent } from '../../components/fitness-exercise-training-field/fitness-exercise-training-field.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
 import { TrainingProgramsService } from '../../services/training-programs/training-programs.service';
-import { FitnessExerciseTrainingFieldComponent } from "../../components/fitness-exercise-training-field/fitness-exercise-training-field.component";
 
 @Component({
   selector: 'app-fitness-program-details',
   standalone: true,
-  imports: [PRIMENG_COMPONENTS, CommonModule, FitnessExerciseTrainingFieldComponent],
+  imports: [
+    PRIMENG_COMPONENTS,
+    CommonModule,
+    FitnessExerciseTrainingFieldComponent,
+  ],
   templateUrl: './fitness-program-details.component.html',
   styleUrl: './fitness-program-details.component.scss',
 })
@@ -34,11 +38,27 @@ export class FitnessProgramDetailsComponent implements OnInit {
     this.trainingPrograms.getSingleTrainingProgram(this.routeID).subscribe({
       next: (program) => {
         program = program.map((p) => {
-          const startDate = p.date_start?.split('T')[0].replaceAll('-', '/');
-          const endDate = p.date_end?.split('T')[0].replaceAll('-', '/');
-          return { ...p, date_start: startDate, date_end: endDate };
+          const dateStart = new Date(p.date_start!);
+          const dateEnd = new Date(p.date_end!);
+          const formattedDateStart = new Intl.DateTimeFormat('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }).format(dateStart);
+          const formattedDateEnd = new Intl.DateTimeFormat('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }).format(dateEnd);
+          return {
+            ...p,
+            date_start: formattedDateStart,
+            date_end: formattedDateEnd,
+          };
         });
+        
         this.program = program[0];
+        console.log(this.program);
         this.backupProgram = cloneDeep(this.program);
       },
       error: () => {},
@@ -55,9 +75,7 @@ export class FitnessProgramDetailsComponent implements OnInit {
     });
   }
 
-  private _getSingleExercise(){
-    
-  }
+  private _getSingleExercise() {}
 
   editTrainingProgram() {
     this.isEditable = true;

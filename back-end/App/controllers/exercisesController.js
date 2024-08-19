@@ -1,7 +1,7 @@
 import ExercisesModel from "../models/exercisesModel.js";
 
 const exercise_index = async (req, res) => {
-  try {
+  try {   
     const result = await ExercisesModel.getAll(req.query);
     return res.status(200).json(result);
   } catch (error) {

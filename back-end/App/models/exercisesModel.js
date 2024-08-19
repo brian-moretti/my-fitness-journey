@@ -5,7 +5,6 @@ class ExercisesModel {
   static table_name = "exercises";
 
   static async getAll(req) {
-    let params = paginations(req);
     let query = `SELECT * FROM ${this.table_name}`;
 
     let name = req.name ?? null;
@@ -36,8 +35,10 @@ class ExercisesModel {
     } else {
       query += " ORDER BY id";
     }
-
-    if (params) query += ` LIMIT ${params.maxData} OFFSET ${params.offsetData}`;
+    if (Object.keys(req).length > 0) {
+      let params = paginations(req);
+      query += ` LIMIT ${params.maxData} OFFSET ${params.offsetData}`;
+    }
     return await mySqlConnectionQuery(query, filters);
   }
 

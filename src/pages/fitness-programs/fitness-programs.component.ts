@@ -15,8 +15,7 @@ import { TrainingProgramsService } from '../../services/training-programs/traini
 })
 export class FitnessProgramsComponent implements OnInit {
   programs: ITrainingProgram[] = [];
-  speedItems: MenuItem[] = [];
-  date: any;
+  
   constructor(
     private trainingPrograms: TrainingProgramsService,
     private messageService: MessageService,
@@ -31,15 +30,24 @@ export class FitnessProgramsComponent implements OnInit {
     this.trainingPrograms.getTrainingPrograms().subscribe({
       next: (programs) => {
         programs = programs.map((program) => {
-          const dateStart = new Date(program.date_start!)
-            .toISOString()
-            .split('T')[0]
-            .replaceAll('-', '/');
-          const dateEnd = new Date(program.date_end!)
-            .toISOString()
-            .split('T')[0]
-            .replaceAll('-', '/');
-          return { ...program, date_start: dateStart, date_end: dateEnd };
+          const dateStart = new Date(program.date_start!);
+          const dateEnd = new Date(program.date_end!);
+          const formattedDateStart = new Intl.DateTimeFormat('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }).format(dateStart);
+          const formattedDateEnd = new Intl.DateTimeFormat('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }).format(dateEnd);
+
+          return {
+            ...program,
+            date_start: formattedDateStart,
+            date_end: formattedDateEnd,
+          };
         });
         //! CATALOGARE X MESE
         this.programs = programs.sort((a, b) =>

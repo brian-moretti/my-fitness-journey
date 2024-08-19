@@ -27,6 +27,7 @@ import { TrainingProgramsService } from '../../services/training-programs/traini
 })
 export class FitnessProgramFormComponent implements OnInit {
   programForm!: FormGroup;
+  programCreated: ITrainingProgram = {}
   action: string = 'CREATE';
 
   constructor(
@@ -59,7 +60,8 @@ export class FitnessProgramFormComponent implements OnInit {
         : {};
 
     this.trainingPrograms.createTrainingProgram(programToAdd).subscribe({
-      next: () => {
+      next: (program) => {
+        this.programCreated = program
         this.toast.add({
           severity: 'success',
           summary: 'Program Created',
@@ -72,6 +74,6 @@ export class FitnessProgramFormComponent implements OnInit {
   }
 
   navigateToPrograms() {
-    this.router.navigate(['programs']);
+    this.router.navigate(['program-trainings'], {state: this.programCreated });
   }
 }

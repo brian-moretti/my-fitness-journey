@@ -1,7 +1,7 @@
-<div class="full-height">
+<main class="main-container">
   <app-fitness-header></app-fitness-header>
-  <div class="container hero container-height">
-    <div class="col-12 md:col-6 xl:col-5">
+  <div class="container hero-container container-height">
+    <div class="hero-child-1">
       <h1 class="font-big roboto-bold">
         <span>The only app that</span>
         <strong> gets you in shape while tracking</strong>
@@ -21,8 +21,12 @@
         ></app-fitness-button>
       </div>
     </div>
-    <div class="col-12 md:col-6 xl:col-7">
-      <img src="" alt="" class="" />
+    <div class="hero-child-2">
+      <img
+        src="assets/images/journey.svg"
+        alt="mockup of gym trainer"
+        class="hero-image"
+      />
     </div>
     <div *ngIf="viewScreen <= 768" class="btn-container">
       <app-fitness-button
@@ -40,4 +44,4 @@
     </div>
   </div>
   <app-fitness-footer></app-fitness-footer>
-</div>
+</main>

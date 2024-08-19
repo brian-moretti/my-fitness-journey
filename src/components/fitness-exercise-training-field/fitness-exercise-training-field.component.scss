@@ -1,23 +1,40 @@
 form {
   border: 1px solid red;
-  width: 90%;
   margin: 0.5rem auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  flex-wrap: nowrap;
   /*   & > * {
     border-right: 1px solid red; //? vedi sotto + impo
   } */
 }
 
+.timer-container{
+  display: flex;
+  align-items: center;
+}
+
 :host ::ng-deep {
   form {
-    .p-inputtext {
-      max-width: fit-content;
+    .p-inputtext:first-of-type {
+      max-width: 150px;
+    }
+    .p-inputtext:not(.p-inputtext:first-of-type),
+    .p-inputnumber-input {
+      width: 100px;
+    }
+     
+    .p-inputtext[type='time'][name='rest']{
+      width: fit-content; 
     }
     .ng-star-inserted {
       margin: 0;
+    }
+    .timer .p-button {
+      width: 2rem;
+      height: 2rem;
+      aspect-ratio: 1;
     }
   }
 }

@@ -23,30 +23,26 @@ const exercisesTraining_details = async (req, res) => {
     }
     result = {
       id_user: result.id_user,
-      "Training Program": {
-        id: result.id_scheda,
-        name: result.program_name,
-        date_start: result.date_start,
-        date_end: result.date_end,
-      },
-      Exercise: {
-        series: result.series,
-        reps: result.reps,
-        rest: result.rest,
-        weight: result.weight,
-        max_weight_rm: result.weight_max_rm,
-        tutorial: result.video,
-      },
-      "Info Exercise": {
-        ID: result.id_exercise,
-        Name: result.exer_name,
-        Target: result.target,
-        Gif: result.gifUrl,
-        Instructions: result.instructions,
-        "Body Part": result.bodyPart,
-        "Secondary Muscles": result.secondaryMuscles,
+      id_program: result.id_scheda,
+      series: result.series,
+      reps: result.reps,
+      rest: result.rest,
+      weight: result.weight,
+      max_weight_rm: result.weight_max_rm,
+      video: result.video,
+      exercise: {
+        id: result.id_exercise,
+        name: result.exer_name,
+        target: result.target,
+        gifUrl: result.gifUrl,
+        equipment: result.equipment,
+        instructions: result.instructions,
+        bodyPart: result.bodyPart,
+        secondaryMuscles: result.secondaryMuscles,
       },
     };
+    console.log(result);
+    
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -75,7 +71,7 @@ const exercisesTraining_create = async (req, res) => {
       req.body
     );
     if (result.affectedRows >= 0) {
-      return res.status(201).json({ Training: req.body });
+      return res.status(201).json(req.body);
     }
   } catch (error) {
     console.error(error);

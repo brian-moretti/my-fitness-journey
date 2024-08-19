@@ -22,7 +22,7 @@ const user_details = async (req, res) => {
       id: result.id,
       username: result.username,
       email: result.email,
-      Programs: {
+      programs: {
         //! DOVREBBE ESSERE ARRAY
         name: result.name,
         date_start: result.date_start,

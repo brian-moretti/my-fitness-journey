@@ -6,6 +6,6 @@ export interface ITrainingProgram {
   name?: string;
   date_start?: string;
   date_end?: string;
-  User?: IUser;
-  Exercises?: IExerciseTraining[];
+  user?: IUser;
+  trainings?: IExerciseTraining[];
 }

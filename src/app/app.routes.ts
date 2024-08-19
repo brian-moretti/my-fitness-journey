@@ -8,6 +8,7 @@ import { FitnessHeroComponent } from '../pages/fitness-hero/fitness-hero.compone
 import { FitnessLoginComponent } from '../pages/fitness-login/fitness-login.component';
 import { FitnessProgramDetailsComponent } from '../pages/fitness-program-details/fitness-program-details.component';
 import { FitnessProgramFormComponent } from '../pages/fitness-program-form/fitness-program-form.component';
+import { FitnessProgramTrainingsComponent } from '../pages/fitness-program-trainings/fitness-program-trainings.component';
 import { FitnessProgramsComponent } from '../pages/fitness-programs/fitness-programs.component';
 import { FitnessSettingsComponent } from '../pages/fitness-settings/fitness-settings.component';
 import { FitnessSignupComponent } from '../pages/fitness-signup/fitness-signup.component';
@@ -56,6 +57,13 @@ export const routes: Routes = [
     path: 'program-form',
     component: FitnessProgramFormComponent,
     title: 'New Program',
+    canActivate: [AuthGuard],
+    canDeactivate: [navigationDelayGuard],
+  },
+  {
+    path: 'program-trainings',
+    component: FitnessProgramTrainingsComponent,
+    title: 'Program Trainings',
     canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },

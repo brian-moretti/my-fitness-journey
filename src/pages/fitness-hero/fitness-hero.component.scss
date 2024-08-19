@@ -1,7 +1,30 @@
-.hero {
+/* div,
+main {
+  border: 1px solid red;
+} */
+.main-container {
+  height: 100lvh;
+}
+
+.hero-container {
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 1.5rem 0;
+}
+
+.hero-child-1 {
+  flex: 1;
+}
+
+.hero-child-2 {
+  flex: 1.5;
+  padding: 0 1em;
+}
+
+.hero-image {
+  width: 100%;
+  aspect-ratio: 16/9;
 }
 
 .btn-container {
@@ -20,19 +43,26 @@
   }
 }
 
-@media only screen and (max-width: 769px) {
-  .font-big {
-    text-align: center;
-  }
-
-  .hero {
-    flex-direction: column;
+@media only screen and (max-width: 425px) {
+  .hero-child-1 h1 {
+    padding: 0 1rem;
   }
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 768px) {
   .font-big {
     font-size: calc(2.25rem + 1.35vw);
+  }
+}
+@media only screen and (max-width: 768px) {
+  .font-big {
+    text-align: center;
+  }
+  .container-height {
+    height: fit-content;
+  }
+  .hero-container {
+    flex-direction: column;
   }
 }
 
