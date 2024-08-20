@@ -1,0 +1,32 @@
+.container-page {
+  max-width: 100svw;
+  padding: 2rem;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-container > :first-child{
+  order: 1;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container-page {
+    margin-left: 15rem;
+    max-width: calc(100lvw - 15rem);
+  }
+}
+@media only screen and (min-width: 768px) {
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+  .header-container > :first-child{
+    order: 0;
+  }
+}

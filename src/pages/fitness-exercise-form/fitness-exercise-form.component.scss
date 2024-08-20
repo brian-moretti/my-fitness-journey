@@ -1,10 +1,10 @@
 .form-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 800px;
-  height: 100vh;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .form-container form {
@@ -15,16 +15,50 @@
   gap: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba($color: black, $alpha: 0.5);
+  max-width: min(90dvw, 100%);
+}
+
+.drop-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 :host ::ng-deep {
   form {
     & .p-button,
-    .p-dropdown, .p-multiselect {
+    .p-dropdown,
+    .p-multiselect {
       width: 250px;
     }
     & .p-float-label .p-inputtext {
-      width: 100%;
+      width: max(250px, 100%);
     }
+  }
+  @media only screen and (max-width: 768px) {
+    form {
+      & p-dropdown,
+      p-multiselect {
+        width: 100%;
+      }
+      & .p-dropdown,
+      .p-multiselect {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .form-container {
+    height: 100dvh;
+  }
+  .btn-container {
+    gap: 2rem;
   }
 }

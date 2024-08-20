@@ -5,6 +5,7 @@
     class="text-center"
     (ngSubmit)="onLoginSubmit(loginForm)"
   >
+    <span class="title">Log and work hard</span>
     <p-floatLabel>
       <input
         pInputText
@@ -19,6 +20,14 @@
       />
       <label for="username">Username</label>
     </p-floatLabel>
+    <small
+      *ngIf="
+        usernameControl.invalid &&
+        (usernameControl.dirty || usernameControl.touched)
+      "
+      class="p-error"
+      >* Please fill the field with a username</small
+    >
     <p-floatLabel>
       <input
         pInputText
@@ -32,6 +41,13 @@
       />
       <label for="email">Email</label>
     </p-floatLabel>
+    <small
+      *ngIf="
+        emailControl.invalid && (emailControl.dirty || emailControl.touched)
+      "
+      class="p-error"
+      >* Please fill the field with a valid email</small
+    >
     <p-floatLabel>
       <p-password
         formControlName="password"
@@ -46,6 +62,14 @@
       />
       <label for="password">Password</label>
     </p-floatLabel>
+    <small
+      *ngIf="
+        passwordControl.invalid &&
+        (passwordControl.dirty || passwordControl.touched)
+      "
+      class="p-error"
+      >* Please fill the field with a secret password</small
+    >
     <app-fitness-button
       [title]="'Not signup yet. Go now'"
       [link]="true"
@@ -61,3 +85,5 @@
   </form>
 </div>
 <app-fitness-footer></app-fitness-footer>
+
+<p-toast position="top-center" />

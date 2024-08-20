@@ -41,6 +41,8 @@ ul > li {
   height: calc(100lvh - 9.5em);
 }
 
+//* SIGNUP / LOGIN PAGES
+
 .log-pages {
   display: flex;
   flex-direction: column;
@@ -49,11 +51,27 @@ ul > li {
   padding: 1.5rem 0;
 }
 
+.title {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: -0.5rem;
+}
+
+small {
+  display: block;
+  text-align: left;
+  margin-bottom: -1rem;
+}
+
+small:last-of-type {
+  margin-bottom: 0;
+}
+
 .font-big {
   font-size: 2.25rem;
 }
 
-// ALTERNATIVA A ::NG-DEEP
+// ALTERNATIVA A ::NG-DEEP -> SOLO DOVE IMPORTI I LAYER PERO'....
 @layer custom {
   //* SIDE-BAR COMP
   .side-bar {
@@ -83,13 +101,15 @@ ul > li {
     & .p-button-label {
       font-size: 0.75rem;
     }
+    & .p-float-label > .ng-invalid.ng-dirty + label {
+      color: #6b7280;
+    }
   }
 
-/*   .info-exercise{
+  /*   .info-exercise{
     & .p-button{
       padding: 0
     }
   } */
 }
-
 @import "./assets/scss/mediascreen";

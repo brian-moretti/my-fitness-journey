@@ -1,3 +1,5 @@
+import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
@@ -10,22 +12,30 @@ import { MessageService } from 'primeng/api';
 import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IUser } from '../../core/model/interface/user';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
   standalone: true,
-  imports: [...SHARED_COMPONENTS, ...PRIMENG_COMPONENTS, ReactiveFormsModule],
+  imports: [
+    ...SHARED_COMPONENTS,
+    ...PRIMENG_COMPONENTS,
+    ReactiveFormsModule,
+    CommonModule,
+  ],
   providers: [MessageService],
   templateUrl: './fitness-signup.component.html',
   styleUrl: './fitness-signup.component.scss',
 })
 export class FitnessSignupComponent implements OnInit {
   signupForm!: FormGroup;
+  errorMessage: string = '';
 
   constructor(
     private router: Router,
     private user: UserService,
-    private messageService: MessageService
+    private toast: MessageService,
+    private interceptor: HttpErrorsService
   ) {}
 
   ngOnInit(): void {
@@ -58,20 +68,29 @@ export class FitnessSignupComponent implements OnInit {
 
     this.user.createUserUsingPost(signupForm).subscribe({
       next: (user: IUser) => {
-        this.messageService.add({
+        this.toast.add({
           severity: 'success',
           summary: `${user.username}'s Account Created`,
           detail: 'Login to your account',
           life: 2000,
+          key: 'success',
         });
-        //form.reset();
+        setTimeout(() => {
+          form.reset();
+          this.router.navigate(['auth/login']);
+        }, 2000);
       },
-      error: () => {},
+      error: (error: HttpErrorResponse) => {
+        console.error(error);
+        this.errorMessage = this.interceptor.handleLoginError(error);
+        this.toast.add({
+          severity: 'error',
+          summary: 'Signup Error',
+          detail: "There's an error on filling the form. Please try again",
+          key: 'error',
+          life: 2000,
+        });
+      },
     });
-  }
-
-  //! FIX ERROR ON CHANGING PAGE FOR INPUT FORM
-  onCloseToast() {
-    this.router.navigate(['auth/login']);
   }
 }

@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SHARED_COMPONENTS } from '..';
 import { ViewportService } from '../../services/viewport/viewport.service';
@@ -6,7 +6,7 @@ import { ViewportService } from '../../services/viewport/viewport.service';
 @Component({
   selector: 'app-fitness-hero',
   standalone: true,
-  imports: [...SHARED_COMPONENTS, CommonModule, NgOptimizedImage],
+  imports: [...SHARED_COMPONENTS, CommonModule],
   templateUrl: './fitness-hero.component.html',
   styleUrl: './fitness-hero.component.scss',
 })

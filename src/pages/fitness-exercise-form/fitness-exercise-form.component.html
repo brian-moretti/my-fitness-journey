@@ -19,7 +19,7 @@
       />
       <label for="exerciseName">Exercise Name</label>
     </p-floatLabel>
-    <div class="flex gap-5">
+    <div class="drop-container">
       <p-dropdown
         name="target"
         placeholder="Select target"
@@ -64,7 +64,7 @@
       tooltipEvent="focus"
     ></textarea>
 
-    <div class="flex gap-5">
+    <div class="drop-container">
       <p-multiSelect
         name="secondaryMuscles"
         placeholder="Optional muscles"
@@ -85,7 +85,7 @@
         [options]="equipments"
       />
     </div>
-    <div class="flex gap-5 mt-5">
+    <div class="btn-container">
       <app-fitness-button
         [title]="'Go Back'"
         [outline]="true"

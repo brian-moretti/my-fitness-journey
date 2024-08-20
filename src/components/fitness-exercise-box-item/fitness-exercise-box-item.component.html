@@ -24,7 +24,11 @@
   [style]="{ width: '35rem' }"
 >
   <div class="dialog-container">
-    <app-fitness-button [icon]="'pi pi-pen-to-square'" (btnEvent)="onEditExercise(exercise)"></app-fitness-button>
+    <app-fitness-button
+      *ngIf="exercise.id! > 1323"
+      [icon]="'pi pi-pen-to-square'"
+      (btnEvent)="onEditExercise(exercise)"
+    ></app-fitness-button>
     <div class="flex flex-column text-sm">
       <img [src]="exercise.gifUrl" [alt]="exercise.name" width="225px" />
       <span><b>Target: </b>{{ exercise.target | titlecase }}</span>

@@ -17,9 +17,9 @@ const login_verify = async (req, res) => {
         user.username === req.body.username && user.email === req.body.email
       );
     });
-    if (!userToVerify) return res.status(400).json({ Error: "User not found" });
+    if (!userToVerify) return res.status(400).json("Invalid user");
     const isMatch = await compareHash(req.body.password, userToVerify.password);
-    if (!isMatch) return res.status(400).json({ Error: "Invalid password" });
+    if (!isMatch) return res.status(400).json("Invalid password");
     const access_token = await generateJWTAccessToken(userToVerify);
     const refresh_token = await generateJWTRefreshToken(userToVerify);
     await insertRefreshTokenDB("users", refresh_token, userToVerify.id);
@@ -37,7 +37,7 @@ const login_verify = async (req, res) => {
     res.redirect(301, "/users");
   } catch (error) {
     console.error(error);
-    res.sendStatus(500).json({ Error: "Internal server error" });
+    res.sendStatus(500).json("Internal server error");
   }
 };
 

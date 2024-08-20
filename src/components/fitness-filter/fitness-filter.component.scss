@@ -2,13 +2,21 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 :host ::ng-deep {
   .p-inputtext {
-    width: 220px;
+    width: calc(250px + 1vw);
   }
   .p-dropdown {
-    width: 220px;
+    width: calc(250px + 1vw);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .filter-container {
+    width: 100%;
+    justify-content: flex-start;
   }
 }

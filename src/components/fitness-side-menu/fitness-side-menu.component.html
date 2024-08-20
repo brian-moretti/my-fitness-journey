@@ -1,5 +1,5 @@
 <app-fitness-button
-  *ngIf="viewScreen < 768"
+  *ngIf="viewScreen < 1024"
   [icon]="'pi pi-angle-left'"
   [raised]="true"
   [rounded]="true"
@@ -7,8 +7,8 @@
   (btnEvent)="showSideMenu()"
 ></app-fitness-button>
 <menu
-  *ngIf="viewScreen >= 768 || (showMenu && viewScreen < 768)"
-  class="side-bar md:w-15rem m-0"
+  *ngIf="viewScreen >= 1024 || (showMenu && viewScreen < 1024)"
+  class="side-bar"
 >
   <div class="logo">
     <img src="" alt="logo" />

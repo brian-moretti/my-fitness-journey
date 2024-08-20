@@ -47,10 +47,8 @@ const user_create = async (req, res) => {
   } catch (error) {
     console.error(error);
     if (error.message === "error body")
-      return res
-        .status(400)
-        .json({ Error: "The body has an error, please check" });
-    return res.status(500).json({ Error: "Internal errors server" });
+      return res.status(400).json("The body has an error, please check");
+    return res.status(500).json("Internal errors server");
   }
 };
 

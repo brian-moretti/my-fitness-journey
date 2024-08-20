@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../../../services/auth/auth.service';
 
+//! ADIBITO ALLA VERIFICA DELLO STATO DI LOGIN SESSIONE
+
 export const errorsInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
