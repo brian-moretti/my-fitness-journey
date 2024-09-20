@@ -65,7 +65,7 @@ const logout = async (req, res) => {
     return res.status(200).json({ message: "Logout successfully completed" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal error server" });
+    return res.status(500).json("Internal error server");
   }
 };
 

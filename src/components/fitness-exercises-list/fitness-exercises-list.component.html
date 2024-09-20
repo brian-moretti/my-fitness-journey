@@ -1,11 +1,14 @@
-<!-- ! FIX EXTRA SPACE RIGHT WITH THIS COMP -->
 <div class="exercise-grid">
   <ng-container *ngFor="let exercise of exerciseList">
     <app-fitness-exercise-box-item
       [exercise]="exercise"
+      (deletedExercise)="onDeleteExercise($event)"
+      [pagination]="pagination"
+      (updatePaginator)="onUpdatePaginator($event)"
     ></app-fitness-exercise-box-item>
   </ng-container>
 </div>
+<!-- ! DYNAMIC FOR BACK FROM LOGIC -->
 <p-paginator
   (onPageChange)="onPageChange($event)"
   [first]="0"

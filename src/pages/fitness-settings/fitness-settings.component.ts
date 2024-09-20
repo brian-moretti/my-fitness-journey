@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
@@ -6,6 +7,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { SHARED_COMPONENTS } from '..';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IUser } from '../../core/model/interface/user';
+import { AuthService } from '../../services/auth/auth.service';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
@@ -21,12 +24,15 @@ export class FitnessSettingsComponent implements OnInit {
   backupUser: IUser = {};
   userLogged: IUser = {};
   isEditable: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private router: Router,
     private userService: UserService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private interceptor: HttpErrorsService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +51,17 @@ export class FitnessSettingsComponent implements OnInit {
           users.find((user) => user.id === this.account.id) || {};
         this.backupUser = cloneDeep(this.userLogged);
       },
-      error: () => {},
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleUserError(err);
+        this.messageService.add({
+          key: 'users-error',
+          severity: 'error',
+          summary: 'Database error',
+          detail: this.errorMessage,
+          life: 2000,
+        });
+      },
     });
   }
 
@@ -65,6 +81,18 @@ export class FitnessSettingsComponent implements OnInit {
         this.backupUser = this.userLogged;
         localStorage.setItem('Account', JSON.stringify(updatedUser));
       },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.userLogged = this.backupUser;
+        this.errorMessage = this.interceptor.handleUserError(err);
+        this.messageService.add({
+          key: 'users-error',
+          severity: 'error',
+          summary: 'Update error',
+          detail: this.errorMessage,
+          life: 2000,
+        });
+      },
     });
     this.isEditable = false;
   }
@@ -72,10 +100,19 @@ export class FitnessSettingsComponent implements OnInit {
   private _deleteAccount() {
     this.userService.deleteUserUsingDelete(this.userLogged).subscribe({
       next: () => {
-        localStorage.removeItem('Account');
+        this.auth.isLogoutStorage();
         this.router.navigate(['']);
       },
-      error: () => {},
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.messageService.add({
+          key: 'users-error',
+          severity: 'error',
+          summary: 'Delete error',
+          detail: this.errorMessage,
+          life: 2000,
+        });
+      },
     });
   }
 

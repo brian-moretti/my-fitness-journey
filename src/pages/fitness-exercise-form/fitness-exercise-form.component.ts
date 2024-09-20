@@ -1,4 +1,5 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
@@ -7,11 +8,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { FitnessButtonComponent } from '../../components/fitness-button/fitness-button.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
 import { IExerciseRouterState } from '../../core/model/interface/exerciseRouterState';
 import { ExerciseService } from '../../services/exercise/exercise.service';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { bodyParts, IBodyParts } from '../../utilities/bodyParts';
 import { equipments, IEquipment } from '../../utilities/equipment';
 import { IMuscles, muscles } from '../../utilities/muscles';
@@ -25,12 +28,11 @@ import { ITargets, targets } from '../../utilities/targets';
     FitnessButtonComponent,
     ReactiveFormsModule,
   ],
+  providers: [MessageService],
   templateUrl: './fitness-exercise-form.component.html',
   styleUrl: './fitness-exercise-form.component.scss',
 })
 export class FitnessExerciseFormComponent implements OnInit {
-  // @Output() exerciseData: EventEmitter<> = new EventEmitter()
-
   exercisesForm!: FormGroup;
   targets: ITargets[] = [];
   bodyParts: IBodyParts[] = [];
@@ -39,13 +41,17 @@ export class FitnessExerciseFormComponent implements OnInit {
   action: string = '';
   exerciseRouterState: IExerciseRouterState = {};
   exerciseToUpdate: IExercise | undefined;
+  errorMessage: string = '';
 
   constructor(
     private exerciseService: ExerciseService,
-    private router: Router
+    private router: Router,
+    private interceptor: HttpErrorsService,
+    private toast: MessageService
   ) {}
 
   ngOnInit(): void {
+    this._getSingleExercise();
     this._getRouterState();
     this._getInterfaceData();
     const { target, bodyPart, instructions, secondaryMuscles, equipment } =
@@ -94,11 +100,15 @@ export class FitnessExerciseFormComponent implements OnInit {
 
   private _mapFormElement() {
     const target = this.targets.find(
-      (target) => target.target.toLowerCase() === this.exerciseToUpdate?.target
+      (target) =>
+        target.target.toLowerCase() ===
+        this.exerciseToUpdate?.target.toLowerCase()
     );
+
     const bodyPart = bodyParts.find(
       (bodyPart) =>
-        bodyPart.bodyPart.toLowerCase() === this.exerciseToUpdate?.bodyPart
+        bodyPart.bodyPart.toLowerCase() ===
+        this.exerciseToUpdate?.bodyPart.toLowerCase()
     );
     const instructions = this.exerciseToUpdate?.instructions
       ?.join(' ')
@@ -115,14 +125,16 @@ export class FitnessExerciseFormComponent implements OnInit {
 
     const equipment = this.equipments.find(
       (equipment) =>
-        equipment.equipment.toLowerCase() === this.exerciseToUpdate?.equipment
+        equipment.equipment.toLowerCase() ===
+        this.exerciseToUpdate?.equipment?.toLowerCase()
     );
 
     return { target, bodyPart, instructions, secondaryMuscles, equipment };
   }
 
+  //?
   private _getSingleExercise() {
-    this.exerciseService.getSingleExercise(1).subscribe((data) => {
+    this.exerciseService.getSingleExercise(1500).subscribe((data) => {
       console.log(data);
     });
   }
@@ -138,39 +150,77 @@ export class FitnessExerciseFormComponent implements OnInit {
   }
 
   onSubmitNewExercise(form: FormGroup) {
+    const exerciseToAdd: IExercise = this._onMappingExerciseForm(form);
+    console.log(exerciseToAdd);
+
+    this.exerciseService.createExerciseUsingPost(exerciseToAdd).subscribe({
+      next: (exercise) => {
+        this.router.navigate(['/exercises', {}])
+        //! OK POST - ESEGUIRE NAVIGAZIONE
+        //! TOGLIERE IMG SE NON PRESENTE HTML
+        this.toast.add({
+          severity: 'success',
+          summary: 'Exercise Created',
+          detail: exercise.name,
+        });
+        form.reset();
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleExerciseError(err);
+        this.toast.add({
+          severity: 'error',
+          summary: 'Submit error',
+          detail: this.errorMessage,
+        });
+      },
+    });
+  }
+
+  onSubmitUpdateExercise(form: FormGroup) {
+    const exerciseToUpdate = this._onMappingExerciseForm(form);
+    this.exerciseService.updateExerciseUsingPut(exerciseToUpdate).subscribe({
+      next: (updatedExercise) => {
+        this.toast.add({
+          severity: 'success',
+          summary: 'Exercise',
+          detail: `${updatedExercise.name} updated`,
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleExerciseError(err);
+        this.toast.add({
+          severity: 'error',
+          summary: 'Update Error',
+          detail: this.errorMessage,
+        });
+      },
+    });
+  }
+
+  private _onMappingExerciseForm(form: FormGroup): IExercise {
     const instructions: string[] | undefined = form.value.instructions
       ? form.value.instructions.trim().split('.')
       : undefined;
+    console.log(instructions);
+
     const secondaryMuscles: string[] | undefined = form.value.secondaryMuscles
       ? form.value.secondaryMuscles
           .flatMap((muscle: { muscle: string }) => Object.values(muscle))
           .sort((a: string, b: string) => (a > b ? 1 : -1))
       : undefined;
-    const equipment = form.value.equipment
+    const equipment: string | undefined = form.value.equipment
       ? form.value.equipment.equipment
       : undefined;
-    const exerciseToAdd: IExercise = {
-      name: form.value.exerciseName,
+    return {
+      id: this.exerciseToUpdate!.id,
+      name: form.value.name,
       target: form.value.target.target,
       instructions,
       bodyPart: form.value.bodyPart.bodyPart,
       secondaryMuscles,
       equipment,
     };
-    this.exerciseService
-      .createExerciseUsingPost(exerciseToAdd)
-      .subscribe((exercise) => {
-        const newExercise = exercise;
-
-        //! OK POST - ESEGUIRE NAVIGAZIONE + MESSAGGIO CORRETTO INSERIMENTO
-        //! GESTIRE ERRORE DUPLICATO NAME
-        //! TOGLIERE IMG SE NON PRESENTE HTML
-        //console.log(exercise); //{id: 1329, name: 'Test4', target: 'Abs', bodyPart: 'Back'}
-        form.reset();
-      });
-  }
-
-  onSubmitUpdateExercise(form: FormGroup) {
-    //this.exerciseService.updateExerciseUsingPut();
   }
 }

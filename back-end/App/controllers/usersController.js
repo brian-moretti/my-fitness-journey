@@ -9,7 +9,7 @@ const user_index = async (req, res) => {
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal server errors" });
+    return res.status(500).json("Internal server errors");
   }
 };
 
@@ -29,16 +29,30 @@ const user_details = async (req, res) => {
         date_end: result.date_end,
       },
     };
-    if (!result) return res.status(404).json({ Error: "User not founded" });
+    if (!result) return res.status(404).json("User not founded");
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal error server" });
+    return res.status(500).json("Internal error server");
   }
 };
 
 const user_create = async (req, res) => {
   try {
+    const [existingUser] = await UsersModel.checkExistingUser(
+      req.body.username,
+      req.body.email
+    );
+    if (existingUser) {
+      if (
+        existingUser.username.toLowerCase() === req.body.username.toLowerCase()
+      ) {
+        return res.status(400).json("Duplicate Name");
+      }
+      if (existingUser.email.toLowerCase() === req.body.email.toLowerCase()) {
+        return res.status(400).json("Duplicate Email");
+      }
+    }
     const auth = await createHashedPassword(req.body.password);
     req.body = { ...req.body, password: auth };
     const result = await UsersModel.createUser(req.body);
@@ -46,7 +60,7 @@ const user_create = async (req, res) => {
     return res.status(201).json(newUser);
   } catch (error) {
     console.error(error);
-    if (error.message === "error body")
+    if (error.message === "Error Body")
       return res.status(400).json("The body has an error, please check");
     return res.status(500).json("Internal errors server");
   }
@@ -54,28 +68,41 @@ const user_create = async (req, res) => {
 
 const user_update = async (req, res) => {
   try {
-    let user = await UsersModel.getUser(req.params.id);
-    //! INSERIRE NEL MODEL
-    [user] = user.filter((username) => username.id === req.user.id);
-    if (!user) return res.status(404).json({ Error: "User not found" });
+    let [user] = await UsersModel.getUser(req.params.id);
+    if (!user) return res.status(404).json("User not found");
+    const otherUsers = await UsersModel.checkUpdatedUser(req.params.id);
+    if (otherUsers.length > 0) {
+      if (
+        otherUsers.some(
+          (user) =>
+            user.username.toLowerCase() === req.body.username.toLowerCase()
+        )
+      )
+        return res.status(400).json("Duplicate Name");
+      if (
+        otherUsers.some(
+          (user) => user.email.toLowerCase() === req.body.email.toLowerCase()
+        )
+      )
+        return res.status(400).json("Duplicate Email");
+    }
     const result = await UsersModel.updateUser(user, req.body);
     const updatedUser = { id: req.params.id, ...req.body };
     if (result.affectedRows >= 1) return res.status(200).json(updatedUser);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal server error" });
+    return res.status(500).json("Internal server error");
   }
 };
 
 const user_delete = async (req, res) => {
   try {
     let [deletedUser, result] = await UsersModel.deleteUser(req.params.id);
-    if (!deletedUser)
-      return res.status(404).json({ Error: "User not founded" });
+    if (!deletedUser) return res.status(404).json("User not founded");
     if (result.affectedRows >= 1) return res.status(200).json(deletedUser);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal error server" });
+    return res.status(500).json("Internal error server");
   }
 };
 

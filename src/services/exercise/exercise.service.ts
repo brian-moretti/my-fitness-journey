@@ -25,6 +25,8 @@ export class ExerciseService {
   }
 
   createExerciseUsingPost(exerciseInfo: IExercise): Observable<IExercise> {
+    console.log(exerciseInfo);
+    
     return this.http.post<IExercise>(this.url, exerciseInfo);
   }
 

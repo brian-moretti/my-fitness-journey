@@ -1,3 +1,8 @@
+.container-page {
+  max-width: 100svw;
+  padding: 2rem;
+}
+
 .setting-container {
   max-width: fit-content;
   padding: 2rem;
@@ -20,5 +25,16 @@
   }
   .danger-btn .p-button {
     width: 100%;
+  }
+
+  .p-toast {
+    width: min(90%, 35rem);
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .container-page {
+    margin-left: 15rem;
+    max-width: calc(100lvw - 15rem);
   }
 }

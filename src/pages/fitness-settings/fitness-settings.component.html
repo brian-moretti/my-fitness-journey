@@ -1,9 +1,8 @@
 <div class="container-fluid g-0">
   <app-fitness-side-menu></app-fitness-side-menu>
-  <div class="container cnb py-5 border-500 border-2">
+  <main class="container-page">
     <h1 class="text-center roboto-bold font-big m-0">Settings</h1>
     <section class="setting-container">
-      <!-- !COMPONENTE SPECIFICO -->
       <span class="align-self-start">Your Account</span>
       <input
         type="text"
@@ -54,8 +53,9 @@
         ></app-fitness-button>
       </ng-container>
     </section>
-  </div>
+  </main>
 </div>
 <p-toast key="success" (onClose)="onCloseToast()" />
 <p-toast key="reject" />
+<p-toast key="users-error" />
 <p-confirmDialog />

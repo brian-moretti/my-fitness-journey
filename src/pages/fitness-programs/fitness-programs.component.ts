@@ -90,7 +90,7 @@ export class FitnessProgramsComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Stay Hard',
-          detail: 'This program still could help',
+          detail: 'This program could still help you',
           life: 2000,
         });
       },

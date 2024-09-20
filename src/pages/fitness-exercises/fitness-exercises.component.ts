@@ -1,15 +1,20 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { SHARED_COMPONENTS } from '..';
+import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
 import { IFilters } from '../../core/model/interface/filterExercises';
 import { IPagination } from '../../core/model/interface/pagination';
 import { ExerciseService } from '../../services/exercise/exercise.service';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 
 @Component({
   selector: 'app-fitness-exercises',
   standalone: true,
-  imports: [...SHARED_COMPONENTS, CommonModule],
+  imports: [...SHARED_COMPONENTS, CommonModule, PRIMENG_COMPONENTS],
+  providers: [MessageService],
   templateUrl: './fitness-exercises.component.html',
   styleUrl: './fitness-exercises.component.scss',
 })
@@ -17,8 +22,13 @@ export class FitnessExercisesComponent implements OnInit {
   exercises: IExercise[] = [];
   filterExercises: IExercise[] = [];
   page: number = 1;
+  errorMessage: string = '';
 
-  constructor(private exerciseService: ExerciseService) {}
+  constructor(
+    private exerciseService: ExerciseService,
+    private interceptor: HttpErrorsService,
+    private toast: MessageService
+  ) {}
 
   ngOnInit(): void {
     this._getExercises();
@@ -30,7 +40,10 @@ export class FitnessExercisesComponent implements OnInit {
         this.exercises = [...this.exercises, ...exercises];
         this.filterExercises = this.exercises;
       },
-      error: () => {},
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleExerciseError(err);
+      },
     });
   }
 
@@ -46,6 +59,7 @@ export class FitnessExercisesComponent implements OnInit {
     const name = filters.searchName;
     const target = filters.selectedTarget;
     const bodyPart = filters.selectedBodyPart;
+    //! USARE METODO B/END CREATO
     const checkDatabase = filters.checkEntireDatabase;
 
     if (!filters) {
@@ -105,6 +119,22 @@ export class FitnessExercisesComponent implements OnInit {
     this.exercises = this.filterExercises.filter((exercise) =>
       exercise.bodyPart.includes(bodyPart.toLowerCase().trim())
     );
+  }
+
+  onDeleteExercise(exercise: IExercise) {
+    this.exerciseService.deleteExerciseUsingDelete(exercise.id!).subscribe({
+      next: () => {
+        this.exercises = this.exercises.filter((ex) => ex.id !== exercise.id);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleExerciseError(err);
+        this.toast.add({
+          severity: 'error',
+          detail: this.errorMessage,
+        });
+      },
+    });
   }
 }
 

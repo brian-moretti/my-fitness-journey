@@ -40,6 +40,10 @@
       width: max(250px, 100%);
     }
   }
+  .p-toast {
+    width: min(90%, 35rem);
+  }
+  
   @media only screen and (max-width: 768px) {
     form {
       & p-dropdown,

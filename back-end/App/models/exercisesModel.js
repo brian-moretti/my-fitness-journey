@@ -54,10 +54,10 @@ class ExercisesModel {
       `SELECT * FROM ${this.table_name}`
     );
     const duplicateExercise = dataInDatabase.find(
-      (exercise) => exercise.name === data.name
+      (exercise) => exercise.name.toLowerCase() === data.name.toLowerCase()
     );
     if (duplicateExercise) {
-      throw new Error("Exercise duplicated");
+      throw new Error("Duplicate Exercise");
     }
 
     let body = [
@@ -117,9 +117,9 @@ class ExercisesModel {
       newData.name ?? currentData.name,
       newData.target ?? currentData.target,
       newData.gifUrl ?? currentData.gifUrl,
-      newData.instructions ?? currentData.instructions,
+      JSON.stringify(newData.instructions) ?? currentData.instructions,
       newData.bodyPart ?? currentData.bodyPart,
-      newData.secondaryMuscles ?? currentData.secondaryMuscles,
+      JSON.stringify(newData.secondaryMuscles) ?? currentData.secondaryMuscles,
       newData.equipment ?? currentData.equipment,
       currentData.id,
     ];

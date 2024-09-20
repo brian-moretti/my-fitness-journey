@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
@@ -63,10 +64,14 @@ export class FitnessSideMenuComponent implements OnInit {
 
   //! MESSAGE ON LOGOUT + DELAY
   onLogout() {
-    this.login
-      .logoutUserUsingDelete()
-      .subscribe({ next: () => {}, error: () => {} });
-    this.auth.isLogoutStorage();
-    this.router.navigate(['']);
+    this.login.logoutUserUsingDelete().subscribe({
+      next: () => {
+        this.auth.isLogoutStorage();
+        this.router.navigate(['']);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+      },
+    });
   }
 }

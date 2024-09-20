@@ -96,16 +96,19 @@
           *ngSwitchCase="'CREATE'"
           [type]="'submit'"
           [title]="'Save'"
+          [disabled]="exercisesForm.invalid"
           (btnEvent)="onSubmitNewExercise(exercisesForm)"
         ></app-fitness-button>
         <app-fitness-button
           *ngSwitchCase="'UPDATE'"
           [type]="'submit'"
           [title]="'Update'"
+          [disabled]="exercisesForm.invalid"
           (btnEvent)="onSubmitUpdateExercise(exercisesForm)"
         ></app-fitness-button>
       </span>
-      <!-- [disabled]="exercisesForm.invalid" -->
+      <!--  -->
     </div>
   </form>
 </div>
+<p-toast position="center" />

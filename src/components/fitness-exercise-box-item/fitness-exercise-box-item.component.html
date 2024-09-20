@@ -3,17 +3,24 @@
     {{ exercise.name | titlecase }} - {{ exercise.id }}
   </h5>
   <img
-    [src]="exercise.gifUrl ? exercise.gifUrl : '.'"
+    *ngIf="!noImage"
+    [src]="exercise.gifUrl"
     [alt]="exercise.name"
     width="200px"
   />
+  <div class="no-image-container" *ngIf="noImage">
+    <span><b>Target: </b>{{ exercise.target | titlecase }}</span>
+    <span><b>Body Part: </b>{{ exercise.bodyPart | titlecase }}</span>
+    <span><b>Equipment: </b>{{ exercise.equipment | titlecase }}</span>
+    <span><b>Secondary Muscles: </b>{{ exercise.secondaryMuscles }}</span>
+  </div>
 
   <app-fitness-button
     *ngIf="!showMoreInfoExercise"
     [text]="true"
     [link]="true"
     [title]="'Show more...'"
-    (btnEvent)="onShowMore($event)"
+    (btnEvent)="onShowMore()"
   ></app-fitness-button>
 </div>
 
@@ -25,12 +32,29 @@
 >
   <div class="dialog-container">
     <app-fitness-button
-      *ngIf="exercise.id! > 1323"
+      *ngIf="exercise.id > 1323"
+      class="edit-btn"
+      [rounded]="true"
+      [raised]="true"
       [icon]="'pi pi-pen-to-square'"
       (btnEvent)="onEditExercise(exercise)"
     ></app-fitness-button>
+    <app-fitness-button
+      *ngIf="exercise.id > 1323"
+      class="delete-btn"
+      severity="danger"
+      [rounded]="true"
+      [raised]="true"
+      [icon]="'pi pi-trash'"
+      (btnEvent)="alertDialogue($event, exercise)"
+    ></app-fitness-button>
     <div class="flex flex-column text-sm">
-      <img [src]="exercise.gifUrl" [alt]="exercise.name" width="225px" />
+      <img
+        *ngIf="!noImage"
+        [src]="exercise.gifUrl"
+        [alt]="exercise.name"
+        width="225px"
+      />
       <span><b>Target: </b>{{ exercise.target | titlecase }}</span>
       <span><b>Body Part: </b>{{ exercise.bodyPart | titlecase }}</span>
       <span><b>Equipment: </b>{{ exercise.equipment | titlecase }}</span>
@@ -42,3 +66,6 @@
     </div>
   </div>
 </p-dialog>
+<p-toast key="success" (onClose)="onCloseToast(exercise)" />
+<p-toast key="reject" />
+<p-confirmDialog />

@@ -11,6 +11,16 @@ class UsersModel {
     return await mySqlConnectionQuery(query);
   }
 
+  static async checkExistingUser(username, email) {
+    const query = `SELECT * FROM ${this.table_name} WHERE username = ? OR email = ?`;
+    return await mySqlConnectionQuery(query, [username, email]);
+  }
+
+  static async checkUpdatedUser(id) {
+    const query = `SELECT * FROM ${this.table_name} WHERE id != ?`;
+    return await mySqlConnectionQuery(query, id);
+  }
+
   static async getUser(id) {
     const query = `SELECT us.id, us.username, us.email, programs.name, programs.date_start, programs.date_end FROM ${this.table_name} AS us LEFT JOIN training_programs as programs ON us.id = programs.id_user WHERE us.id = ?`;
     return await mySqlConnectionQuery(query, id);

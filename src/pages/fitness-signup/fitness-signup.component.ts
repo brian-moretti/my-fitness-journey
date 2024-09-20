@@ -82,11 +82,11 @@ export class FitnessSignupComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.error(error);
-        this.errorMessage = this.interceptor.handleLoginError(error);
+        this.errorMessage = this.interceptor.handleSignupError(error);
         this.toast.add({
           severity: 'error',
           summary: 'Signup Error',
-          detail: "There's an error on filling the form. Please try again",
+          detail: this.errorMessage,
           key: 'error',
           life: 2000,
         });

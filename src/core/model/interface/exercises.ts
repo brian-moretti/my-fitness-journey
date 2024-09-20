@@ -1,5 +1,5 @@
 export interface IExercise {
-  id?: number;
+  id: number;
   name: string;
   target: string;
   gifUrl?: string;

@@ -21,6 +21,7 @@
         <app-fitness-exercises-list
           [exerciseDataList]="exercises"
           (updateExerciseList)="onUpdateExerciseList($event)"
+          (deleteExercise)="onDeleteExercise($event)"
         ></app-fitness-exercises-list
       ></ng-container>
     </div>
@@ -29,3 +30,5 @@
 
 <!-- ! SOSTITUIRE CON LOADING SPINNER PRIMENG -->
 <ng-template #loading>Loading...</ng-template>
+
+<p-toast />

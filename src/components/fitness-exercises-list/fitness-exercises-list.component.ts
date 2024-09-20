@@ -27,11 +27,18 @@ import { FitnessExerciseBoxItemComponent } from '../fitness-exercise-box-item/fi
 export class FitnessExercisesListComponent implements OnChanges {
   @Input() exerciseDataList: IExercise[] = [];
   @Output() updateExerciseList: EventEmitter<IPagination> = new EventEmitter();
+  @Output() deleteExercise: EventEmitter<IExercise> = new EventEmitter();
 
   exerciseList: IExercise[] = [];
   maxElementPerPage: number = 0;
   first: number = 0;
   rows: number = 30;
+  pagination: IPagination = {
+    first: 0,
+    rows: 30,
+    page: 0,
+    maxElementPerPage: 0,
+  };
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['exerciseDataList']) {
@@ -44,6 +51,10 @@ export class FitnessExercisesListComponent implements OnChanges {
       this.first,
       this.first + this.rows
     );
+  }
+
+  onDeleteExercise(exercise: IExercise) {
+    this.deleteExercise.emit(exercise);
   }
 
   private _onMappingExercises(exercises: IExercise[]) {
@@ -93,4 +104,6 @@ export class FitnessExercisesListComponent implements OnChanges {
 
     this.updateExerciseList.emit(pagination);
   }
+
+  onUpdatePaginator(event: any) {}
 }
