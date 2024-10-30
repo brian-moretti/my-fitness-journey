@@ -28,8 +28,8 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './fitness-signup.component.scss',
 })
 export class FitnessSignupComponent implements OnInit {
-  signupForm!: FormGroup;
-  errorMessage: string = '';
+  public signupForm!: FormGroup;
+  public errorMessage: string = '';
 
   constructor(
     private router: Router,
@@ -59,7 +59,7 @@ export class FitnessSignupComponent implements OnInit {
     return this.signupForm.get('password') as FormControl;
   }
 
-  onSignupSubmit(form: FormGroup) {
+  public onSignupSubmit(form: FormGroup) {
     const signupForm = {
       username: form.value.username,
       email: form.value.email,

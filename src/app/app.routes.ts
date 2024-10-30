@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '../guard/auth/auth.guard';
-import { navigationDelayGuard } from '../guard/navigation-delay.guard';
+import { navigationDelayGuard } from '../guard/navigation-delay/navigation-delay.guard';
 import { FitnessDashboardComponent } from '../pages/fitness-dashboard/fitness-dashboard.component';
 import { FitnessExerciseFormComponent } from '../pages/fitness-exercise-form/fitness-exercise-form.component';
 import { FitnessExercisesComponent } from '../pages/fitness-exercises/fitness-exercises.component';
@@ -49,7 +49,6 @@ export const routes: Routes = [
   {
     path: 'program/:id',
     component: FitnessProgramDetailsComponent,
-    title: 'Program :name',
     canActivate: [AuthGuard],
     canDeactivate: [navigationDelayGuard],
   },

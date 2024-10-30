@@ -1,43 +1,22 @@
 <div class="container-fluid g-0">
   <app-fitness-side-menu></app-fitness-side-menu>
-  <div class="container cnb py-5 border-500 border-2">
-    <h1 class="text-center roboto-bold font-big m-0">YOUR PROGRAMS</h1>
+  <div class="container-page">
+    <h1 class="text-center roboto-bold font-big">YOUR PROGRAMS</h1>
     <p class="text-center m-0">Limits are often just illusions!</p>
     <ng-container *ngIf="programs.length > 0; else sideBtn">
       <app-fitness-button
         [link]="true"
+        [className]="'new-program'"
         [title]="'New program'"
         [urlLink]="'/program-form'"
       ></app-fitness-button>
     </ng-container>
     <div class="program-container">
       <ng-container *ngFor="let program of programs">
-        <!-- !COMPONENTE SPECIFICO - programBoxItem -->
-        <p-card [header]="program.name">
-          <p
-            [innerHTML]="
-              '<b>Start: </b> ' +
-              program.date_start +
-              ' </br> ' +
-              '<b>End: </b> ' +
-              program.date_end
-            "
-          ></p>
-          <app-fitness-button
-            [title]="'View Program'"
-            [size]="'small'"
-            [urlLink]="['/program', program.id]"
-          ></app-fitness-button>
-          <span class="delete">
-            <app-fitness-button
-              [icon]="'pi pi-trash'"
-              [rounded]="true"
-              [severity]="'danger'"
-              [size]="'small'"
-              (btnEvent)="alertDialogue($event, program.id!)"
-            ></app-fitness-button>
-          </span>
-        </p-card>
+        <app-fitness-program-box-item
+          [program]="program"
+          (deleteProgram)="alertDialogue($event)"
+        ></app-fitness-program-box-item>
       </ng-container>
     </div>
   </div>

@@ -11,6 +11,12 @@ export class LoginService {
 
   private url = 'http://localhost:3000/login';
 
+  loginVerifyUsingGet(): Observable<{ valid: boolean; user: IUser }> {
+    return this.http.get<{ valid: boolean; user: IUser }>(this.url, {
+      withCredentials: true,
+    });
+  }
+
   loginUserUsingPost(userInfo: IUser): Observable<IUser[]> {
     return this.http.post<IUser[]>(this.url, userInfo, {
       withCredentials: true,

@@ -1,40 +1,75 @@
-form {
-  border: 1px solid red;
+.training-field {
+  border-bottom: 0.5px solid rgba($color: #000000, $alpha: 0.85);
   margin: 0.5rem auto;
+  padding: 6px;
+  //max-width: clamp(100dvw, 500px ,80dvw);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   flex-wrap: nowrap;
-  /*   & > * {
-    border-right: 1px solid red; //? vedi sotto + impo
-  } */
+  position: relative;
 }
 
-.timer-container{
+.training-field div {
   display: flex;
   align-items: center;
+}
+
+.timer-container {
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .training-field {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 6px;
+  }
+
+  .edit-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 0;
+  }
 }
 
 :host ::ng-deep {
   form {
+    .p-inputtext {
+      border-right: 0.5px solid rgba($color: #000000, $alpha: 0.85);
+    }
     .p-inputtext:first-of-type {
-      max-width: 150px;
+      width: 350px;
     }
-    .p-inputtext:not(.p-inputtext:first-of-type),
-    .p-inputnumber-input {
+    [data-size="little"] .p-inputnumber-input {
+      width: 50px;
+    }
+    [data-size="medium"] .p-inputnumber-input {
+      width: 75px;
+      margin-left: 6px;
+      padding: 6px;
+    }
+
+    .p-inputtext[type="time"][name="rest"] {
       width: 100px;
-    }
-     
-    .p-inputtext[type='time'][name='rest']{
-      width: fit-content; 
+      margin-right: -30px;
     }
     .ng-star-inserted {
       margin: 0;
     }
-    .timer .p-button {
+    .timer .p-button,
+    .edit-btn .p-button {
       width: 2rem;
       height: 2rem;
-      aspect-ratio: 1;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    .p-inputtext:first-of-type {
+      max-width: calc(100px + 40dvw);
+      overflow-x: hidden;
     }
   }
 }

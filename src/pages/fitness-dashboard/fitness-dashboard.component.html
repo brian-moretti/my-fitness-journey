@@ -1,3 +1,16 @@
-<div>
+<div class="container-fluid g-0">
   <app-fitness-side-menu></app-fitness-side-menu>
+  <main class="container-page">
+    <!-- ! CREARE COMPONENTE STRUTTURA <ng-content></ng-content> -->
+    <div class="dashboard">
+      <h2>Welcome back, {{ user.username }}</h2>
+      <div [@fadeInOut]>
+        <p>{{ currentPhrase }} <span></span></p>
+      </div>
+      <app-fitness-button
+        [title]="'Workout'"
+        [size]="'large'"
+      ></app-fitness-button>
+    </div>
+  </main>
 </div>

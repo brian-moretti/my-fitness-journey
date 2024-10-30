@@ -8,7 +8,7 @@ import { authenticateToken } from "./utilities/authentication.js";
 const router = express.Router();
 
 router
-  .use("/users", usersRoute)
+  .use("/users", authenticateToken, usersRoute)
   .use("/training-programs", authenticateToken, trainingProgramsRoute)
   .use("/exercises", exercisesRouter)
   .use("/exercises-training", authenticateToken, exercisesTrainingRoute)

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { getRefreshTokenDB } from "./tokenModel.js";
 
 export async function generateJWTAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: "10min" }); //! DA AUMENTARE
+  return jwt.sign(user, process.env.ACCESS_TOKEN, { expiresIn: "1500min" }); //! DA AUMENTARE
 }
 
 export async function generateJWTRefreshToken(user) {

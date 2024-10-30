@@ -23,8 +23,9 @@ const trainingPrograms_details = async (req, res) => {
       req.params.id
     );
     if (result.length <= 0) {
-      return res.status(404).json({ Error: "Training program not founded" });
+      return res.status(404).json("Training program not founded");
     }
+
     result = result.reduce((acc, current) => {
       let program = acc.find((p) => p.id === current.id);
       if (!program) {
@@ -39,21 +40,23 @@ const trainingPrograms_details = async (req, res) => {
         acc.push(program);
       }
       program.trainings.push({
+        id_scheda: current.id,
+        id_exercise: current.id_exercise,
+        // exercise: { id: current.id_exercise },
         series: current.series,
         reps: current.reps,
         rest: current.rest,
         weight: current.weight,
         weiht_max_rm: current.weight_max_rm,
         video: current.video,
-        exercise: { id: current.id_exercise },
-        id_program: current.id,
       });
       return acc;
     }, []);
-    return res.status(200).json(result);
+
+    return res.status(200).json(result[0]);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal server error" });
+    return res.status(500).json("Internal server error");
   }
 };
 const trainingPrograms_create = async (req, res) => {
@@ -78,6 +81,7 @@ const trainingPrograms_create = async (req, res) => {
 const trainingPrograms_update = async (req, res) => {
   try {
     const [trainingProgram] = await TrainingProgramsModel.getTrainingProgram(
+      req.user.id,
       req.params.id
     );
     if (!trainingProgram)

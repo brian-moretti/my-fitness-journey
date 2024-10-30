@@ -1,40 +1,49 @@
-<form>
-  <label for="name">Name:</label>
-  <input
-    type="text"
-    id="name"
-    name="name"
-    pInputText
-    [(ngModel)]="training.exercise!.name"
-    [disabled]="true"
-  />
-  <label for="reps">Reps:</label>
-  <p-inputNumber
-    type="number"
-    id="reps"
-    name="reps"
-    inputId="integeronly"
-    [(ngModel)]="training.reps"
-    [disabled]="readOnly"
-  />
-  <label for="series">Series:</label>
-  <p-inputNumber
-    type="number"
-    name="series"
-    id="series"
-    inputId="integeronly"
-    [(ngModel)]="training.series"
-    [disabled]="readOnly"
-  />
-  <span class="timer-container">
+<form class="training-field">
+  <div *ngIf="training.exercise">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      pInputText
+      [title]="training.exercise!.name"
+      [(ngModel)]="training.exercise!.name"
+      [disabled]="true"
+    />
+  </div>
+  <div>
+    <label for="reps">Reps:</label>
+    <p-inputNumber
+      data-size="little"
+      type="number"
+      id="reps"
+      name="reps"
+      inputId="integeronly"
+      [(ngModel)]="training.reps"
+      [disabled]="true"
+    />
+  </div>
+  <div>
+    <label for="series">Series:</label>
+    <p-inputNumber
+      data-size="little"
+      type="number"
+      name="series"
+      id="series"
+      inputId="integeronly"
+      [(ngModel)]="training.series"
+      [disabled]="true"
+    />
+  </div>
+  <div class="timer-container">
     <label for="rest">Rest:</label>
     <input
       type="time"
       name="rest"
       id="rest"
       pInputText
-      [(ngModel)]="training.rest"
-      [disabled]="readOnly"
+      [(ngModel)]="correctTimeFormat"
+      [disabled]="true"
     />
     <app-fitness-button
       class="timer"
@@ -42,24 +51,46 @@
       icon="pi pi-stopwatch"
       [rounded]="true"
       [raised]="true"
+      (btnEvent)="activateTimer()"
     ></app-fitness-button>
-  </span>
-  <label for="weight">Weight:</label>
-  <p-inputNumber
-    type="number"
-    name="weight"
-    id="weight"
-    inputId="minmaxfraction"
-    suffix=" KG"
-    mode="decimal"
-    [minFractionDigits]="1"
-    [maxFractionDigits]="1"
-    [useGrouping]="false"
-    [max]="999.9"
-    [maxlength]="8"
-    [(ngModel)]="training.weight"
-    [disabled]="readOnly"
-  />
+  </div>
+  <div>
+    <label for="weight">Weight:</label>
+    <p-inputNumber
+      data-size="medium"
+      type="number"
+      name="weight"
+      id="weight"
+      inputId="minmaxfraction"
+      suffix=" KG"
+      mode="decimal"
+      [minFractionDigits]="1"
+      [maxFractionDigits]="1"
+      [useGrouping]="false"
+      [max]="999.9"
+      [maxlength]="8"
+      [(ngModel)]="training.weight"
+      [disabled]="!editAllowed"
+    />
+  </div>
+  <div class="edit-btn">
+    <app-fitness-button
+      *ngIf="!editAllowed"
+      type="button"
+      [icon]="'pi pi-pencil'"
+      [size]="'small'"
+      [rounded]="true"
+      (btnEvent)="editExercise()"
+    ></app-fitness-button>
+    <app-fitness-button
+      *ngIf="!!editAllowed"
+      [icon]="'pi pi-save'"
+      [size]="'small'"
+      [rounded]="true"
+      (btnEvent)="saveEditExercise(training)"
+    ></app-fitness-button>
+  </div>
+  <!--
   <label for="maxWeightRM">Max Weight RM:</label>
   <p-inputNumber
     type="number"
@@ -67,9 +98,11 @@
     id="maxWeightRM"
     inputId="integeronly"
     [(ngModel)]="training.weight_max_rm"
-    [disabled]="readOnly"
-  />
-  <!--   <label for="video">Video Tutorial:</label>
+    [disabled]="!editAllowed"
+  /> 
+  -->
+  <!--
+  <label for="video">Video Tutorial:</label>
   <input
     type="text"
     name="video"
@@ -77,5 +110,8 @@
     pInputText
     [(ngModel)]="training.video"
     [disabled]="true"
-  /> -->
+  />
+  -->
+  <!-- ! EDIT EXE BTN -->
 </form>
+<p-toast />

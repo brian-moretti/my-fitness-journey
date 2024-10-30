@@ -1,0 +1,25 @@
+<p-card [header]="program.name">
+    <p
+      [innerHTML]="
+        '<b>Start: </b> ' +
+        dateStart +
+        ' </br> ' +
+        '<b>End: </b> ' +
+        dateEnd
+      "
+    ></p>
+    <app-fitness-button
+      [title]="'View Program'"
+      [size]="'small'"
+      [urlLink]="['/program', program.id]"
+    ></app-fitness-button>
+    <span class="delete">
+      <app-fitness-button
+        [icon]="'pi pi-trash'"
+        [rounded]="true"
+        [severity]="'danger'"
+        [size]="'small'"
+        (btnEvent)="onDeleteProgram(program.id!)"
+      ></app-fitness-button>
+    </span>
+  </p-card>

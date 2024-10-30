@@ -1,31 +1,58 @@
-<div class="container">
+<div class="container program-details">
   <form #trainingProgram="ngForm">
-    <input
-      id="programName"
-      type="text"
-      pInputText
-      name="programName"
-      [(ngModel)]="program.name"
-      [disabled]="readOnly"
-    />
-    <p-calendar
-      name="startDate"
-      dataType="string"
-      dateFormat="yy/mm/dd"
-      [(ngModel)]="program.date_start"
-      [disabled]="readOnly"
-    />
-    <p-calendar
-      name="endDate"
-      dataType="string"
-      dateFormat="yy mm dd"
-      [(ngModel)]="program.date_end"
-      [disabled]="readOnly"
-    />
-    <ng-container *ngFor="let training of program.trainings">
-      <app-fitness-exercise-training-field
-        [training]="training"
-      ></app-fitness-exercise-training-field>
-    </ng-container>
+    <div class="edit-program">
+      <app-fitness-button
+        *ngIf="!isEditable"
+        [title]="viewScreen > 1024 ? 'Edit Program' : ''"
+        [icon]="viewScreen <= 1024 ? 'pi pi-pen-to-square' : ''"
+        [size]="'small'"
+        [rounded]="true"
+        [raised]="true"
+        (btnEvent)="editTrainingProgram()"
+      ></app-fitness-button>
+      <app-fitness-button
+        *ngIf="isEditable"
+        [icon]="viewScreen <= 1024 ? 'pi pi-save' : ''"
+        [size]="'small'"
+        [title]="viewScreen > 1024 ? 'Save Program' : ''"
+        [rounded]="true"
+        [raised]="true"
+        (btnEvent)="saveTrainingProgram()"
+      ></app-fitness-button>
+    </div>
+    <div class="program-info">
+      <input
+        id="programName"
+        type="text"
+        pInputText
+        name="programName"
+        [(ngModel)]="program.name"
+        [disabled]="!isEditable"
+      />
+      <p-calendar
+        name="startDate"
+        dateFormat="yy MM dd"
+        [(ngModel)]="program.date_start"
+        [disabled]="!isEditable"
+      />
+      <p-calendar
+        name="endDate"
+        dateFormat="yy MM dd"
+        [(ngModel)]="program.date_end"
+        [disabled]="!isEditable"
+      />
+    </div>
   </form>
+  <ng-container *ngFor="let training of program.trainings">
+    <app-fitness-exercise-training-field
+      [training]="training"
+    ></app-fitness-exercise-training-field>
+  </ng-container>
+</div>
+<div class="go-back">
+  <app-fitness-button
+    [title]="'Go to programs'"
+    [raised]="true"
+    [routerLink]="'/programs'"
+  ></app-fitness-button>
 </div>

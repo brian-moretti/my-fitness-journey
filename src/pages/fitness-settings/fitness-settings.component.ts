@@ -20,11 +20,11 @@ import { UserService } from '../../services/user/user.service';
   styleUrl: './fitness-settings.component.scss',
 })
 export class FitnessSettingsComponent implements OnInit {
-  account: IUser = {};
-  backupUser: IUser = {};
-  userLogged: IUser = {};
-  isEditable: boolean = false;
-  errorMessage: string = '';
+  public userLogged: IUser = {};
+  public isEditable: boolean = false;
+  public errorMessage: string = '';
+  private account: IUser = {};
+  private backupUser: IUser = {};
 
   constructor(
     private router: Router,
@@ -65,16 +65,7 @@ export class FitnessSettingsComponent implements OnInit {
     });
   }
 
-  editAccount() {
-    this.isEditable = true;
-  }
-
-  cancelEdit() {
-    this.userLogged = this.backupUser;
-    this.isEditable = false;
-  }
-
-  saveEdit() {
+  public saveEdit() {
     this.userService.modifyUserUsingPut(this.userLogged).subscribe({
       next: (updatedUser) => {
         this.userLogged = updatedUser;
@@ -97,6 +88,15 @@ export class FitnessSettingsComponent implements OnInit {
     this.isEditable = false;
   }
 
+  public editAccount() {
+    this.isEditable = true;
+  }
+
+  public cancelEdit() {
+    this.userLogged = this.backupUser;
+    this.isEditable = false;
+  }
+
   private _deleteAccount() {
     this.userService.deleteUserUsingDelete(this.userLogged).subscribe({
       next: () => {
@@ -116,7 +116,7 @@ export class FitnessSettingsComponent implements OnInit {
     });
   }
 
-  alertDialogue(event: Event) {
+  public alertDialogue(event: Event) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Do you really want to delete your account?',
@@ -150,7 +150,7 @@ export class FitnessSettingsComponent implements OnInit {
     });
   }
 
-  onCloseToast() {
+  public onCloseToast() {
     this._deleteAccount();
   }
 }

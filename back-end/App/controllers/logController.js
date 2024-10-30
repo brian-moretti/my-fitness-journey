@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import {
   generateJWTAccessToken,
   generateJWTRefreshToken,
@@ -42,8 +43,11 @@ const login_verify = async (req, res) => {
 };
 
 const login_page = async (req, res) => {
-  res.json({
-    Login: "Login page loaded. Please login with POST Method on Postman",
+  const token = req.cookies["accessToken"];
+  if (!token) return res.status(401).json("Token not available");
+  jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+    if (err) return res.status(403).json("Token expired");
+    return res.json({ valid: true, user });
   });
 };
 

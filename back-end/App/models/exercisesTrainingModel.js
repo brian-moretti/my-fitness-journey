@@ -27,7 +27,7 @@ class ExercisesTrainingModel {
     return await mySqlConnectionQuery(query, body);
   }
   static async updateExerciseTraining(currentData, newData) {
-    const query = `UPDATE ${this.table_name} SET series = ?, reps = ?, rest = ?, weight = ?, weight_max_rm = ?, video = ? WHERE id_scheda = ?`;
+    const query = `UPDATE ${this.table_name} SET series = ?, reps = ?, rest = ?, weight = ?, weight_max_rm = ?, video = ? WHERE id_scheda = ? AND id_exercise = ?`;
     let body = [
       newData.series ?? currentData.series,
       newData.reps ?? currentData.reps,
@@ -36,6 +36,7 @@ class ExercisesTrainingModel {
       newData.weight_max_rm ?? currentData.weight_max_rm,
       newData.video ?? currentData.video,
       currentData.id_scheda,
+      currentData.id_exercise,
     ];
     return await mySqlConnectionQuery(query, body);
   }

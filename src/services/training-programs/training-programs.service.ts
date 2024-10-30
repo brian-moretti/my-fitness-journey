@@ -17,8 +17,8 @@ export class TrainingProgramsService {
     });
   }
 
-  getSingleTrainingProgram(programID: number): Observable<ITrainingProgram[]> {
-    return this.http.get<ITrainingProgram[]>(`${this.url}/${programID}`, {
+  getSingleTrainingProgram(programID: number): Observable<ITrainingProgram> {
+    return this.http.get<ITrainingProgram>(`${this.url}/${programID}`, {
       withCredentials: true,
     });
   }

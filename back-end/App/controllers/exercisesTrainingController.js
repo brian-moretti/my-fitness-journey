@@ -23,7 +23,8 @@ const exercisesTraining_details = async (req, res) => {
     }
     result = {
       id_user: result.id_user,
-      id_program: result.id_scheda,
+      id_scheda: result.id_scheda,
+      id_exercise: result.id_exercise,
       series: result.series,
       reps: result.reps,
       rest: result.rest,
@@ -41,8 +42,8 @@ const exercisesTraining_details = async (req, res) => {
         secondaryMuscles: result.secondaryMuscles,
       },
     };
-    console.log(result);
-    
+    //console.log(result);
+
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -85,13 +86,17 @@ const exercisesTraining_update = async (req, res) => {
       return res
         .status(400)
         .json({ Error: "The exercise provided do not exists" });
+
     const [programToFind] = await TrainingProgramsModel.getTrainingProgram(
+      req.body.id_user,
       req.body.id_scheda
     );
     if (!programToFind)
       return res
         .status(400)
         .json({ Error: "The program provided do not exists" });
+    console.log(programToFind);
+
     const query = `SELECT * FROM exercises_training WHERE id_exercise = ? AND id_scheda = ?`;
     const [exerciseTraining] = await mySqlConnectionQuery(query, [
       req.params.id,
@@ -101,6 +106,9 @@ const exercisesTraining_update = async (req, res) => {
       return res
         .status(400)
         .json({ Error: "The exercise do not exist in the program" });
+    console.log(exerciseTraining);
+    console.log(req.body);
+
     const result = await ExercisesTrainingModel.updateExerciseTraining(
       exerciseTraining,
       req.body
