@@ -6,17 +6,15 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FitnessButtonComponent } from '../../components/fitness-button/fitness-button.component';
-import { FitnessFilterComponent } from '../../components/fitness-filter/fitness-filter.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
 import { IExerciseTraining } from '../../core/model/interface/exerciseTraining';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 import { ExercisesTrainingService } from '../../services/exercises-training/exercises-training.service';
-import { FitnessExerciseTrainingFormComponent } from '../../components/fitness-exercise-training-form/fitness-exercise-training-form.component';
-import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -25,10 +23,8 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     PRIMENG_COMPONENTS,
     FitnessButtonComponent,
-    FitnessFilterComponent,
-    FitnessExerciseTrainingFormComponent,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './fitness-program-trainings.component.html',
   styleUrl: './fitness-program-trainings.component.scss',
 })
@@ -54,6 +50,7 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     private exerciseService: ExerciseService,
     private exerciseTrainingService: ExercisesTrainingService,
     private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private router: Router
   ) {}
 
@@ -65,11 +62,19 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     console.log(this.programInfo);
   }
 
+  /*   showConfirmDialog() {
+    this.confirmationService.confirm({
+      message: 'Are you sure?',
+      accept: () => {},
+      reject: () => {},
+    });
+  } */
+
   get exercises(): FormArray {
     return this.trainingsForm.get('exercises') as FormArray;
   }
 
-  createExercise(): FormGroup {
+  public createExercise(): FormGroup {
     return this.formBuilder.group({
       id_scheda: [this.programInfo.id || 11], //! to remove
       id_exercise: [],
@@ -83,13 +88,13 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     });
   }
 
-  addExercise() {
+  public addExercise() {
     this.exercises.push(this.createExercise());
     this._enableSubmitBtn();
     this.hideBtn = true;
   }
 
-  searchExercise(index: number) {
+  public searchExercise(index: number) {
     this.activeFilterMenu = index;
     this.exerciseService.getExercises().subscribe({
       next: (exercises) => {
@@ -102,7 +107,7 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     });
   }
 
-  onFilterExercise(key: string) {
+  public onFilterExercise(key: string) {
     this.filterExercise = this.exercisesList.filter((exercise) =>
       exercise.name.toLowerCase().startsWith(key.toLowerCase())
     );
@@ -111,27 +116,24 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     }
   }
 
-  selectExercise(exercise: IExercise, index: number) {
+  public selectExercise(exercise: IExercise, index: number) {
     this.exercises.controls[index].patchValue({
       exercise: exercise.name,
       id_exercise: exercise.id,
     });
     this.filterExercise = [];
     this.activeFilterMenu = null;
-    console.log(this.exercises);
   }
 
-  editExercise(index: number) {
+  public editExercise(index: number) {
     this.exercises.at(index).enable();
     this.hideBtn = true;
     this._enableSubmitBtn();
   }
 
-  saveExercise(index: number) {
-    //! SAVE EXE DENTR ARRAY/OBJ E AL SUBMIT INVIARE MASSIVAMENTE
+  public saveExercise(index: number) {
     const exercise = this.exercises.at(index) as FormGroup;
     exercise.value.rest = exercise.value.rest.padStart(8, '00:');
-    //? Remove exe.name control???
     if (exercise.valid) {
       this.trainingAddToProgram.push(exercise.value);
       if (this.exercises.controls.length - 1 === index) {
@@ -142,7 +144,7 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     this._enableSubmitBtn();
   }
 
-  deleteExercise(index: number) {
+  public deleteExercise(index: number) {
     this.trainingAddToProgram.splice(index, 1);
     if (this.exercises.length > 1) {
       return this.exercises.removeAt(index);
@@ -153,11 +155,10 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     this._enableSubmitBtn();
   }
 
-  onSubmit() {
+  public onSubmit() {
     this.trainingAddToProgram.forEach((training) => {
       this.exerciseTrainingService.createExerciseTraining(training).subscribe({
         next: (exercise: IExerciseTraining) => {
-          console.log(exercise); // b/end return
           this.messageService.add({
             severity: 'success',
             summary: 'Program Trainings Build',
@@ -170,7 +171,7 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     });
   }
 
-  redirect() {
+  public redirect() {
     this.router.navigate([`program/${this.programInfo.id}`]);
   }
 

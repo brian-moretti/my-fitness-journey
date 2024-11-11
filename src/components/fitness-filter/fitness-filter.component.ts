@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
+import { IFilters } from '../../core/model/interface/filterExercises';
 import { bodyParts, IBodyParts } from '../../utilities/bodyParts';
 import { ITargets, targets } from '../../utilities/targets';
-import { IFilters } from '../../core/model/interface/filterExercises';
 
 @Component({
   selector: 'app-fitness-filter',
@@ -15,36 +15,31 @@ export class FitnessFilterComponent implements OnInit {
   @Output() filtersToApply: EventEmitter<IFilters> =
     new EventEmitter<IFilters>();
 
-  searchName: string = '';
-  targets: ITargets[] = [];
-  selectedTarget!: ITargets;
-  bodyParts: IBodyParts[] = [];
-  selectedBodyPart!: IBodyParts;
-  checkEntireDatabase: boolean = false;
-  filters: IFilters = {};
+  public searchName: string = '';
+  public targets: ITargets[] = [];
+  public selectedTarget!: ITargets;
+  public bodyParts: IBodyParts[] = [];
+  public selectedBodyPart!: IBodyParts;
+  public filters: IFilters = {};
 
   ngOnInit(): void {
     this.targets = targets;
     this.bodyParts = bodyParts;
   }
 
-  onSearchName(searchName: string) {
-    this.filters.searchName = searchName;
-    this.onFilters();
+  public onSearchName(searchName: string) {
+    this.filters.name = searchName;
+    this._onFilters();
   }
-  onSelectTargets(targets: ITargets | null) {
-    this.filters.selectedTarget = targets?.target;
-    this.onFilters();
+  public onSelectTargets(targets: ITargets | null) {
+    this.filters.target = targets?.target;
+    this._onFilters();
   }
-  onSelectBodyPart(bodyPart: IBodyParts | null) {
-    this.filters.selectedBodyPart = bodyPart?.bodyPart;
-    this.onFilters();
+  public onSelectBodyPart(bodyPart: IBodyParts | null) {
+    this.filters.bodyPart = bodyPart?.bodyPart;
+    this._onFilters();
   }
-  onCheckEntireDatabase(checkEntireDatabase: boolean) {
-    this.filters.checkEntireDatabase = checkEntireDatabase;
-    this.onFilters();
-  }
-  onFilters() {
+  private _onFilters() {
     this.filtersToApply.emit(this.filters);
   }
 }

@@ -1,52 +1,98 @@
-<p-toast (onClose)="navigateToPrograms()"/>
+<p-toast (onClose)="navigateToPrograms()" />
 <div class="container form-container">
   <form [formGroup]="programForm">
     <h2>Create Program</h2>
-    <p-floatLabel>
-      <input
-        id="programName"
-        type="text"
-        pInputText
-        formControlName="programName"
-      />
-      <label for="programName">Program Name</label>
-    </p-floatLabel>
+    <div>
+      <p-floatLabel>
+        <input
+          id="programName"
+          type="text"
+          pInputText
+          formControlName="programName"
+        />
+        <label for="programName">Program Name</label>
+      </p-floatLabel>
+      <small
+        *ngIf="
+          programNameControl.invalid &&
+          (programNameControl.dirty || programNameControl.touched)
+        "
+        class="p-error"
+        >* Please fill the field with a name</small
+      >
+    </div>
     <div class="calendar">
-      <p-calendar
-        formControlName="startDate"
-        [dateFormat]="'dd MM yy'"
-        [showIcon]="true"
-        [showButtonBar]="true"
-        [placeholder]="'From...'"
-      />
-      <p-calendar
-        formControlName="endDate"
-        [dateFormat]="'dd MM yy'"
-        [showIcon]="true"
-        [showButtonBar]="true"
-        [placeholder]="'To...'"
-      />
+      <div>
+        <p-calendar
+          formControlName="startDate"
+          [dateFormat]="'dd MM yy'"
+          [showIcon]="true"
+          [showButtonBar]="true"
+          [placeholder]="'From...'"
+        />
+        <small
+          *ngIf="
+            startDateControl.invalid &&
+            (startDateControl.dirty || startDateControl.touched)
+          "
+          class="p-error"
+          >* Please fill the field with a starting date</small
+        >
+        <small
+          *ngIf="programForm.errors?.['datesNotValid'] && (startDateControl.dirty || startDateControl.touched) "
+          class="p-error mt-2"
+        >
+          * Starting Date must be before Ending Date
+        </small>
+      </div>
+      <div>
+        <p-calendar
+          formControlName="endDate"
+          [dateFormat]="'dd MM yy'"
+          [showIcon]="true"
+          [showButtonBar]="true"
+          [placeholder]="'To...'"
+        />
+        <small
+          *ngIf="
+            endDateControl.invalid &&
+            (endDateControl.dirty || endDateControl.touched)
+          "
+          class="p-error"
+          >* Please fill the field with an ending date</small
+        >
+        <small
+          *ngIf="programForm.errors?.['datesNotValid'] && (endDateControl.dirty || endDateControl.touched) "
+          class="p-error mt-2"
+        >
+          * Starting Date must be before Ending Date
+        </small>
+      </div>
     </div>
     <div class="buttons">
       <app-fitness-button
         [title]="'Go Back'"
         [outline]="true"
         [urlLink]="'/programs'"
+        [color]="'SECONDARY'"
       ></app-fitness-button>
       <span [ngSwitch]="action">
         <app-fitness-button
           *ngSwitchCase="'CREATE'"
           [type]="'submit'"
           [title]="'Save'"
+          [color]="'PRIMARY'"
+          [disabled]="programForm.invalid"
           (btnEvent)="onCreateProgram(programForm)"
         ></app-fitness-button>
         <app-fitness-button
           *ngSwitchCase="'UPDATE'"
           [type]="'submit'"
           [title]="'Update'"
+          [color]="'PRIMARY'"
+          [disabled]="programForm.invalid"
         ></app-fitness-button>
       </span>
-      <!-- [disabled]="exercisesForm.invalid" -->
     </div>
   </form>
 </div>

@@ -40,7 +40,8 @@ export class FitnessButtonComponent implements OnInit {
   @Input() disabled: boolean = false;
   @Input() link: boolean = false;
   @Input() urlLink!: string | any[];
-  @Input() color: 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'EMPTY' = 'EMPTY';
+  @Input() color: 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'ONLYCOLOR' | 'EMPTY' =
+    'EMPTY';
   @Input() styleClasses: string[] = [];
 
   @Output() btnEvent = new EventEmitter();
@@ -62,11 +63,13 @@ export class FitnessButtonComponent implements OnInit {
   private _mapColorButton(): string {
     switch (this.color) {
       case 'PRIMARY':
-        return 'blue';
+        return 'primary';
       case 'SECONDARY':
-        return 'gray';
+        return 'secondary';
+      case 'ONLYCOLOR':
+        return 'onlycolor';
       case 'ACCENT':
-        return 'green';
+        return 'accent';
       default:
         return 'empty';
     }

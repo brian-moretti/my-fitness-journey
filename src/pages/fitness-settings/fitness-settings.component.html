@@ -9,12 +9,14 @@
         pInputText
         [(ngModel)]="userLogged.username"
         [disabled]="!isEditable"
+        required
       />
       <input
         type="text"
         pInputText
         [(ngModel)]="userLogged.email"
         [disabled]="!isEditable"
+        required
       />
 
       <app-fitness-button
@@ -23,6 +25,7 @@
         [rounded]="true"
         [raised]="true"
         [icon]="'pi pi-user-edit'"
+        [color]="'PRIMARY'"
         (btnEvent)="editAccount()"
       ></app-fitness-button>
       <ng-container *ngIf="isEditable">
@@ -35,12 +38,14 @@
             [outline]="true"
             [raised]="true"
             [size]="'small'"
+            [color]="'SECONDARY'"
             (btnEvent)="cancelEdit()"
           ></app-fitness-button>
           <app-fitness-button
             [title]="'Save'"
             [raised]="true"
             [size]="'small'"
+            [color]="'PRIMARY'"
             (btnEvent)="saveEdit()"
           ></app-fitness-button>
         </div>
@@ -49,6 +54,7 @@
           class="danger-btn"
           severity="danger"
           [title]="'DELETE ACCOUNT'"
+          [color]="'ACCENT'"
           (btnEvent)="alertDialogue($event)"
         ></app-fitness-button>
       </ng-container>

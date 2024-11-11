@@ -15,7 +15,6 @@ import { IUser } from '../../core/model/interface/user';
 import { AuthService } from '../../services/auth/auth.service';
 import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { LoginService } from '../../services/login/login.service';
-import { UserService } from '../../services/user/user.service';
 
 @Component({
   standalone: true,
@@ -36,9 +35,8 @@ export class FitnessLoginComponent implements OnInit {
   constructor(
     private toast: MessageService,
     private router: Router,
-    private login: LoginService,
+    private loginService: LoginService,
     private guard: AuthService,
-    private user: UserService,
     private interceptor: HttpErrorsService
   ) {}
 
@@ -69,7 +67,7 @@ export class FitnessLoginComponent implements OnInit {
       email: form.value.email,
       password: form.value.password,
     };
-    this.login.loginUserUsingPost(loginForm).subscribe({
+    this.loginService.loginUserUsingPost(loginForm).subscribe({
       next: (users: IUser[]) => {
         const account = users.find(
           (user) =>
@@ -78,9 +76,8 @@ export class FitnessLoginComponent implements OnInit {
         );
         //! METODO GETUSER CON ID ACCOUNT.ID
         //! VERIFICARE IL REDIRECT DI LOGIN TO /USERS
- 
+
         if (account && account.id) {
-          this.user.getUser(account?.id).subscribe((d) => console.log(d)); //? VEDERE SE SERVE
           this.guard.isLoginStorage(account);
           this.router.navigate(['dashboard']);
         }

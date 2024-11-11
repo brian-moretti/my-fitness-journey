@@ -9,12 +9,12 @@ class ExercisesModel {
 
     let name = req.name ?? null;
     let target = req.target ?? null;
-    let bodyPart = req.body_part ?? null;
+    let bodyPart = req.bodyPart ?? null;
     let filters = [];
 
     if (name) {
-      query += ` WHERE LIKE CONCAT(?,'%')`;
-      filters.push(query);
+      query += ` WHERE name LIKE CONCAT(?,'%')`;
+      filters.push(name);
     }
     if (target) {
       query += `${name ? " AND" : " WHERE"} target LIKE CONCAT(?,'%')`;
@@ -35,10 +35,12 @@ class ExercisesModel {
     } else {
       query += " ORDER BY id";
     }
-    if (Object.keys(req).length > 0) {
+    if (Object.keys(req).includes("page")) {
       let params = paginations(req);
       query += ` LIMIT ${params.maxData} OFFSET ${params.offsetData}`;
     }
+    console.log(query);
+
     return await mySqlConnectionQuery(query, filters);
   }
 

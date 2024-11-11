@@ -74,12 +74,14 @@
       [title]="'Already signed. Login now!'"
       [link]="true"
       [urlLink]="'/auth/login'"
+      [color]="'ONLYCOLOR'"
     ></app-fitness-button>
 
     <app-fitness-button
       [title]="'SIGNUP'"
       [raised]="true"
       [type]="'submit'"
+      [color]="'PRIMARY'"
       [disabled]="signupForm.invalid"
     ></app-fitness-button>
     <p-toast position="top-center" key="success" />

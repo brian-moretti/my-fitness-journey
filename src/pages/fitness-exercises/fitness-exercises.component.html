@@ -16,10 +16,12 @@
             [text]="true"
             [raised]="true"
             [urlLink]="'/exercise-form'"
+            [color]="'ONLYCOLOR'"
           ></app-fitness-button>
         </div>
         <app-fitness-exercises-list
           [exerciseDataList]="exercises"
+          [pagination]="pagination"
           (updateExerciseList)="onUpdateExerciseList($event)"
           (deleteExercise)="onDeleteExercise($event)"
         ></app-fitness-exercises-list

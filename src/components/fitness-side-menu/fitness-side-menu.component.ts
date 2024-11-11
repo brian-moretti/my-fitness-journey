@@ -25,15 +25,32 @@ export class FitnessSideMenuComponent implements OnInit {
   viewScreen: number = window.innerWidth;
   showMenu!: boolean;
 
-  buttons = [
-    { title: 'PROGRAMS', urlLink: '/programs', outline: false },
+  buttons: Array<{
+    id: number;
+    title: string;
+    urlLink: string;
+    class: 'PRIMARY' | 'SECONDARY' | 'ACCENT' | 'ONLYCOLOR' | 'EMPTY';
+  }> = [
     {
+      id: 1,
+      title: 'PROGRAMS',
+      urlLink: '/programs',
+      class: 'PRIMARY',
+    },
+    {
+      id: 2,
       title: 'EXERCISES DATABASE',
       urlLink: '/exercises',
-      outline: false,
+      class: 'PRIMARY',
     },
-    { title: 'SETTINGS', urlLink: '/settings', outline: false },
+    {
+      id: 3,
+      title: 'SETTINGS',
+      urlLink: '/settings',
+      class: 'PRIMARY',
+    },
   ];
+  activeBtn: number | null = null;
 
   constructor(
     private router: Router,
@@ -50,12 +67,15 @@ export class FitnessSideMenuComponent implements OnInit {
     });
   }
 
-  //? TEST WINDOW WIDTH WITH ONCHANGES
+  onActiveSection(buttonId: number) {
+    this.activeBtn = buttonId;
+    console.log(this.activeBtn);
 
-  onActiveSection(index: number) {
-    this.buttons.forEach((btn, i) => {
-      btn.outline = i === index;
+    this.buttons.forEach((btn) => {
+      btn.class = this.activeBtn === btn.id ? 'SECONDARY' : 'PRIMARY';
     });
+    console.log(buttonId);
+    console.log(this.buttons);
   }
 
   showSideMenu() {

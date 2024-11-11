@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FitnessButtonComponent } from '../fitness-button/fitness-button.component';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
+import { FitnessButtonComponent } from '../fitness-button/fitness-button.component';
 
 @Component({
   selector: 'app-fitness-exercise-training-form',

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -37,14 +38,37 @@ export class FitnessProgramFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.programForm = new FormGroup({
-      programName: new FormControl<string>('', Validators.required),
-      startDate: new FormControl<string>('', Validators.required),
-      endDate: new FormControl<string>('', Validators.required),
-    });
+    this.programForm = new FormGroup(
+      {
+        programName: new FormControl<string>('', Validators.required),
+        startDate: new FormControl<string>('', Validators.required),
+        endDate: new FormControl<string>('', Validators.required),
+      },
+      { validators: this._checkDate('startDate', 'endDate') }
+    );
   }
 
-  onCreateProgram(form: FormGroup) {
+  get programNameControl() {
+    return this.programForm.get('programName') as FormControl;
+  }
+  get startDateControl() {
+    return this.programForm.get('startDate') as FormControl;
+  }
+  get endDateControl() {
+    return this.programForm.get('endDate') as FormControl;
+  }
+
+  private _checkDate(start: string, end: string) {
+    return (control: AbstractControl) => {
+      const startDate = control.get(start)?.value;
+      const endDate = control.get(end)?.value;
+      return startDate < endDate ? null : { datesNotValid: true };
+    };
+  }
+
+  public onCreateProgram(form: FormGroup) {
+    console.log(this.programForm.errors);
+
     const programName = (form && form.value && form.value.programName) || '';
     const startDate =
       form && form.value && form.value.startDate
@@ -54,7 +78,6 @@ export class FitnessProgramFormComponent implements OnInit {
             .reverse()
             .join('-')
         : '';
-        
     const endDate =
       form && form.value && form.value.endDate
         ? form.value.endDate.toLocaleDateString().split('/').reverse().join('-')
@@ -78,7 +101,7 @@ export class FitnessProgramFormComponent implements OnInit {
     });
   }
 
-  navigateToPrograms() {
+  public navigateToPrograms() {
     this.router.navigate(['program-trainings'], { state: this.programCreated });
   }
 }

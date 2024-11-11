@@ -33,7 +33,7 @@ export class FitnessSignupComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private user: UserService,
+    private userService: UserService,
     private toast: MessageService,
     private interceptor: HttpErrorsService
   ) {}
@@ -66,7 +66,9 @@ export class FitnessSignupComponent implements OnInit {
       password: form.value.password,
     };
 
-    this.user.createUserUsingPost(signupForm).subscribe({
+    console.log(signupForm);
+
+    this.userService.createUserUsingPost(signupForm).subscribe({
       next: (user: IUser) => {
         this.toast.add({
           severity: 'success',

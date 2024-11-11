@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IExercise } from '../../core/model';
+import { IFilters } from '../../core/model/interface/filterExercises';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +11,25 @@ export class ExerciseService {
   constructor(private http: HttpClient) {}
 
   private url = 'http://localhost:3000/exercises';
+  private params = new HttpParams();
 
-  //! VEDERE PER MAXDATA = 120
-  getExercises(page?: number, filters?: {}): Observable<IExercise[]> {
+  getExercises(page?: number, filters?: IFilters): Observable<IExercise[]> {
+    this.params = new HttpParams();
     if (page) {
-      let params = new HttpParams().set('page', page);
-      return this.http.get<IExercise[]>(this.url, { params });
+      this.params = this.params.set('page', page);
     }
-    return this.http.get<IExercise[]>(this.url);
+    if (filters) {
+      if (filters.name) {
+        this.params = this.params.set('name', filters.name);
+      }
+      if (filters.target) {
+        this.params = this.params.set('target', filters.target);
+      }
+      if (filters.bodyPart) {
+        this.params = this.params.set('bodyPart', filters.bodyPart);
+      }
+    }
+    return this.http.get<IExercise[]>(this.url, { params: this.params });
   }
 
   getSingleExercise(id: number): Observable<IExercise> {
@@ -26,7 +38,7 @@ export class ExerciseService {
 
   createExerciseUsingPost(exerciseInfo: IExercise): Observable<IExercise> {
     console.log(exerciseInfo);
-    
+
     return this.http.post<IExercise>(this.url, exerciseInfo);
   }
 

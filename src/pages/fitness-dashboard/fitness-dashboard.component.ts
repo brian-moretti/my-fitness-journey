@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SHARED_COMPONENTS } from '..';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { UserService } from '../../services/user/user.service';
 import { IUser } from '../../core/model/interface/user';
-import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-fitness-dashboard',
@@ -11,17 +9,7 @@ import { AuthService } from '../../services/auth/auth.service';
   imports: [...SHARED_COMPONENTS],
   templateUrl: './fitness-dashboard.component.html',
   styleUrl: './fitness-dashboard.component.scss',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('1s', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [animate('1s', style({ opacity: 0 }))]),
-    ]),
-  ],
 })
-//! FIX ANIMATIONS
 export class FitnessDashboardComponent implements OnInit {
   public user: IUser = {};
   public currentUser: IUser | undefined = {};
@@ -49,7 +37,7 @@ export class FitnessDashboardComponent implements OnInit {
   ];
   currentPhraseIndex: number = 0;
 
-  constructor(private userService: UserService, private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this._getUserLogged();

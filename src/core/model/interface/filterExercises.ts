@@ -1,6 +1,6 @@
 export interface IFilters {
-  searchName?: string;
-  selectedTarget?: string;
-  selectedBodyPart?: string;
-  checkEntireDatabase?: boolean;
+  name?: string;
+  target?: string;
+  bodyPart?: string;
+  //checkEntireDatabase?: boolean;
 }

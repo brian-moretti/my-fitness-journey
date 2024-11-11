@@ -4,13 +4,9 @@
     <!-- ! CREARE COMPONENTE STRUTTURA <ng-content></ng-content> -->
     <div class="dashboard">
       <h2>Welcome back, {{ user.username }}</h2>
-      <div [@fadeInOut]>
+      <div class="fix-height">
         <p>{{ currentPhrase }} <span></span></p>
       </div>
-      <app-fitness-button
-        [title]="'Workout'"
-        [size]="'large'"
-      ></app-fitness-button>
     </div>
   </main>
 </div>

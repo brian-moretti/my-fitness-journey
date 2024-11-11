@@ -12,6 +12,7 @@
       [title]="'View Program'"
       [size]="'small'"
       [urlLink]="['/program', program.id]"
+      [color]="'PRIMARY'"
     ></app-fitness-button>
     <span class="delete">
       <app-fitness-button
@@ -19,6 +20,7 @@
         [rounded]="true"
         [severity]="'danger'"
         [size]="'small'"
+        [color]="'ACCENT'"
         (btnEvent)="onDeleteProgram(program.id!)"
       ></app-fitness-button>
     </span>

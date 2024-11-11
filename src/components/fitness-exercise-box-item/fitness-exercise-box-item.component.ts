@@ -17,7 +17,6 @@ import { FitnessButtonComponent } from '../fitness-button/fitness-button.compone
 })
 export class FitnessExerciseBoxItemComponent implements OnInit {
   @Input() exercise!: IExercise;
-  @Input() pagination!: IPagination;
   @Output() deletedExercise: EventEmitter<IExercise> = new EventEmitter();
 
   showMoreInfoExercise: boolean = false;

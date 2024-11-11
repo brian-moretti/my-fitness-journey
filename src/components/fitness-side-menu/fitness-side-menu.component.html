@@ -1,9 +1,10 @@
 <app-fitness-button
   *ngIf="viewScreen < 1024"
+  class="mobile-btn"
   [icon]="'pi pi-angle-left'"
   [raised]="true"
   [rounded]="true"
-  class="mobile-btn"
+  [color]="'PRIMARY'"
   (btnEvent)="showSideMenu()"
 ></app-fitness-button>
 <menu
@@ -11,19 +12,19 @@
   class="side-bar"
 >
   <div class="logo">
-    <img src="" alt="logo" />
+    <img src="../../assets/images/logo.svg" alt="logo" />
   </div>
   <nav>
     <ul class="p-0 m-0 text-center">
-      <ng-container *ngFor="let button of buttons; let i = index">
+      <ng-container *ngFor="let button of buttons">
         <app-fitness-button
           [title]="button.title"
           [rounded]="true"
           [raised]="true"
-          [outline]="button.outline"
           [size]="'small'"
           [urlLink]="button.urlLink"
-          (btnEvent)="onActiveSection(i)"
+          [color]="button.class"
+          (btnEvent)="onActiveSection(button.id)"
         ></app-fitness-button>
       </ng-container>
     </ul>

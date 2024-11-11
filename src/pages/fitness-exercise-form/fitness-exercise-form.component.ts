@@ -51,7 +51,6 @@ export class FitnessExerciseFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._getSingleExercise();
     this._getRouterState();
     this._getInterfaceData();
     const { target, bodyPart, instructions, secondaryMuscles, equipment } =
@@ -132,13 +131,6 @@ export class FitnessExerciseFormComponent implements OnInit {
     return { target, bodyPart, instructions, secondaryMuscles, equipment };
   }
 
-  //?
-  private _getSingleExercise() {
-    this.exerciseService.getSingleExercise(1500).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
   get nameControl() {
     return this.exercisesForm.get('name') as FormControl;
   }
@@ -149,19 +141,18 @@ export class FitnessExerciseFormComponent implements OnInit {
     return this.exercisesForm.get('bodyPart') as FormControl;
   }
 
-  onSubmitNewExercise(form: FormGroup) {
+  public onSubmitNewExercise(form: FormGroup) {
     const exerciseToAdd: IExercise = this._onMappingExerciseForm(form);
     console.log(exerciseToAdd);
 
     this.exerciseService.createExerciseUsingPost(exerciseToAdd).subscribe({
       next: (exercise) => {
-        this.router.navigate(['/exercises', {}])
-        //! OK POST - ESEGUIRE NAVIGAZIONE
-        //! TOGLIERE IMG SE NON PRESENTE HTML
         this.toast.add({
           severity: 'success',
           summary: 'Exercise Created',
           detail: exercise.name,
+          life: 1500,
+          key: 'success',
         });
         form.reset();
       },
@@ -172,19 +163,27 @@ export class FitnessExerciseFormComponent implements OnInit {
           severity: 'error',
           summary: 'Submit error',
           detail: this.errorMessage,
+          life: 1500,
+          key: 'reject',
         });
       },
     });
   }
 
-  onSubmitUpdateExercise(form: FormGroup) {
+  public onSubmitUpdateExercise(form: FormGroup) {
     const exerciseToUpdate = this._onMappingExerciseForm(form);
+    console.log(exerciseToUpdate);
+
     this.exerciseService.updateExerciseUsingPut(exerciseToUpdate).subscribe({
       next: (updatedExercise) => {
+        console.log(updatedExercise);
+
         this.toast.add({
           severity: 'success',
           summary: 'Exercise',
           detail: `${updatedExercise.name} updated`,
+          life: 1500,
+          key: 'success',
         });
       },
       error: (err: HttpErrorResponse) => {
@@ -194,6 +193,8 @@ export class FitnessExerciseFormComponent implements OnInit {
           severity: 'error',
           summary: 'Update Error',
           detail: this.errorMessage,
+          life: 1500,
+          key: 'reject',
         });
       },
     });
@@ -203,18 +204,18 @@ export class FitnessExerciseFormComponent implements OnInit {
     const instructions: string[] | undefined = form.value.instructions
       ? form.value.instructions.trim().split('.')
       : undefined;
-    console.log(instructions);
 
     const secondaryMuscles: string[] | undefined = form.value.secondaryMuscles
       ? form.value.secondaryMuscles
           .flatMap((muscle: { muscle: string }) => Object.values(muscle))
           .sort((a: string, b: string) => (a > b ? 1 : -1))
       : undefined;
+
     const equipment: string | undefined = form.value.equipment
       ? form.value.equipment.equipment
       : undefined;
-    return {
-      id: this.exerciseToUpdate!.id,
+
+    const exerciseData: Partial<IExercise> = {
       name: form.value.name,
       target: form.value.target.target,
       instructions,
@@ -222,5 +223,15 @@ export class FitnessExerciseFormComponent implements OnInit {
       secondaryMuscles,
       equipment,
     };
+
+    if (this.exerciseToUpdate?.id) {
+      exerciseData.id = this.exerciseToUpdate.id;
+    }
+
+    return exerciseData as IExercise;
+  }
+
+  public moveToExerciseList() {
+    this.router.navigate(['/exercises', {}]);
   }
 }

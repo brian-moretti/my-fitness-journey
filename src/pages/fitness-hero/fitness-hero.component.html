@@ -8,16 +8,18 @@
       </h1>
       <div *ngIf="viewScreen > 768" class="btn-container">
         <app-fitness-button
-          [title]="'ACCEDI'"
+          [title]="'LOGIN'"
           [rounded]="true"
           [raised]="true"
           [urlLink]="'auth/login'"
+          [color]="'PRIMARY'"
         ></app-fitness-button>
         <app-fitness-button
-          [title]="'REGISTRATI'"
+          [title]="'SIGNUP'"
           [rounded]="true"
           [raised]="true"
           [urlLink]="'auth/signup'"
+          [color]="'PRIMARY'"
         ></app-fitness-button>
       </div>
     </div>
@@ -30,13 +32,13 @@
     </div>
     <div *ngIf="viewScreen <= 768" class="btn-container">
       <app-fitness-button
-        [title]="'ACCEDI'"
+        [title]="'LOGIN'"
         [rounded]="true"
         [raised]="true"
         [urlLink]="'auth/login'"
       ></app-fitness-button>
       <app-fitness-button
-        [title]="'REGISTRATI'"
+        [title]="'SIGNUP'"
         [rounded]="true"
         [raised]="true"
         [urlLink]="'auth/signup'"

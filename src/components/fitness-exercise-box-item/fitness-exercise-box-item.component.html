@@ -1,6 +1,6 @@
 <div class="exercise-box">
   <h5 class="text-center">
-    {{ exercise.name | titlecase }} - {{ exercise.id }}
+    {{ exercise.name | titlecase }}
   </h5>
   <img
     *ngIf="!noImage"
@@ -20,6 +20,7 @@
     [text]="true"
     [link]="true"
     [title]="'Show more...'"
+    [color]="'ONLYCOLOR'"
     (btnEvent)="onShowMore()"
   ></app-fitness-button>
 </div>
@@ -32,7 +33,7 @@
 >
   <div class="dialog-container">
     <app-fitness-button
-      *ngIf="exercise.id > 1323"
+      *ngIf="exercise.id! > 1323"
       class="edit-btn"
       [rounded]="true"
       [raised]="true"
@@ -40,7 +41,7 @@
       (btnEvent)="onEditExercise(exercise)"
     ></app-fitness-button>
     <app-fitness-button
-      *ngIf="exercise.id > 1323"
+      *ngIf="exercise.id! > 1323"
       class="delete-btn"
       severity="danger"
       [rounded]="true"

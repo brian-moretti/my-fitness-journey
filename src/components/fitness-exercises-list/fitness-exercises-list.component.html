@@ -3,16 +3,14 @@
     <app-fitness-exercise-box-item
       [exercise]="exercise"
       (deletedExercise)="onDeleteExercise($event)"
-      [pagination]="pagination"
-      (updatePaginator)="onUpdatePaginator($event)"
     ></app-fitness-exercise-box-item>
   </ng-container>
 </div>
 <!-- ! DYNAMIC FOR BACK FROM LOGIC -->
 <p-paginator
   (onPageChange)="onPageChange($event)"
-  [first]="0"
-  [rows]="30"
-  [totalRecords]="maxElementPerPage"
+  [first]="pagination.first!"
+  [rows]="pagination.rows"
+  [totalRecords]="pagination.totalRecords"
   [rowsPerPageOptions]="[10, 20, 30, 60]"
 />

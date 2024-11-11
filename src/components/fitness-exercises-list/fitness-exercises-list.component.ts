@@ -26,38 +26,28 @@ import { FitnessExerciseBoxItemComponent } from '../fitness-exercise-box-item/fi
 })
 export class FitnessExercisesListComponent implements OnChanges {
   @Input() exerciseDataList: IExercise[] = [];
+  @Input() pagination: IPagination = {};
   @Output() updateExerciseList: EventEmitter<IPagination> = new EventEmitter();
   @Output() deleteExercise: EventEmitter<IExercise> = new EventEmitter();
 
-  exerciseList: IExercise[] = [];
-  maxElementPerPage: number = 0;
-  first: number = 0;
-  rows: number = 30;
-  pagination: IPagination = {
-    first: 0,
-    rows: 30,
-    page: 0,
-    maxElementPerPage: 0,
-  };
+  public exerciseList: IExercise[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['exerciseDataList']) {
       this.exerciseDataList = [
         ...this._onMappingExercises(this.exerciseDataList),
       ];
+      this._updateExerciseList();
     }
-    this.maxElementPerPage = this.exerciseDataList.length;
-    this.exerciseList = this.exerciseDataList.slice(
-      this.first,
-      this.first + this.rows
-    );
   }
 
-  onDeleteExercise(exercise: IExercise) {
+  public onDeleteExercise(exercise: IExercise) {
     this.deleteExercise.emit(exercise);
   }
 
   private _onMappingExercises(exercises: IExercise[]) {
+    console.log(this.pagination);
+
     return exercises.map((exercise) => {
       const name = exercise.name.replaceAll('_', ' ');
       const gifUrl =
@@ -88,22 +78,19 @@ export class FitnessExercisesListComponent implements OnChanges {
     });
   }
 
-  onPageChange(event: PaginatorState) {
-    this.first = event.first!;
-    this.rows = event.rows!;
+  public onPageChange(event: PaginatorState) {
+    this.pagination.first = event.first!;
+    this.pagination.rows = event.rows!;
 
-    this.exerciseList = this.exerciseDataList.slice(
-      this.first,
-      this.first + this.rows
-    );
+    this._updateExerciseList();
 
-    let pagination: IPagination = {
-      ...event,
-      maxElementPerPage: this.maxElementPerPage,
-    };
-
-    this.updateExerciseList.emit(pagination);
+    this.updateExerciseList.emit(this.pagination);
   }
 
-  onUpdatePaginator(event: any) {}
+  private _updateExerciseList() {
+    this.exerciseList = this.exerciseDataList.slice(
+      this.pagination.first,
+      this.pagination.first! + this.pagination.rows!
+    );
+  }
 }

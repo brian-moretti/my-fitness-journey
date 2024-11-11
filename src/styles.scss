@@ -10,16 +10,20 @@
 @import "./assets/scss/fonts";
 
 :root {
-  --primary-color: rgb(59, 130, 246); // #007bff;
+  --background: #2a2a2a;
+  --side-background: #2a2a2a;
+  --primary-color: #fa862d;
+  --shadow-primary: #fdd5b0;
+  --dark-primary: #d66a1a;
   --secondary-color: #f8f9fa;
-  --accent-color: #28a745;
+  --accent-color: #b53b2e;
+  --hover-accent: #d24b3c;
   --primary-text: #212529;
   --secondary-text: #6c757d;
-  --background: #ffffff;
 }
 
 footer {
-  color: var(--primary-text);
+  color: var(--background);
   background-color: var(--secondary-color);
 }
 
@@ -69,6 +73,7 @@ small:last-of-type {
 
 .font-big {
   font-size: 2.25rem;
+  color: var(--background);
 }
 
 // ALTERNATIVA A ::NG-DEEP -> SOLO DOVE IMPORTI I LAYER PERO'....
@@ -105,11 +110,36 @@ small:last-of-type {
       color: #6b7280;
     }
   }
+  .p-inputtext:enabled:focus,
+  .p-dropdown:not(.p-disabled).p-focus,
+  .p-multiselect:not(.p-disabled).p-focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem var(--shadow-primary);
+  }
+  .p-inputtext:hover,
+  .p-dropdown:hover,
+  .p-multiselect:hover {
+    border-color: var(--primary-color);
+  }
 
-  /*   .info-exercise{
-    & .p-button{
-      padding: 0
-    }
-  } */
+  .p-button:focus {
+    box-shadow: none;
+  }
+
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    color: var(--primary-color);
+    background-color: var(--shadow-primary);
+    border-color: var(--shadow-primary);
+  }
+
+  p-calendar .p-button {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--secondary-color);
+  }
+  p-calendar .p-button:hover {
+    background-color: var(--dark-primary);
+    border-color: var(--dark-primary);
+  }
 }
 @import "./assets/scss/mediascreen";

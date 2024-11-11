@@ -14,7 +14,7 @@
   padding: 1rem;
   gap: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba($color: black, $alpha: 0.5);
+  box-shadow: 0 0 10px var(--primary-color);
   max-width: min(90dvw, 100%);
 }
 
@@ -43,7 +43,7 @@
   .p-toast {
     width: min(90%, 35rem);
   }
-  
+
   @media only screen and (max-width: 768px) {
     form {
       & p-dropdown,

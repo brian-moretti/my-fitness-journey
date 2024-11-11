@@ -13,6 +13,7 @@ import {
 } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { errorsInterceptor } from '../core/http/interceptors/errors-interceptor.interceptor';
 import { routes } from './app.routes';
 
@@ -23,7 +24,7 @@ export const appConfig: ApplicationConfig = {
       FormsModule,
       HttpClient,
       BrowserAnimationsModule,
-      CommonModule
+      CommonModule,
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
