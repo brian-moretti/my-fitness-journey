@@ -5,10 +5,7 @@ import path from "path";
 import router from "./Core/Router.js";
 
 const app = express();
-app.use(
-  "/back-end/Api/gif_exercises",
-  express.static(path.join(process.cwd(), "Api/gif_exercises"))
-);
+
 app.use(
   cors({
     origin: ["http://localhost:4200", "https://my-fitness-journey.netlify.app"],
@@ -16,12 +13,17 @@ app.use(
     credentials: true,
   })
 );
+app.options("*", cors());
+
+app.use(
+  "/back-end/Api/gif_exercises",
+  express.static(path.join(process.cwd(), "Api/gif_exercises"))
+);
+
 app.use(express.json()).use(cookieParser()).use(router);
 //app.use(express.urlencoded({ extended: false }));
 
-app.options("*", cors());
-
-app.listen(3000, (err) => {
+app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
     console.error(err);
   }
