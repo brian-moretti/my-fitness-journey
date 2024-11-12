@@ -2,8 +2,9 @@
   "name": "your-fitness-journey",
   "version": "1.0.0",
   "description": "A complete app to track your fitness journey. Loads your workouts, save your workouts session, set timers. ",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "node --watch app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
