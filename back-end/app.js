@@ -19,6 +19,8 @@ app.use(
 app.use(express.json()).use(cookieParser()).use(router);
 //app.use(express.urlencoded({ extended: false }));
 
+app.options("*", cors());
+
 app.listen(3000, (err) => {
   if (err) {
     console.error(err);
