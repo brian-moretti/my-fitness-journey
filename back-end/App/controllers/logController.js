@@ -38,7 +38,7 @@ const login_verify = async (req, res) => {
     res.redirect(301, "/users");
   } catch (error) {
     console.error(error);
-    res.sendStatus(500).json("Internal server error");
+    res.status(500).json("Internal server error");
   }
 };
 
