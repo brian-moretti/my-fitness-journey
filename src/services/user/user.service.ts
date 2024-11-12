@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUser, IUserDetails } from '../../core/model/interface/user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { IUser, IUserDetails } from '../../core/model/interface/user';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  private url = 'http://localhost:3000/users';
+  private url = `${environment.apiUrl}/users'`;
 
   getAllUser(): Observable<IUser[]> {
     return this.http.get<IUser[]>(this.url, { withCredentials: true });

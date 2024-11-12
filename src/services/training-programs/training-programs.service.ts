@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
 export class TrainingProgramsService {
   constructor(private http: HttpClient) {}
 
-  private url = 'http://localhost:3000/training-programs';
+  private url = `${environment.apiUrl}/training-programs`;
 
   getTrainingPrograms(): Observable<ITrainingProgram[]> {
     return this.http.get<ITrainingProgram[]>(this.url, {

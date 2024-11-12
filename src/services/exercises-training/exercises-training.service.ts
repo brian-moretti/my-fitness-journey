@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IExerciseTraining } from '../../core/model/interface/exerciseTraining';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { IExerciseTraining } from '../../core/model/interface/exerciseTraining';
 export class ExercisesTrainingService {
   constructor(private http: HttpClient) {}
 
-  private url = 'http://localhost:3000/exercises-training';
+  private url = `${environment.apiUrl}/exercises-training`;
 
   getSingleExerciseTraining(exerciseID: number): Observable<IExerciseTraining> {
     return this.http.get<IExerciseTraining>(`${this.url}/${exerciseID}`, {
@@ -29,7 +30,7 @@ export class ExercisesTrainingService {
     exerciseTraining: IExerciseTraining
   ): Observable<IExerciseTraining> {
     console.log(exerciseTraining.exercise?.id);
-    
+
     return this.http.put<IExerciseTraining>(
       `${this.url}/${exerciseTraining.exercise?.id}`,
       exerciseTraining,

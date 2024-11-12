@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUser } from '../../core/model/interface/user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { IUser } from '../../core/model/interface/user';
 export class LoginService {
   constructor(private http: HttpClient) {}
 
-  private url = 'http://localhost:3000/login';
+  private url = `${environment.apiUrl}/login`;
 
   loginVerifyUsingGet(): Observable<{ valid: boolean; user: IUser }> {
     return this.http.get<{ valid: boolean; user: IUser }>(this.url, {

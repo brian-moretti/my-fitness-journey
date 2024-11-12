@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IExercise } from '../../core/model';
 import { IFilters } from '../../core/model/interface/filterExercises';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { IFilters } from '../../core/model/interface/filterExercises';
 export class ExerciseService {
   constructor(private http: HttpClient) {}
 
-  private url = 'http://localhost:3000/exercises';
+  private url = `${environment.apiUrl}/exercises`;
   private params = new HttpParams();
 
   getExercises(page?: number, filters?: IFilters): Observable<IExercise[]> {
