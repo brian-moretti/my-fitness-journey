@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  private url = `${environment.apiUrl}/users'`;
+  private url = `${environment.apiUrl}/users`;
 
   getAllUser(): Observable<IUser[]> {
     return this.http.get<IUser[]>(this.url, { withCredentials: true });

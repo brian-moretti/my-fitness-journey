@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, TitleStrategy } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
+import { FitnessButtonComponent } from '../../components/fitness-button/fitness-button.component';
 import { FitnessExerciseTrainingFieldComponent } from '../../components/fitness-exercise-training-field/fitness-exercise-training-field.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
-import { TrainingProgramsService } from '../../services/training-programs/training-programs.service';
-import { FitnessButtonComponent } from '../../components/fitness-button/fitness-button.component';
-import { ViewportService } from '../../services/viewport/viewport.service';
-import { Title } from '@angular/platform-browser';
-import { NgForm } from '@angular/forms';
 import { DateTrasformService } from '../../services/date-transform/date-trasform.service';
+import { TrainingProgramsService } from '../../services/training-programs/training-programs.service';
+import { ViewportService } from '../../services/viewport/viewport.service';
 
 @Component({
   selector: 'app-fitness-program-details',
