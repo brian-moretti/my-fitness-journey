@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'my-fitness-journey.up.railway.app',
+  apiUrl: 'https://my-fitness-journey.up.railway.app',
 };
