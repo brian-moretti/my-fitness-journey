@@ -11,10 +11,8 @@ app.use(
 );
 app.use(
   cors({
-    origin: [
-      "http://localhost:4200",
-      "https://my-fitness-journey.netlify.app",
-    ],
+    origin: ["http://localhost:4200", "https://my-fitness-journey.netlify.app"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
