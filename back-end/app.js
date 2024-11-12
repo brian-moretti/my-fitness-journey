@@ -9,7 +9,15 @@ app.use(
   "/back-end/Api/gif_exercises",
   express.static(path.join(process.cwd(), "Api/gif_exercises"))
 );
-app.use(cors({ origin: "http://localhost:4200", credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:4200",
+      "https://my-fitness-journey.netlify.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json()).use(cookieParser()).use(router);
 //app.use(express.urlencoded({ extended: false }));
 
