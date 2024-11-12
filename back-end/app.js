@@ -24,6 +24,7 @@ app.use(express.json()).use(cookieParser()).use(router);
 //app.use(express.urlencoded({ extended: false }));
 
 app.listen(3000, (err) => {
+  console.log("connected");
   if (err) {
     console.error(err);
   }
