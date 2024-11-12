@@ -23,7 +23,7 @@ app.use(
 app.use(express.json()).use(cookieParser()).use(router);
 //app.use(express.urlencoded({ extended: false }));
 
-app.listen(process.env.PORT || 3000, (err) => {
+app.listen(3000, (err) => {
   if (err) {
     console.error(err);
   }
