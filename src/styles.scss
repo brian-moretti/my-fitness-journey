@@ -41,6 +41,13 @@ ul > li {
   list-style-type: none;
 }
 
+.main-container {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .container-height {
   height: calc(100lvh - 9.5em);
 }

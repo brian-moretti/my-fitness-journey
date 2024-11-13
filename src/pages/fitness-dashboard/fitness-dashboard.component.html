@@ -4,8 +4,14 @@
     <!-- ! CREARE COMPONENTE STRUTTURA <ng-content></ng-content> -->
     <div class="dashboard">
       <h2>Welcome back, {{ user.username }}</h2>
-      <div class="fix-height">
+      <div class="d-view">
         <p>{{ currentPhrase }} <span></span></p>
+        <app-fitness-button
+          *ngIf="viewScreen < 1024"
+          [title]="'Start training'"
+          [color]="'PRIMARY'"
+          [urlLink]="'/programs'"
+        ></app-fitness-button>
       </div>
     </div>
   </main>

@@ -38,6 +38,12 @@
   }
 }
 
+.d-view {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 @media only screen and (width < 1024px) {
 }
 

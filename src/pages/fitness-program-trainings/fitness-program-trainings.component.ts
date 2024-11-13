@@ -50,7 +50,6 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     private exerciseService: ExerciseService,
     private exerciseTrainingService: ExercisesTrainingService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,
     private router: Router
   ) {}
 
@@ -62,21 +61,13 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     console.log(this.programInfo);
   }
 
-  /*   showConfirmDialog() {
-    this.confirmationService.confirm({
-      message: 'Are you sure?',
-      accept: () => {},
-      reject: () => {},
-    });
-  } */
-
   get exercises(): FormArray {
     return this.trainingsForm.get('exercises') as FormArray;
   }
 
   public createExercise(): FormGroup {
     return this.formBuilder.group({
-      id_scheda: [this.programInfo.id || 11], //! to remove
+      id_scheda: [this.programInfo.id],
       id_exercise: [],
       exercise: [''],
       reps: [],
@@ -142,16 +133,21 @@ export class FitnessProgramTrainingsComponent implements OnInit {
       exercise.disable();
     }
     this._enableSubmitBtn();
+    console.log(this.trainingAddToProgram);
   }
 
   public deleteExercise(index: number) {
     this.trainingAddToProgram.splice(index, 1);
     if (this.exercises.length > 1) {
-      return this.exercises.removeAt(index);
+      this.exercises.removeAt(index);
+      this.exercises.controls.forEach((c) => {
+        this.hideBtn = !c.disabled;
+      });
+    } else {
+      this.exercises.at(index).reset();
+      this.exercises.at(index).enable();
+      this.hideBtn = true;
     }
-    this.exercises.at(index).reset();
-    this.exercises.at(index).enable();
-    this.hideBtn = true;
     this._enableSubmitBtn();
   }
 

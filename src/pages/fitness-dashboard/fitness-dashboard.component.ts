@@ -1,19 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SHARED_COMPONENTS } from '..';
+import { FitnessButtonComponent } from '../../components';
 import { IUser } from '../../core/model/interface/user';
 import { UserService } from '../../services/user/user.service';
+import { ViewportService } from '../../services/viewport/viewport.service';
 
 @Component({
   selector: 'app-fitness-dashboard',
   standalone: true,
-  imports: [...SHARED_COMPONENTS],
+  imports: [...SHARED_COMPONENTS, FitnessButtonComponent, CommonModule],
   templateUrl: './fitness-dashboard.component.html',
   styleUrl: './fitness-dashboard.component.scss',
 })
 export class FitnessDashboardComponent implements OnInit {
   public user: IUser = {};
   public currentUser: IUser | undefined = {};
-  motivationalPhrases = [
+  public motivationalPhrases = [
     {
       id: 1,
       text: 'Every rep brings you closer to your goal. Keep improving, your future self will thank you!',
@@ -35,14 +38,21 @@ export class FitnessDashboardComponent implements OnInit {
       text: 'Your effort is the key. Every tracked effort brings you closer to success: stay focused and conquer your challenge!',
     },
   ];
-  currentPhraseIndex: number = 0;
+  public currentPhraseIndex: number = 0;
+  public viewScreen: number = 0;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private viewportService: ViewportService
+  ) {}
 
   ngOnInit(): void {
     this._getUserLogged();
     this._carouselPhrases();
     this._checkCurrentUserLogged();
+    this.viewportService.viewScreen$.subscribe({
+      next: (size) => (this.viewScreen = size),
+    });
   }
 
   private _checkCurrentUserLogged() {

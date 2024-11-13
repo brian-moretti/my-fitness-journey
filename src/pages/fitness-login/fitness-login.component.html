@@ -1,91 +1,93 @@
-<app-fitness-header></app-fitness-header>
-<div class="container log-pages container-height">
-  <form
-    [formGroup]="loginForm"
-    class="text-center"
-    (ngSubmit)="onLoginSubmit(loginForm)"
-  >
-    <span class="title">Log and work hard</span>
-    <p-floatLabel>
-      <input
-        pInputText
-        id="username"
-        formControlName="username"
-        [class]="
+<main class="main-container">
+  <app-fitness-header></app-fitness-header>
+  <div class="container log-pages container-height">
+    <form
+      [formGroup]="loginForm"
+      class="text-center"
+      (ngSubmit)="onLoginSubmit(loginForm)"
+    >
+      <span class="title">Log and work hard</span>
+      <p-floatLabel>
+        <input
+          pInputText
+          id="username"
+          formControlName="username"
+          [class]="
+            usernameControl.invalid &&
+            (usernameControl.dirty || usernameControl.touched)
+              ? 'ng-dirty ng-invalid'
+              : ''
+          "
+        />
+        <label for="username">Username</label>
+      </p-floatLabel>
+      <small
+        *ngIf="
           usernameControl.invalid &&
           (usernameControl.dirty || usernameControl.touched)
-            ? 'ng-dirty ng-invalid'
-            : ''
         "
-      />
-      <label for="username">Username</label>
-    </p-floatLabel>
-    <small
-      *ngIf="
-        usernameControl.invalid &&
-        (usernameControl.dirty || usernameControl.touched)
-      "
-      class="p-error"
-      >* Please fill the field with a username</small
-    >
-    <p-floatLabel>
-      <input
-        pInputText
-        id="email"
-        formControlName="email"
-        [class]="
+        class="p-error"
+        >* Please fill the field with a username</small
+      >
+      <p-floatLabel>
+        <input
+          pInputText
+          id="email"
+          formControlName="email"
+          [class]="
+            emailControl.invalid && (emailControl.dirty || emailControl.touched)
+              ? 'ng-dirty ng-invalid'
+              : ''
+          "
+        />
+        <label for="email">Email</label>
+      </p-floatLabel>
+      <small
+        *ngIf="
           emailControl.invalid && (emailControl.dirty || emailControl.touched)
-            ? 'ng-dirty ng-invalid'
-            : ''
         "
-      />
-      <label for="email">Email</label>
-    </p-floatLabel>
-    <small
-      *ngIf="
-        emailControl.invalid && (emailControl.dirty || emailControl.touched)
-      "
-      class="p-error"
-      >* Please fill the field with a valid email</small
-    >
-    <p-floatLabel>
-      <p-password
-        formControlName="password"
-        [feedback]="false"
-        [toggleMask]="true"
-        [class]="
+        class="p-error"
+        >* Please fill the field with a valid email</small
+      >
+      <p-floatLabel>
+        <p-password
+          formControlName="password"
+          [feedback]="false"
+          [toggleMask]="true"
+          [class]="
+            passwordControl.invalid &&
+            (passwordControl.dirty || passwordControl.touched)
+              ? 'ng-dirty ng-invalid'
+              : ''
+          "
+        />
+        <label for="password">Password</label>
+      </p-floatLabel>
+      <small
+        *ngIf="
           passwordControl.invalid &&
           (passwordControl.dirty || passwordControl.touched)
-            ? 'ng-dirty ng-invalid'
-            : ''
         "
-      />
-      <label for="password">Password</label>
-    </p-floatLabel>
-    <small
-      *ngIf="
-        passwordControl.invalid &&
-        (passwordControl.dirty || passwordControl.touched)
-      "
-      class="p-error"
-      >* Please fill the field with a secret password</small
-    >
-    <app-fitness-button
-      [title]="'Not signup yet. Go now'"
-      [link]="true"
-      [urlLink]="'/auth/signup'"
-      [color]="'ONLYCOLOR'"
-    ></app-fitness-button>
+        class="p-error"
+        >* Please fill the field with a secret password</small
+      >
+      <app-fitness-button
+        [title]="'Not signup yet. Go now'"
+        [link]="true"
+        [urlLink]="'/auth/signup'"
+        [color]="'ONLYCOLOR'"
+      ></app-fitness-button>
 
-    <app-fitness-button
-      [title]="'LOGIN'"
-      [raised]="true"
-      [type]="'submit'"
-      [color]="'PRIMARY'"
-      [disabled]="loginForm.invalid"
-    ></app-fitness-button>
-  </form>
-</div>
-<app-fitness-footer></app-fitness-footer>
+      <app-fitness-button
+        [title]="'LOGIN'"
+        [raised]="true"
+        [type]="'submit'"
+        [color]="'PRIMARY'"
+        [disabled]="loginForm.invalid"
+      ></app-fitness-button>
+    </form>
+  </div>
+  <app-fitness-footer></app-fitness-footer>
 
-<p-toast position="top-center" />
+  <p-toast position="top-center" />
+</main>

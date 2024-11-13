@@ -1,6 +1,6 @@
 <div class="container py-4 my-4 trainings">
   <h1 class="text-center">Create your Training</h1>
-  <form class="container" [formGroup]="trainingsForm" (ngSubmit)="onSubmit()">
+  <form class="container t-form" [formGroup]="trainingsForm" (ngSubmit)="onSubmit()">
     <ng-container formArrayName="exercises">
       <ng-container
         *ngFor="let exercise of exercises.controls; let i = index"
@@ -126,7 +126,7 @@
         (click)="addExercise()"
       ></app-fitness-button>
     </ng-container>
-    <div>
+    <div class="submit">
       <app-fitness-button
         type="submit"
         [disabled]="!activeSubmit"

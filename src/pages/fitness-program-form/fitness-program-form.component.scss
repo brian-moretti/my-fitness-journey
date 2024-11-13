@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 800px;
   height: 100vh;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 form {
@@ -41,6 +41,14 @@ form {
       & .p-button {
         width: 100%;
       }
+    }
+  }
+  @media only screen and (width < 515px) {
+    .calendar, .buttons{
+      flex-direction: column;
+    }
+    form .buttons > *{
+      width: 100%;
     }
   }
 }

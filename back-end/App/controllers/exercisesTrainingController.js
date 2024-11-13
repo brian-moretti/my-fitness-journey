@@ -57,17 +57,15 @@ const exercisesTraining_create = async (req, res) => {
       req.body.id_exercise
     );
     if (!exerciseToFind)
-      return res
-        .status(400)
-        .json({ Error: "The exercise provided do not exists" });
+      return res.status(400).json("The exercise provided do not exists");
+    console.log(req.user, req.body);
+    
     const [programToFind] = await TrainingProgramsModel.getTrainingProgram(
       req.user.id,
       req.body.id_scheda
     );
     if (!programToFind)
-      return res
-        .status(400)
-        .json({ Error: "The program provided do not exists" });
+      return res.status(400).json("The program provided do not exist");
     const result = await ExercisesTrainingModel.createExerciseTraining(
       req.body
     );
