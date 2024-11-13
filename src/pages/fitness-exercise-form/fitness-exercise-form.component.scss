@@ -27,6 +27,7 @@
 .btn-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 
 :host ::ng-deep {

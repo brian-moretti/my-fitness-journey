@@ -86,30 +86,34 @@
       />
     </div>
     <div class="btn-container">
-      <app-fitness-button
-        [title]="'Go Back'"
-        [outline]="true"
-        [urlLink]="'/exercises'"
-        [color]="'SECONDARY'"
-      ></app-fitness-button>
-      <span [ngSwitch]="action">
+      <div>
         <app-fitness-button
-          *ngSwitchCase="'CREATE'"
-          [type]="'submit'"
-          [title]="'Save'"
-          [color]="'PRIMARY'"
-          [disabled]="exercisesForm.invalid"
-          (btnEvent)="onSubmitNewExercise(exercisesForm)"
+          [title]="'Go Back'"
+          [outline]="true"
+          [urlLink]="'/exercises'"
+          [color]="'SECONDARY'"
         ></app-fitness-button>
-        <app-fitness-button
-          *ngSwitchCase="'UPDATE'"
-          [type]="'submit'"
-          [title]="'Update'"
-          [color]="'PRIMARY'"
-          [disabled]="exercisesForm.invalid"
-          (btnEvent)="onSubmitUpdateExercise(exercisesForm)"
-        ></app-fitness-button>
-      </span>
+      </div>
+      <div>
+        <span [ngSwitch]="action">
+          <app-fitness-button
+            *ngSwitchCase="'CREATE'"
+            [type]="'submit'"
+            [title]="'Save'"
+            [color]="'PRIMARY'"
+            [disabled]="exercisesForm.invalid"
+            (btnEvent)="onSubmitNewExercise(exercisesForm)"
+          ></app-fitness-button>
+          <app-fitness-button
+            *ngSwitchCase="'UPDATE'"
+            [type]="'submit'"
+            [title]="'Update'"
+            [color]="'PRIMARY'"
+            [disabled]="exercisesForm.invalid"
+            (btnEvent)="onSubmitUpdateExercise(exercisesForm)"
+          ></app-fitness-button>
+        </span>
+      </div>
     </div>
   </form>
 </div>
