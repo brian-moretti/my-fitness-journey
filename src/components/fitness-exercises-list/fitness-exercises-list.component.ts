@@ -11,6 +11,7 @@ import { PaginatorState } from 'primeng/paginator';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
 import { IPagination } from '../../core/model/interface/pagination';
+import { environment } from '../../environments/environment';
 import { FitnessExerciseBoxItemComponent } from '../fitness-exercise-box-item/fitness-exercise-box-item.component';
 
 @Component({
@@ -46,12 +47,12 @@ export class FitnessExercisesListComponent implements OnChanges {
   }
 
   private _onMappingExercises(exercises: IExercise[]) {
-    console.log(this.pagination);
-
     return exercises.map((exercise) => {
       const name = exercise.name.replaceAll('_', ' ');
+      /*       const gifUrl =
+        'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2); */
       const gifUrl =
-        'http://localhost:3000/back-end/Api/' + exercise.gifUrl?.slice(2);
+        `${environment.apiUrl}/back-end/Api/` + exercise.gifUrl?.slice(2);
       const instructions = exercise.instructions?.join(' <br/>').split(',');
       const secondaryMuscles = exercise.secondaryMuscles
         ?.map((muscle) => {
