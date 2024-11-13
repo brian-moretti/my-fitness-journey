@@ -2,7 +2,7 @@ import { config } from "dotenv";
 
 config();
 
-const urlRailwayDB = `mysql://${process.env.RAILWAY_USER}:${process.env.RAILWAY_PASSWORD}@${process.env.RAILWAY_CONNECTION}:${process.env.RAILWAY_PORT}/${process.env.RAILWAY_DB_NAME}`;
+const urlRailwayDB = `mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}`;
 //mysql://root:bMKqlRKtHXIdXQGXBLdinMJXVpHbkyvJ@mysql.railway.internal:3306/railway;
 
 const databaseConfig = urlRailwayDB || {
