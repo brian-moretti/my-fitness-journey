@@ -46,7 +46,13 @@
   }
 
   @media only screen and (max-width: 768px) {
+    .btn-container > div {
+      width: 100%;
+    }
     form {
+      & .p-button {
+        width: 100%;
+      }
       & p-dropdown,
       p-multiselect {
         width: 100%;
