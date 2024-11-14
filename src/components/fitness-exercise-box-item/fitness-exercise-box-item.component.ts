@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
-import { IPagination } from '../../core/model/interface/pagination';
 import { FitnessButtonComponent } from '../fitness-button/fitness-button.component';
 
 @Component({

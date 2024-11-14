@@ -1,18 +1,16 @@
-<div class="container-fluid g-0">
-  <app-fitness-side-menu></app-fitness-side-menu>
-  <main class="container-page">
-    <!-- ! CREARE COMPONENTE STRUTTURA <ng-content></ng-content> -->
-    <div class="dashboard">
-      <h2>Welcome back, {{ user.username }}</h2>
-      <div class="d-view">
-        <p>{{ currentPhrase }} <span></span></p>
-        <app-fitness-button
-          *ngIf="viewScreen < 1024"
-          [title]="'Start training'"
-          [color]="'PRIMARY'"
-          [urlLink]="'/programs'"
-        ></app-fitness-button>
-      </div>
+<app-fitness-page-structure-html>
+  <!-- ! CREARE COMPONENTE STRUTTURA <ng-content></ng-content> -->
+  <div class="dashboard">
+    <h2>Welcome back, {{ user.username }}</h2>
+    <div class="d-view">
+      <p>{{ currentPhrase }} <span></span></p>
+      <app-fitness-button
+        *ngIf="viewScreen < 1024"
+        [title]="'Start training'"
+        [color]="'PRIMARY'"
+        [urlLink]="'/programs'"
+      ></app-fitness-button>
     </div>
-  </main>
-</div>
+  </div>
+</app-fitness-page-structure-html>
+<p-toast position="center" />

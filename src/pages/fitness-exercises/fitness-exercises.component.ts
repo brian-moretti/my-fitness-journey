@@ -9,11 +9,12 @@ import { IFilters } from '../../core/model/interface/filterExercises';
 import { IPagination } from '../../core/model/interface/pagination';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
+import { FitnessPageStructureHtmlComponent } from "../../components/fitness-page-structure-html/fitness-page-structure-html.component";
 
 @Component({
   selector: 'app-fitness-exercises',
   standalone: true,
-  imports: [...SHARED_COMPONENTS, CommonModule, PRIMENG_COMPONENTS],
+  imports: [...SHARED_COMPONENTS, CommonModule, PRIMENG_COMPONENTS, FitnessPageStructureHtmlComponent],
   providers: [MessageService],
   templateUrl: './fitness-exercises.component.html',
   styleUrl: './fitness-exercises.component.scss',
@@ -43,19 +44,18 @@ export class FitnessExercisesComponent implements OnInit {
   private _getExercises() {
     this.exerciseService.getExercises(this.pageDB, this.filters).subscribe({
       next: (exercises) => {
-        this.exercises = [...this.exercises, ...exercises];
-        this.pagination.totalRecords = this.exercises.length;
-        /*         if (this.filters) {
-          this.exercises = exercises;
-          this.totalRecords = exercises.length;
-        } else {
+        setTimeout(() => {
           this.exercises = [...this.exercises, ...exercises];
-          this.totalRecords += exercises.length;
-        } */
+        }, 1500);
+        this.pagination.totalRecords = this.exercises.length;
       },
       error: (err: HttpErrorResponse) => {
         console.error(err);
         this.errorMessage = this.interceptor.handleExerciseError(err);
+        this.toast.add({
+          severity: 'error',
+          detail: this.errorMessage,
+        });
       },
     });
   }
@@ -68,8 +68,6 @@ export class FitnessExercisesComponent implements OnInit {
   }
 
   public onFilters(filters: IFilters) {
-    console.log(this.pagination);
-
     this.pageDB = 1;
     this.pagination.first = 0;
     this.exercises = [];

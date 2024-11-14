@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -12,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { FitnessButtonComponent } from '../../components';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { TrainingProgramsService } from '../../services/training-programs/training-programs.service';
 
 @Component({
@@ -30,11 +32,13 @@ export class FitnessProgramFormComponent implements OnInit {
   programForm!: FormGroup;
   programCreated: ITrainingProgram = {};
   action: string = 'CREATE';
+  errorMessage: string = '';
 
   constructor(
     private trainingPrograms: TrainingProgramsService,
     private router: Router,
-    private toast: MessageService
+    private toast: MessageService,
+    private interceptor: HttpErrorsService
   ) {}
 
   ngOnInit(): void {
@@ -67,8 +71,6 @@ export class FitnessProgramFormComponent implements OnInit {
   }
 
   public onCreateProgram(form: FormGroup) {
-    console.log(this.programForm.errors);
-
     const programName = (form && form.value && form.value.programName) || '';
     const startDate =
       form && form.value && form.value.startDate
@@ -97,7 +99,15 @@ export class FitnessProgramFormComponent implements OnInit {
           life: 1500,
         });
       },
-      error: () => {},
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleTrainingProgramError(err);
+        this.toast.add({
+          severity: 'error',
+          detail: this.errorMessage,
+          life: 1500,
+        });
+      },
     });
   }
 

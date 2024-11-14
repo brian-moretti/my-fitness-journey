@@ -14,6 +14,7 @@ import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IUser } from '../../core/model/interface/user';
 import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { UserService } from '../../services/user/user.service';
+import { FitnessAuthStructureHtmlComponent } from "../../components/fitness-auth-structure-html/fitness-auth-structure-html.component";
 
 @Component({
   standalone: true,
@@ -22,7 +23,8 @@ import { UserService } from '../../services/user/user.service';
     ...PRIMENG_COMPONENTS,
     ReactiveFormsModule,
     CommonModule,
-  ],
+    FitnessAuthStructureHtmlComponent
+],
   providers: [MessageService],
   templateUrl: './fitness-signup.component.html',
   styleUrl: './fitness-signup.component.scss',
@@ -65,8 +67,6 @@ export class FitnessSignupComponent implements OnInit {
       email: form.value.email,
       password: form.value.password,
     };
-
-    console.log(signupForm);
 
     this.userService.createUserUsingPost(signupForm).subscribe({
       next: (user: IUser) => {

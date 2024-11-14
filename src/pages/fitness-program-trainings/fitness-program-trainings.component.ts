@@ -1,4 +1,5 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
@@ -15,6 +16,7 @@ import { IExerciseTraining } from '../../core/model/interface/exerciseTraining';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 import { ExercisesTrainingService } from '../../services/exercises-training/exercises-training.service';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 
 @Component({
   standalone: true,
@@ -45,12 +47,15 @@ export class FitnessProgramTrainingsComponent implements OnInit {
   hideBtn: boolean = true;
   isEditable: boolean = false;
 
+  public errorMessage: string = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private exerciseService: ExerciseService,
     private exerciseTrainingService: ExercisesTrainingService,
-    private messageService: MessageService,
-    private router: Router
+    private toast: MessageService,
+    private router: Router,
+    private interceptor: HttpErrorsService
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +63,6 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     this.trainingsForm = this.formBuilder.group({
       exercises: this.formBuilder.array([this.createExercise()]),
     });
-    console.log(this.programInfo);
   }
 
   get exercises(): FormArray {
@@ -94,7 +98,14 @@ export class FitnessProgramTrainingsComponent implements OnInit {
           name: this.titlecase.transform(exercise.name.replaceAll('_', ' ')),
         }));
       },
-      error: () => {},
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleExerciseError(err);
+        this.toast.add({
+          severity: 'error',
+          detail: this.errorMessage,
+        });
+      },
     });
   }
 
@@ -133,7 +144,6 @@ export class FitnessProgramTrainingsComponent implements OnInit {
       exercise.disable();
     }
     this._enableSubmitBtn();
-    console.log(this.trainingAddToProgram);
   }
 
   public deleteExercise(index: number) {
@@ -155,14 +165,22 @@ export class FitnessProgramTrainingsComponent implements OnInit {
     this.trainingAddToProgram.forEach((training) => {
       this.exerciseTrainingService.createExerciseTraining(training).subscribe({
         next: (exercise: IExerciseTraining) => {
-          this.messageService.add({
+          this.toast.add({
             severity: 'success',
             summary: 'Program Trainings Build',
             detail: "Let's grow your muscles",
             life: 2500,
           });
         },
-        error: () => {},
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          this.errorMessage = this.interceptor.handleExerciseTrainingError(err);
+          this.toast.add({
+            severity: 'error',
+            summary: "Error on training creation",
+            detail: this.errorMessage,
+          });
+        },
       });
     });
   }

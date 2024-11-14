@@ -69,13 +69,10 @@ export class FitnessSideMenuComponent implements OnInit {
 
   onActiveSection(buttonId: number) {
     this.activeBtn = buttonId;
-    console.log(this.activeBtn);
-
     this.buttons.forEach((btn) => {
-      btn.class = this.activeBtn === btn.id ? 'SECONDARY' : 'PRIMARY';
+      btn.class = 'SECONDARY'
+      //btn.class = this.activeBtn === btn.id ? 'SECONDARY' : 'PRIMARY';
     });
-    console.log(buttonId);
-    console.log(this.buttons);
   }
 
   showSideMenu() {

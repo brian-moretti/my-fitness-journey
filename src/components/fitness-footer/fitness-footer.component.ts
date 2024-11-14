@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './fitness-footer.component.scss',
 })
 export class FitnessFooterComponent {
-  year: number = new Date().getFullYear();
+  public year: number = new Date().getFullYear();
 }

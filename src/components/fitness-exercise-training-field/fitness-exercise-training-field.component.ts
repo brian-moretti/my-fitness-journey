@@ -1,10 +1,12 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExerciseTraining } from '../../core/model/interface/exerciseTraining';
 import { ExercisesTrainingService } from '../../services/exercises-training/exercises-training.service';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { FitnessButtonComponent } from '../fitness-button/fitness-button.component';
-import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-fitness-exercise-training-field',
@@ -17,13 +19,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class FitnessExerciseTrainingFieldComponent implements OnInit {
   @Input() training!: IExerciseTraining;
   titlecase: TitleCasePipe = new TitleCasePipe();
-  correctTimeFormat: string = '';
-  editAllowed: boolean = false;
+  public correctTimeFormat: string = '';
+  public editAllowed: boolean = false;
+  public errorMessage: string = '';
 
   constructor(
     private exerciseTraining: ExercisesTrainingService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private toast: MessageService,
+    private interceptor: HttpErrorsService
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +49,14 @@ export class FitnessExerciseTrainingFieldComponent implements OnInit {
             },
           });
         },
-        error: () => {},
+        error: (err: HttpErrorResponse) => {
+          console.error(err);
+          this.errorMessage = this.interceptor.handleExerciseTrainingError(err);
+          this.toast.add({
+            severity: 'error',
+            detail: this.errorMessage,
+          });
+        },
       });
   }
 
@@ -56,14 +66,28 @@ export class FitnessExerciseTrainingFieldComponent implements OnInit {
 
   saveEditExercise(training: IExerciseTraining) {
     this.editAllowed = false;
-    this.exerciseTraining
-      .updateExerciseTraining(training)
-      .subscribe((data) => console.log(data));
+    this.exerciseTraining.updateExerciseTraining(training).subscribe({
+      next: () => {
+        this.toast.add({
+          severity: 'success',
+          detail: 'Training update successfully',
+          life: 1500,
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleExerciseTrainingError(err);
+        this.toast.add({
+          severity: 'error',
+          detail: this.errorMessage,
+        });
+      },
+    });
   }
 
   /**
    * Make a copy of the rest value on view. Create a timer and a countdown. Then use a setInterval to decrease the timer to 0. If 0 the interval will clear and the rest value will return to his original value
-   * @returns {any}
+   * @returns {void}
    */
   public activateTimer(): void {
     let backupRest = this.correctTimeFormat;
@@ -84,7 +108,7 @@ export class FitnessExerciseTrainingFieldComponent implements OnInit {
   }
 
   private _endSeriesMessage() {
-    this.messageService.add({
+    this.toast.add({
       severity: 'success',
       summary: 'Next Series',
       detail: "It's time to work",

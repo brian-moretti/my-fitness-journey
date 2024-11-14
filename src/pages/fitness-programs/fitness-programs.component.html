@@ -1,31 +1,30 @@
-<div class="container-fluid g-0">
-  <app-fitness-side-menu></app-fitness-side-menu>
-  <div class="container-page">
-    <h1 class="text-center roboto-bold font-big">YOUR PROGRAMS</h1>
-    <p class="text-center m-0">Limits are often just illusions!</p>
-    <ng-container *ngIf="programs.length > 0; else sideBtn">
-      <app-fitness-button
-        [link]="true"
-        [className]="'new-program'"
-        [title]="'New program'"
-        [urlLink]="'/program-form'"
-        [color]="'ONLYCOLOR'"
-      ></app-fitness-button>
+<app-fitness-page-structure-html>
+  <h1 class="text-center roboto-bold font-big">YOUR PROGRAMS</h1>
+  <p class="text-center m-0">Limits are often just illusions!</p>
+  <ng-container *ngIf="programs.length > 1; else sideBtn">
+    <app-fitness-button
+      [link]="true"
+      [className]="'new-program'"
+      [title]="'New program'"
+      [urlLink]="'/program-form'"
+      [color]="'ONLYCOLOR'"
+    ></app-fitness-button>
+  </ng-container>
+  <div class="program-container">
+    <ng-container *ngFor="let program of programs">
+      <app-fitness-program-box-item
+        [program]="program"
+        (deleteProgram)="alertDialogue($event)"
+      ></app-fitness-program-box-item>
     </ng-container>
-    <div class="program-container">
-      <ng-container *ngFor="let program of programs">
-        <app-fitness-program-box-item
-          [program]="program"
-          (deleteProgram)="alertDialogue($event)"
-        ></app-fitness-program-box-item>
-      </ng-container>
-    </div>
   </div>
-</div>
+</app-fitness-page-structure-html>
+
 <p-toast />
 <p-confirmDialog />
+
 <ng-template #sideBtn>
-  <div class="no-programs">
+  <div *ngIf="!isLoading" class="no-programs">
     <app-fitness-button
       [title]="'New program'"
       [urlLink]="'/program-form'"

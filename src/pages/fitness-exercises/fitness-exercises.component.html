@@ -1,36 +1,35 @@
-<div class="container-fluid g-0">
-  <app-fitness-side-menu></app-fitness-side-menu>
+<app-fitness-page-structure-html>
+  <h1 class="text-center roboto-bold font-big m-0">Exercises Database</h1>
+  <p class="text-center m-0">Limits are often just illusions!</p>
+  <div class="my-4 py-4">
+    <ng-container *ngIf="exercises.length > 0; else loading">
+      <div class="header-container mb-4">
+        <app-fitness-filter
+          (filtersToApply)="onFilters($event)"
+        ></app-fitness-filter>
+        <app-fitness-button
+          [link]="true"
+          [title]="'Create new exercise' | titlecase"
+          [text]="true"
+          [raised]="true"
+          [urlLink]="'/exercise-form'"
+          [color]="'ONLYCOLOR'"
+        ></app-fitness-button>
+      </div>
+      <app-fitness-exercises-list
+        [exerciseDataList]="exercises"
+        [pagination]="pagination"
+        (updateExerciseList)="onUpdateExerciseList($event)"
+        (deleteExercise)="onDeleteExercise($event)"
+      ></app-fitness-exercises-list
+    ></ng-container>
+  </div>
+</app-fitness-page-structure-html>
 
-  <main class="container-page">
-    <h1 class="text-center roboto-bold font-big m-0">Exercises Database</h1>
-    <p class="text-center m-0">Limits are often just illusions!</p>
-    <div class="my-4 py-4">
-      <ng-container *ngIf="exercises; else loading">
-        <div class="header-container mb-4">
-          <app-fitness-filter
-            (filtersToApply)="onFilters($event)"
-          ></app-fitness-filter>
-          <app-fitness-button
-            [link]="true"
-            [title]="'Create new exercise' | titlecase"
-            [text]="true"
-            [raised]="true"
-            [urlLink]="'/exercise-form'"
-            [color]="'ONLYCOLOR'"
-          ></app-fitness-button>
-        </div>
-        <app-fitness-exercises-list
-          [exerciseDataList]="exercises"
-          [pagination]="pagination"
-          (updateExerciseList)="onUpdateExerciseList($event)"
-          (deleteExercise)="onDeleteExercise($event)"
-        ></app-fitness-exercises-list
-      ></ng-container>
-    </div>
-  </main>
-</div>
-
-<!-- ! SOSTITUIRE CON LOADING SPINNER PRIMENG -->
-<ng-template #loading>Loading...</ng-template>
+<ng-template #loading>
+  <div class="loading">
+    <p-progressSpinner ariaLabel="loading" />
+  </div>
+</ng-template>
 
 <p-toast />

@@ -143,7 +143,6 @@ export class FitnessExerciseFormComponent implements OnInit {
 
   public onSubmitNewExercise(form: FormGroup) {
     const exerciseToAdd: IExercise = this._onMappingExerciseForm(form);
-    console.log(exerciseToAdd);
 
     this.exerciseService.createExerciseUsingPost(exerciseToAdd).subscribe({
       next: (exercise) => {
@@ -172,12 +171,9 @@ export class FitnessExerciseFormComponent implements OnInit {
 
   public onSubmitUpdateExercise(form: FormGroup) {
     const exerciseToUpdate = this._onMappingExerciseForm(form);
-    console.log(exerciseToUpdate);
 
     this.exerciseService.updateExerciseUsingPut(exerciseToUpdate).subscribe({
       next: (updatedExercise) => {
-        console.log(updatedExercise);
-
         this.toast.add({
           severity: 'success',
           summary: 'Exercise',

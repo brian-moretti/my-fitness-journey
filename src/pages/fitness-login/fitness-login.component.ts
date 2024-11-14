@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { SHARED_COMPONENTS } from '..';
+import { FitnessAuthStructureHtmlComponent } from '../../components/fitness-auth-structure-html/fitness-auth-structure-html.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IUser } from '../../core/model/interface/user';
 import { AuthService } from '../../services/auth/auth.service';
@@ -23,6 +24,7 @@ import { LoginService } from '../../services/login/login.service';
     ...PRIMENG_COMPONENTS,
     ReactiveFormsModule,
     CommonModule,
+    FitnessAuthStructureHtmlComponent,
   ],
   providers: [MessageService],
   templateUrl: './fitness-login.component.html',
@@ -89,6 +91,7 @@ export class FitnessLoginComponent implements OnInit {
           severity: 'error',
           summary: 'Login error',
           detail: this.errorMessage,
+          life: 1500,
         });
       },
     });

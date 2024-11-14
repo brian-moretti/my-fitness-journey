@@ -4,7 +4,6 @@ export const SHARED_COMPONENTS = [
   COMPONENTS.FitnessFooterComponent,
   COMPONENTS.FitnessHeaderComponent,
   COMPONENTS.FitnessButtonComponent,
-  COMPONENTS.FitnessHeaderMenuComponent,
   COMPONENTS.FitnessSideMenuComponent,
   COMPONENTS.FitnessExercisesListComponent,
   COMPONENTS.FitnessFilterComponent,

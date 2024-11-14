@@ -10,11 +10,12 @@ import { IUser } from '../../core/model/interface/user';
 import { AuthService } from '../../services/auth/auth.service';
 import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { UserService } from '../../services/user/user.service';
+import { FitnessPageStructureHtmlComponent } from "../../components/fitness-page-structure-html/fitness-page-structure-html.component";
 
 @Component({
   selector: 'app-fitness-settings',
   standalone: true,
-  imports: [...SHARED_COMPONENTS, CommonModule, ...PRIMENG_COMPONENTS],
+  imports: [...SHARED_COMPONENTS, CommonModule, ...PRIMENG_COMPONENTS, FitnessPageStructureHtmlComponent],
   templateUrl: './fitness-settings.component.html',
   providers: [ConfirmationService, MessageService],
   styleUrl: './fitness-settings.component.scss',

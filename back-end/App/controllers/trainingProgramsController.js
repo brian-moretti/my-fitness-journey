@@ -13,7 +13,7 @@ const trainingPrograms_index = async (req, res) => {
     return res.status(200).json(trainingPrograms);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal server error" });
+    return res.status(500).json("Internal server error");
   }
 };
 const trainingPrograms_details = async (req, res) => {
@@ -72,9 +72,9 @@ const trainingPrograms_create = async (req, res) => {
   } catch (error) {
     console.error(error);
     if (error.message === "body") {
-      return res.status(400).json({ "Body Error": "Some field are missing" });
+      return res.status(400).json("Some field are missing");
     }
-    return res.status(500).json({ Error: "Internal server error" });
+    return res.status(500).json("Internal server error");
   }
 };
 
@@ -85,7 +85,7 @@ const trainingPrograms_update = async (req, res) => {
       req.params.id
     );
     if (!trainingProgram)
-      return res.status(404).json({ Error: "Training Program not founded" });
+      return res.status(404).json("Training Program not founded");
     const result = await TrainingProgramsModel.updateTrainingProgram(
       trainingProgram,
       req.body
@@ -95,7 +95,7 @@ const trainingPrograms_update = async (req, res) => {
       return res.status(200).json(updatedTrainingProgram);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal server error" });
+    return res.status(500).json("Internal server error");
   }
 };
 
@@ -104,12 +104,12 @@ const trainingPrograms_delete = async (req, res) => {
     const [deletedTrainingProgram, result] =
       await TrainingProgramsModel.deleteTrainingProgram(req.params.id);
     if (!deletedTrainingProgram)
-      return res.status(404).json({ Error: "Training program not founded" });
+      return res.status(404).json("Training program not founded");
     if (result.affectedRows >= 1)
       return res.status(200).json(deletedTrainingProgram);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal server error" });
+    return res.status(500).json("Internal server error");
   }
 };
 

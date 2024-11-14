@@ -1,15 +1,27 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { SHARED_COMPONENTS } from '..';
 import { FitnessButtonComponent } from '../../components';
+import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IUser } from '../../core/model/interface/user';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { UserService } from '../../services/user/user.service';
 import { ViewportService } from '../../services/viewport/viewport.service';
+import { FitnessPageStructureHtmlComponent } from "../../components/fitness-page-structure-html/fitness-page-structure-html.component";
 
 @Component({
   selector: 'app-fitness-dashboard',
   standalone: true,
-  imports: [...SHARED_COMPONENTS, FitnessButtonComponent, CommonModule],
+  imports: [
+    ...SHARED_COMPONENTS,
+    FitnessButtonComponent,
+    CommonModule,
+    PRIMENG_COMPONENTS,
+    FitnessPageStructureHtmlComponent
+],
+  providers: [MessageService],
   templateUrl: './fitness-dashboard.component.html',
   styleUrl: './fitness-dashboard.component.scss',
 })
@@ -40,10 +52,13 @@ export class FitnessDashboardComponent implements OnInit {
   ];
   public currentPhraseIndex: number = 0;
   public viewScreen: number = 0;
+  public errorMessage: string = '';
 
   constructor(
     private userService: UserService,
-    private viewportService: ViewportService
+    private viewportService: ViewportService,
+    private interceptor: HttpErrorsService,
+    private toast: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -60,7 +75,16 @@ export class FitnessDashboardComponent implements OnInit {
       next: (users) => {
         this.currentUser = users.find((user) => user.id === this.user.id);
       },
-      error: () => {},
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleUserError(err);
+        this.toast.add({
+          severity: 'error',
+          summary: 'Checking Account Error',
+          detail: this.errorMessage,
+          life: 1500,
+        });
+      },
     });
   }
 

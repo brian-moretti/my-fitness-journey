@@ -1,66 +1,64 @@
-<div class="container-fluid g-0">
-  <app-fitness-side-menu></app-fitness-side-menu>
-  <main class="container-page">
-    <h1 class="text-center roboto-bold font-big m-0">Settings</h1>
-    <section class="setting-container">
-      <span class="align-self-start">Your Account</span>
-      <input
-        type="text"
-        pInputText
-        [(ngModel)]="userLogged.username"
-        [disabled]="!isEditable"
-        required
-      />
-      <input
-        type="text"
-        pInputText
-        [(ngModel)]="userLogged.email"
-        [disabled]="!isEditable"
-        required
-      />
+<app-fitness-page-structure-html>
+  <h1 class="text-center roboto-bold font-big m-0">Settings</h1>
+  <section class="setting-container">
+    <span class="align-self-start">Your Account</span>
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="userLogged.username"
+      [disabled]="!isEditable"
+      required
+    />
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="userLogged.email"
+      [disabled]="!isEditable"
+      required
+    />
 
-      <app-fitness-button
-        *ngIf="!isEditable"
-        class="align-self-end edit-btn"
-        [rounded]="true"
-        [raised]="true"
-        [icon]="'pi pi-user-edit'"
-        [color]="'PRIMARY'"
-        (btnEvent)="editAccount()"
-      ></app-fitness-button>
-      <ng-container *ngIf="isEditable">
-        <div
-          class="d-flex justify-content-between"
-          [ngClass]="isEditable ? 'mt-3' : ''"
-        >
-          <app-fitness-button
-            [title]="'Cancel'"
-            [outline]="true"
-            [raised]="true"
-            [size]="'small'"
-            [color]="'SECONDARY'"
-            (btnEvent)="cancelEdit()"
-          ></app-fitness-button>
-          <app-fitness-button
-            [title]="'Save'"
-            [raised]="true"
-            [size]="'small'"
-            [color]="'PRIMARY'"
-            (btnEvent)="saveEdit()"
-          ></app-fitness-button>
-        </div>
-        <p-divider />
+    <app-fitness-button
+      *ngIf="!isEditable"
+      class="align-self-end edit-btn"
+      [rounded]="true"
+      [raised]="true"
+      [icon]="'pi pi-user-edit'"
+      [color]="'PRIMARY'"
+      (btnEvent)="editAccount()"
+    ></app-fitness-button>
+    <ng-container *ngIf="isEditable">
+      <div
+        class="d-flex justify-content-between"
+        [ngClass]="isEditable ? 'mt-3' : ''"
+      >
         <app-fitness-button
-          class="danger-btn"
-          severity="danger"
-          [title]="'DELETE ACCOUNT'"
-          [color]="'ACCENT'"
-          (btnEvent)="alertDialogue($event)"
+          [title]="'Cancel'"
+          [outline]="true"
+          [raised]="true"
+          [size]="'small'"
+          [color]="'SECONDARY'"
+          (btnEvent)="cancelEdit()"
         ></app-fitness-button>
-      </ng-container>
-    </section>
-  </main>
-</div>
+        <app-fitness-button
+          [title]="'Save'"
+          [raised]="true"
+          [size]="'small'"
+          [color]="'PRIMARY'"
+          (btnEvent)="saveEdit()"
+        ></app-fitness-button>
+      </div>
+      <p-divider />
+      <app-fitness-button
+        class="danger-btn"
+        severity="danger"
+        [title]="'DELETE ACCOUNT'"
+        [color]="'ACCENT'"
+        (btnEvent)="alertDialogue($event)"
+      ></app-fitness-button>
+    </ng-container>
+  </section>
+</app-fitness-page-structure-html>
+
 <p-toast key="success" (onClose)="onCloseToast()" />
 <p-toast key="reject" />
 <p-toast key="users-error" />

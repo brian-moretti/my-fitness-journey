@@ -13,6 +13,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PaginatorModule } from 'primeng/paginator';
 import { PasswordModule } from 'primeng/password';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
@@ -36,4 +37,5 @@ export const PRIMENG_COMPONENTS = [
   ToastModule,
   MessagesModule,
   InputMaskModule,
+  ProgressSpinnerModule,
 ];

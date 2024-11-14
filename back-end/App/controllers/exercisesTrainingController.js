@@ -4,10 +4,11 @@ import ExercisesTrainingModel from "../models/exercisesTrainingModel.js";
 import TrainingProgramsModel from "../models/trainingProgramsModel.js";
 
 const exercisesTraining_index = async (req, res) => {
-  return res.status(400).json({
-    Error:
-      "Please provide an exercise ID on the request to look into the database",
-  });
+  return res
+    .status(400)
+    .json(
+      "Please provide an exercise ID on the request to look into the database"
+    );
 };
 
 const exercisesTraining_details = async (req, res) => {
@@ -19,7 +20,7 @@ const exercisesTraining_details = async (req, res) => {
     if (!result) {
       return res
         .status(404)
-        .json({ Error: "Error on finding this exercise in the database" });
+        .json("Error on finding this exercise in the database");
     }
     result = {
       id_user: result.id_user,
@@ -47,7 +48,7 @@ const exercisesTraining_details = async (req, res) => {
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal error server" });
+    return res.status(500).json("Internal error server");
   }
 };
 
@@ -57,15 +58,15 @@ const exercisesTraining_create = async (req, res) => {
       req.body.id_exercise
     );
     if (!exerciseToFind)
-      return res.status(400).json("The exercise provided do not exists");
+      return res.status(404).json("The exercise provided do not exists");
     console.log(req.user, req.body);
-    
+
     const [programToFind] = await TrainingProgramsModel.getTrainingProgram(
       req.user.id,
       req.body.id_scheda
     );
     if (!programToFind)
-      return res.status(400).json("The program provided do not exist");
+      return res.status(404).json("The program provided do not exist");
     const result = await ExercisesTrainingModel.createExerciseTraining(
       req.body
     );
@@ -74,7 +75,7 @@ const exercisesTraining_create = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ Error: "Internal server error" });
+    res.status(500).json( "Internal server error");
   }
 };
 const exercisesTraining_update = async (req, res) => {
@@ -82,8 +83,8 @@ const exercisesTraining_update = async (req, res) => {
     const [exerciseToFind] = await ExercisesModel.getExercise(req.params.id);
     if (!exerciseToFind)
       return res
-        .status(400)
-        .json({ Error: "The exercise provided do not exists" });
+        .status(404)
+        .json("The exercise provided do not exists");
 
     const [programToFind] = await TrainingProgramsModel.getTrainingProgram(
       req.body.id_user,
@@ -92,8 +93,7 @@ const exercisesTraining_update = async (req, res) => {
     if (!programToFind)
       return res
         .status(400)
-        .json({ Error: "The program provided do not exists" });
-    console.log(programToFind);
+        .json("The program provided do not exists");
 
     const query = `SELECT * FROM exercises_training WHERE id_exercise = ? AND id_scheda = ?`;
     const [exerciseTraining] = await mySqlConnectionQuery(query, [
@@ -103,9 +103,7 @@ const exercisesTraining_update = async (req, res) => {
     if (!exerciseTraining)
       return res
         .status(400)
-        .json({ Error: "The exercise do not exist in the program" });
-    console.log(exerciseTraining);
-    console.log(req.body);
+        .json("The exercise do not exist in the program");
 
     const result = await ExercisesTrainingModel.updateExerciseTraining(
       exerciseTraining,
@@ -118,7 +116,7 @@ const exercisesTraining_update = async (req, res) => {
         .json({ "Exercise Update": exerciseToFind.name, Updated: req.body });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal error server" });
+    return res.status(500).json("Internal error server");
   }
 };
 
@@ -131,7 +129,7 @@ const exercisesTraining_delete = async (req, res) => {
     if (!exerciseToDelete)
       return res
         .status(404)
-        .json({ Error: "The exercise do not exists in the program" });
+        .json("The exercise do not exists in the program");
     const result = await ExercisesTrainingModel.deleteExerciseTraining(
       req.params.id,
       exerciseToDelete.id_scheda
@@ -141,7 +139,7 @@ const exercisesTraining_delete = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ Error: "Internal error server" });
+    return res.status(500).json("Internal error server");
   }
 };
 

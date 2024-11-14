@@ -11,8 +11,6 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './fitness-button.component.scss',
 })
 export class FitnessButtonComponent implements OnInit {
-  //? ROUTER ACTIVE LINK cosa fa?
-
   @Input()
   severity:
     | 'success'

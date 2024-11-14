@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SHARED_COMPONENTS } from '..';
+import { FitnessPageStructureHtmlComponent } from '../../components/fitness-page-structure-html/fitness-page-structure-html.component';
 import { FitnessProgramBoxItemComponent } from '../../components/fitness-program-box-item/fitness-program-box-item.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { ITrainingProgram } from '../../core/model/interface/trainingProgram';
+import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
 import { TrainingProgramsService } from '../../services/training-programs/training-programs.service';
 
 @Component({
@@ -14,6 +17,7 @@ import { TrainingProgramsService } from '../../services/training-programs/traini
     CommonModule,
     PRIMENG_COMPONENTS,
     FitnessProgramBoxItemComponent,
+    FitnessPageStructureHtmlComponent,
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './fitness-programs.component.html',
@@ -21,11 +25,14 @@ import { TrainingProgramsService } from '../../services/training-programs/traini
 })
 export class FitnessProgramsComponent implements OnInit {
   public programs: ITrainingProgram[] = [];
+  public errorMessage: string = '';
+  public isLoading: boolean = true;
 
   constructor(
     private trainingPrograms: TrainingProgramsService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private toast: MessageService,
+    private confirmationService: ConfirmationService,
+    private interceptor: HttpErrorsService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +46,15 @@ export class FitnessProgramsComponent implements OnInit {
         this.programs = programs.sort((a, b) =>
           a.date_end! < b.date_end! ? 1 : -1
         );
+        this.isLoading = false;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleTrainingProgramError(err);
+        this.toast.add({
+          severity: 'error',
+          detail: this.errorMessage,
+        });
       },
     });
   }
@@ -48,7 +64,14 @@ export class FitnessProgramsComponent implements OnInit {
       next: (program) => {
         this._getTrainingPrograms();
       },
-      error: () => {},
+      error: (err: HttpErrorResponse) => {
+        console.error(err);
+        this.errorMessage = this.interceptor.handleTrainingProgramError(err);
+        this.toast.add({
+          severity: 'error',
+          detail: this.errorMessage,
+        });
+      },
     });
   }
 
@@ -64,7 +87,7 @@ export class FitnessProgramsComponent implements OnInit {
       defaultFocus: 'none',
       accept: () => {
         this._deleteProgram(programID);
-        this.messageService.add({
+        this.toast.add({
           severity: 'success',
           summary: 'Program Deleted',
           detail: 'Go ahead and make another one',
@@ -72,7 +95,7 @@ export class FitnessProgramsComponent implements OnInit {
         });
       },
       reject: () => {
-        this.messageService.add({
+        this.toast.add({
           severity: 'info',
           summary: 'Stay Hard',
           detail: 'This program could still help you',
