@@ -12,17 +12,18 @@
   .p-dropdown {
     width: calc(250px + 1vw);
   }
+  p-dropdown {
+    width: initial;
+  }
 
   @media only screen and (max-width: 768px) {
-    .p-inputtext {
-      width: 100%;
-    }
-    .p-dropdown {
+    .p-inputtext,
+    .p-dropdown,
+    p-dropdown {
       width: 100%;
     }
   }
 }
-
 @media only screen and (max-width: 768px) {
   .filter-container {
     width: 100%;
