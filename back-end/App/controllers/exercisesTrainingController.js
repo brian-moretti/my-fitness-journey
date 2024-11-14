@@ -43,8 +43,6 @@ const exercisesTraining_details = async (req, res) => {
         secondaryMuscles: result.secondaryMuscles,
       },
     };
-    //console.log(result);
-
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);
@@ -59,7 +57,6 @@ const exercisesTraining_create = async (req, res) => {
     );
     if (!exerciseToFind)
       return res.status(404).json("The exercise provided do not exists");
-    console.log(req.user, req.body);
 
     const [programToFind] = await TrainingProgramsModel.getTrainingProgram(
       req.user.id,

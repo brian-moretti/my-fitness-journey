@@ -7,9 +7,5 @@ export const navigationDelayGuard: CanDeactivateFn<boolean> = (
   currentState,
   nextState
 ) => {
-  console.log(component);
-  console.log(currentRoute);
-  console.log(currentState);
-  console.log(nextState);
   return scheduled([true], asyncScheduler).pipe(delay(500));
 };

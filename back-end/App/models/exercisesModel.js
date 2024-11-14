@@ -39,8 +39,6 @@ class ExercisesModel {
       let params = paginations(req);
       query += ` LIMIT ${params.maxData} OFFSET ${params.offsetData}`;
     }
-    console.log(query);
-
     return await mySqlConnectionQuery(query, filters);
   }
 

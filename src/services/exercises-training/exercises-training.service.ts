@@ -29,8 +29,6 @@ export class ExercisesTrainingService {
   updateExerciseTraining(
     exerciseTraining: IExerciseTraining
   ): Observable<IExerciseTraining> {
-    console.log(exerciseTraining.exercise?.id);
-
     return this.http.put<IExerciseTraining>(
       `${this.url}/${exerciseTraining.exercise?.id}`,
       exerciseTraining,
