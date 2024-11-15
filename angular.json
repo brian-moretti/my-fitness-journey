@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "your-fitness-journey": {
+    "my-fitness-journey": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/your-fitness-journey",
+            "outputPath": "dist/my-fitness-journey",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js", "@angular/localize/init"],
@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "your-fitness-journey:build:production"
+              "buildTarget": "my-fitness-journey:build:production"
             },
             "development": {
-              "buildTarget": "your-fitness-journey:build:development"
+              "buildTarget": "my-fitness-journey:build:development"
             }
           },
           "defaultConfiguration": "development",

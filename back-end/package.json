@@ -1,5 +1,5 @@
 {
-  "name": "your-fitness-journey",
+  "name": "my-fitness-journey",
   "version": "1.0.0",
   "description": "A complete app to track your fitness journey. Loads your workouts, save your workouts session, set timers. ",
   "main": "app.js",
