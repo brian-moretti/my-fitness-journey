@@ -17,7 +17,7 @@ export const routes: Routes = [
   {
     path: '',
     component: FitnessHeroComponent,
-    title: 'Your Fitness Journey',
+    title: 'My Fitness Journey',
     canDeactivate: [navigationDelayGuard],
   },
   {
