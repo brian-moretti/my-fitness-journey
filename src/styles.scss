@@ -7,20 +7,9 @@
 @import "primeng/resources/primeng.css" layer(primeng);
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css" layer(primeflex);
-@import "./assets/scss/fonts";
 
-:root {
-  --background: #2a2a2a;
-  --side-background: #2a2a2a;
-  --primary-color: #fa862d;
-  --shadow-primary: #fdd5b0;
-  --dark-primary: #d66a1a;
-  --secondary-color: #f8f9fa;
-  --accent-color: #b53b2e;
-  --hover-accent: #d24b3c;
-  --primary-text: #212529;
-  --secondary-text: #6c757d;
-}
+@import "./assets/scss/fonts";
+@import "./assets/scss/color";
 
 footer {
   color: var(--background);
