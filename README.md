@@ -6,7 +6,7 @@ Welcome to my final project for Start2Impact University's Master Full-Stack Dev.
   - [:muscle: The project: My Fitness Journey](#muscle-the-project-my-fitness-journey)
     - [:gear: Functionality](#gear-functionality)
   - [Tools used](#tools-used)
-  - [:incoming_envelope: Contact me](#incoming_envelope-contact-me)
+  - [:incoming\_envelope: Contact me](#incoming_envelope-contact-me)
 
 ## :muscle: The project: My Fitness Journey
 
@@ -14,7 +14,9 @@ As a fitness and gym lover I feel the need to build an app to track all of my gr
 
 It's a personal project that allow the users to create their training programs or, as my case, to report the training programs the personal trainer create for me, and track the progress through the time.
 
-I believe this app has an incredible hidden potetial. Just think to the possibility to add a lot of new and usefull functionality to fulfill all the needs of the people who live the fitness's world
+I believe this app has an incredible hidden potetial. Just thinking to the possibility to add a lot of new and usefull functionality to fulfill all the needs of the people who live the fitness's world
+
+Try now my app: [**My Fitness Journey**](https://my-fitness-journey.netlify.app/)
 
 ### :gear: Functionality
 
