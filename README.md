@@ -1,27 +1,57 @@
-# YourFitnessJourney
+# Master Full-Stack Development
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
+Welcome to my final project for Start2Impact University's Master Full-Stack Dev.
 
-## Development server
+- [Master Full-Stack Development](#master-full-stack-development)
+  - [:muscle: The project: My Fitness Journey](#muscle-the-project-my-fitness-journey)
+    - [:gear: Functionality](#gear-functionality)
+  - [Tools used](#tools-used)
+  - [:incoming_envelope: Contact me](#incoming_envelope-contact-me)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## :muscle: The project: My Fitness Journey
 
-## Code scaffolding
+As a fitness and gym lover I feel the need to build an app to track all of my growing and training journey.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+It's a personal project that allow the users to create their training programs or, as my case, to report the training programs the personal trainer create for me, and track the progress through the time.
 
-## Build
+I believe this app has an incredible hidden potetial. Just think to the possibility to add a lot of new and usefull functionality to fulfill all the needs of the people who live the fitness's world
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### :gear: Functionality
 
-## Running unit tests
+Here a list of what you can do with this app:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Create a free personal account
+  - Edit account allowed
+- Create training programs adding various exercises
+  - Each exercise must include Series, Reps, Rest Time and then the Weight used
+  - Each exercise added has a timer locate close by that helps on stay focused
+- Has a Database with over 1000 exercises
+  - Creation of new exercises allowed
+  - Edit or delete allowed only for the exercise create by the user and not the one in the Database
+  - Filter exercise by Name, by myscolar Target and by Body Part used
+  - Each exercise include a gift that explain the movement, and all the information needed to execute them.
 
-## Running end-to-end tests
+## Tools used
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Front-End:
 
-## Further help
+- Angular
+- Typescript
+- PrimeNG
+- Bootstrap
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Back-End:
+
+- Node.js
+- Express
+- JWT
+- MySql
+
+Hosting:
+
+- Netlify (FE)
+- Railway (BE)
+
+## :incoming_envelope: Contact me
+
+If you find some bugs to fix or simply you want to send me a message please write me at [**brianmoretti2512@gmail.com**](mailto:brianmoretti2512@gmail.com) or [**LinkedIn | Brian Moretti**](https://www.linkedin.com/in/brian-moretti/)
