@@ -50,6 +50,7 @@ export class FitnessExercisesComponent implements OnInit {
   }
 
   private _getExercises() {
+    this.loading = true;
     this.exerciseService.getExercises(this.pageDB, this.filters).subscribe({
       next: (exercises) => {
         this.exercises = [...this.exercises, ...exercises];
