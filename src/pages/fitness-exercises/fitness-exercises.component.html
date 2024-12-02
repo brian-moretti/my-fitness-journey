@@ -2,33 +2,43 @@
   <h1 class="text-center roboto-bold font-big m-0">Exercises Database</h1>
   <p class="text-center m-0">Limits are often just illusions!</p>
   <div class="my-4 py-4">
-    <ng-container *ngIf="exercises.length > 0; else loading">
-      <div class="header-container mb-4">
-        <app-fitness-filter
-          (filtersToApply)="onFilters($event)"
-        ></app-fitness-filter>
-        <app-fitness-button
-          [link]="true"
-          [title]="'Create new exercise' | titlecase"
-          [text]="true"
-          [raised]="true"
-          [urlLink]="'/exercise-form'"
-          [color]="'ONLYCOLOR'"
-        ></app-fitness-button>
-      </div>
-      <app-fitness-exercises-list
-        [exerciseDataList]="exercises"
-        [pagination]="pagination"
-        (updateExerciseList)="onUpdateExerciseList($event)"
-        (deleteExercise)="onDeleteExercise($event)"
-      ></app-fitness-exercises-list
-    ></ng-container>
+    <div class="header-container mb-4">
+      <app-fitness-filter
+        (filtersToApply)="onFilters($event)"
+      ></app-fitness-filter>
+      <app-fitness-button
+        [link]="true"
+        [title]="'Create new exercise' | titlecase"
+        [text]="true"
+        [raised]="true"
+        [urlLink]="'/exercise-form'"
+        [color]="'ONLYCOLOR'"
+      ></app-fitness-button>
+    </div>
+    <ng-container *ngIf="!loading; else loadingTemplate">
+      <ng-container *ngIf="exercises.length > 0; else noResults">
+        <app-fitness-exercises-list
+          [exerciseDataList]="exercises"
+          [pagination]="pagination"
+          (updateExerciseList)="onUpdateExerciseList($event)"
+          (deleteExercise)="onDeleteExercise($event)"
+        ></app-fitness-exercises-list
+      ></ng-container>
+    </ng-container>
   </div>
 </app-fitness-page-structure-html>
 
-<ng-template #loading>
+<ng-template #loadingTemplate>
   <div class="loading">
-    <p-progressSpinner ariaLabel="loading" />
+    <p-progressSpinner ariaLabel="loading" animationDuration="1,5s" />
+  </div>
+</ng-template>
+
+<ng-template #noResults>
+  <div class="loading">
+    <p>
+      No exercises has been found with the provided Filters. Please try again
+    </p>
   </div>
 </ng-template>
 

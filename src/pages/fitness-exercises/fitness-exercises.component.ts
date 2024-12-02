@@ -3,18 +3,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { SHARED_COMPONENTS } from '..';
+import { FitnessPageStructureHtmlComponent } from '../../components/fitness-page-structure-html/fitness-page-structure-html.component';
 import { PRIMENG_COMPONENTS } from '../../core/library/primeng-index';
 import { IExercise } from '../../core/model';
 import { IFilters } from '../../core/model/interface/filterExercises';
 import { IPagination } from '../../core/model/interface/pagination';
 import { ExerciseService } from '../../services/exercise/exercise.service';
 import { HttpErrorsService } from '../../services/http-errors/http-errors.service';
-import { FitnessPageStructureHtmlComponent } from "../../components/fitness-page-structure-html/fitness-page-structure-html.component";
 
 @Component({
   selector: 'app-fitness-exercises',
   standalone: true,
-  imports: [...SHARED_COMPONENTS, CommonModule, PRIMENG_COMPONENTS, FitnessPageStructureHtmlComponent],
+  imports: [
+    ...SHARED_COMPONENTS,
+    CommonModule,
+    PRIMENG_COMPONENTS,
+    FitnessPageStructureHtmlComponent,
+  ],
   providers: [MessageService],
   templateUrl: './fitness-exercises.component.html',
   styleUrl: './fitness-exercises.component.scss',
@@ -30,6 +35,7 @@ export class FitnessExercisesComponent implements OnInit {
     page: 0,
     totalRecords: 0,
   };
+  public loading: boolean = true;
 
   constructor(
     private exerciseService: ExerciseService,
@@ -38,16 +44,17 @@ export class FitnessExercisesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._getExercises();
+    setTimeout(() => {
+      this._getExercises();
+    }, 1500);
   }
 
   private _getExercises() {
     this.exerciseService.getExercises(this.pageDB, this.filters).subscribe({
       next: (exercises) => {
-        setTimeout(() => {
-          this.exercises = [...this.exercises, ...exercises];
-        }, 1500);
+        this.exercises = [...this.exercises, ...exercises];
         this.pagination.totalRecords = this.exercises.length;
+        this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
         console.error(err);
@@ -56,6 +63,7 @@ export class FitnessExercisesComponent implements OnInit {
           severity: 'error',
           detail: this.errorMessage,
         });
+        this.loading = false;
       },
     });
   }

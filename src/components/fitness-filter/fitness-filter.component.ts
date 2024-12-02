@@ -28,7 +28,7 @@ export class FitnessFilterComponent implements OnInit {
   }
 
   public onSearchName(searchName: string) {
-    this.filters.name = searchName;
+    this.filters.name = searchName;    
     this._onFilters();
   }
   public onSelectTargets(targets: ITargets | null) {
