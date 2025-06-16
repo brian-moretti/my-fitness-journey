@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "node --watch app.js",
+    "build": "echo \"No build needed for this repo\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/brian-moretti/master-back-end#readme",
   "dependencies": {
+    "@types/node": "^22.10.2",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
